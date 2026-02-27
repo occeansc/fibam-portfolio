@@ -641,35 +641,38 @@ function buildPerformance() {
    ACCOUNT DETAIL DRAWER
 ──────────────────────────────────────────── */
 function openDrawer(id) {
-  const acc=ACCOUNTS.find(a=>a.id===id);if(!acc)return;
-  const trades=TRADE_DATA[id]||[];
-  const s=trades.length?tradeStats(trades):null;
-  const days=daysBetween(acc.startDate,acc.endDate);
+  const acc = ACCOUNTS.find(a => a.id === id);
+  if (!acc) return;
+  const trades = TRADE_DATA[id] || [];
+  const s = trades.length ? tradeStats(trades) : null;
+  const days = daysBetween(acc.startDate, acc.endDate);
 
-  document.getElementById('drawerTitle').textContent=acc.name;
-  document.getElementById('drawerSubtitle').textContent=`${acc.shortName} · ${acc.platform} · ${acc.marketLabel}`;
+  document.getElementById('drawerTitle').textContent = acc.name;
+  document.getElementById('drawerSubtitle').textContent = `${acc.shortName} · ${acc.platform} · ${acc.marketLabel}`;
 
-  const src = DATA_SOURCE[id] || { label:'Unknown', cls:'source-est', tip:'' };
-  let html=`
+  const src = DATA_SOURCE[id] || { label: 'Unknown', cls: 'source-est', tip: '' };
+  
+  // This is the fixed part:
+  let html = `
     <div class="drawer-source-badge ${src.cls}" title="${src.tip}">
       <span class="drawer-source-icon">◈</span> ${src.label}
       <span class="drawer-source-tip">${src.tip}</span>
-    </div>`;
+    </div>
     <div class="drawer-stats">
-      <div class="drawer-stat"><div class="drawer-stat-label">Status</div><div class="drawer-stat-val">${acc.status==='active'?'● Active':'✓ Ended'}</div></div>
-      <div class="drawer-stat"><div class="drawer-stat-label">Account Size</div><div class="drawer-stat-val">${acc.currency==='NGN'?'NGN':fmt(acc.size)}</div></div>
-      <div class="drawer-stat"><div class="drawer-stat-label">Net P&L</div><div class="drawer-stat-val ${acc.pnl==null?'':acc.pnl>=0?'pos':'neg'}">${acc.pnl!=null?fmtFull(acc.pnl):'Active'}</div></div>
-      <div class="drawer-stat"><div class="drawer-stat-label">Return</div><div class="drawer-stat-val ${acc.performance==null?'':acc.performance>=0?'pos':'neg'}">${acc.performance!=null?fmtPct(acc.performance):'—'}</div></div>
+      <div class="drawer-stat"><div class="drawer-stat-label">Status</div><div class="drawer-stat-val">${acc.status === 'active' ? '● Active' : '✓ Ended'}</div></div>
+      <div class="drawer-stat"><div class="drawer-stat-label">Account Size</div><div class="drawer-stat-val">${acc.currency === 'NGN' ? 'NGN' : fmt(acc.size)}</div></div>
+      <div class="drawer-stat"><div class="drawer-stat-label">Net P&L</div><div class="drawer-stat-val ${acc.pnl == null ? '' : acc.pnl >= 0 ? 'pos' : 'neg'}">${acc.pnl != null ? fmtFull(acc.pnl) : 'Active'}</div></div>
+      <div class="drawer-stat"><div class="drawer-stat-label">Return</div><div class="drawer-stat-val ${acc.performance == null ? '' : acc.performance >= 0 ? 'pos' : 'neg'}">${acc.performance != null ? fmtPct(acc.performance) : '—'}</div></div>
       <div class="drawer-stat"><div class="drawer-stat-label">Period</div><div class="drawer-stat-val" style="font-size:12px">${fmtDate(acc.startDate)}</div></div>
       <div class="drawer-stat"><div class="drawer-stat-label">Duration</div><div class="drawer-stat-val" style="font-size:12px">${days} days · ${fmtDate(acc.endDate)}</div></div>
     </div>`;
 
-  if(s){
-    html+=`
+  if (s) {
+    html += `
       <div class="drawer-section-title">Analytics</div>
       <div class="drawer-stats">
-        <div class="drawer-stat"><div class="drawer-stat-label">Win Rate</div><div class="drawer-stat-val ${s.winRate>=0.5?'pos':'neg'}">${(s.winRate*100).toFixed(0)}%</div></div>
-        <div class="drawer-stat"><div class="drawer-stat-label">Profit Factor</div><div class="drawer-stat-val ${s.profitFactor>=1?'pos':'neg'}">${s.profitFactor}</div></div>
+        <div class="drawer-stat"><div class="drawer-stat-label">Win Rate</div><div class="drawer-stat-val ${s.winRate >= 0.5 ? 'pos' : 'neg'}">${(s.winRate * 100).toFixed(0)}%</div></div>
+        <div class="drawer-stat"><div class="drawer-stat-label">Profit Factor</div><div class="drawer-stat-val ${s.profitFactor >= 1 ? 'pos' : 'neg'}">${s.profitFactor}</div></div>
         <div class="drawer-stat"><div class="drawer-stat-label">Avg Win</div><div class="drawer-stat-val pos">+${fmtFull(s.avgWin)}</div></div>
         <div class="drawer-stat"><div class="drawer-stat-label">Avg Loss</div><div class="drawer-stat-val neg">−${fmtFull(s.avgLoss)}</div></div>
         <div class="drawer-stat"><div class="drawer-stat-label">Best Day</div><div class="drawer-stat-val pos">${fmtFull(s.bestDay[1])}</div></div>
@@ -685,59 +688,58 @@ function openDrawer(id) {
       <canvas id="drawerEquity" height="110" style="margin-bottom:8px"></canvas>`;
   }
 
-  html+=`
+  html += `
     <div class="drawer-section-title">Instruments</div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">${acc.instruments.map(i=>`<span class="instrument-chip"><span style="background:#40B5AD;width:6px;height:6px;border-radius:50%"></span>${i}</span>`).join('')}</div>`;
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">${acc.instruments.map(i => `<span class="instrument-chip"><span style="background:#40B5AD;width:6px;height:6px;border-radius:50%"></span>${i}</span>`).join('')}</div>`;
 
-  if(acc.costOfFund){
-    html+=`<div class="drawer-section-title">Cost Details</div>
+  if (acc.costOfFund) {
+    html += `<div class="drawer-section-title">Cost Details</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
       <div class="drawer-stat"><div class="drawer-stat-label">Cost of Fund</div><div class="drawer-stat-val neg">−$${acc.costOfFund}</div></div>
-      ${acc.fxRate?`<div class="drawer-stat"><div class="drawer-stat-label">NGN/USD Rate</div><div class="drawer-stat-val">₦${acc.fxRate.toLocaleString()}</div></div>`:''}
+      ${acc.fxRate ? `<div class="drawer-stat"><div class="drawer-stat-label">NGN/USD Rate</div><div class="drawer-stat-val">₦${acc.fxRate.toLocaleString()}</div></div>` : ''}
     </div>`;
   }
 
-  html+=`<div class="drawer-section-title">Notes</div>
+  html += `<div class="drawer-section-title">Notes</div>
     <p style="font-size:13px;color:var(--text-2);line-height:1.65;padding:14px;background:var(--bg);border-radius:var(--radius-md);margin-bottom:20px">${acc.notes}</p>`;
 
-  if(trades.length){
-    html+=`<div class="drawer-section-title">Trade Log — ${trades.length} trades</div>
+  if (trades.length) {
+    html += `<div class="drawer-section-title">Trade Log — ${trades.length} trades</div>
       <div class="drawer-trades-table">
         <div class="drawer-trades-header"><span>Close</span><span>Instr</span><span>Dir</span><span>Lots</span><span>Pips</span><span>Net P&L</span></div>
-        ${trades.slice().reverse().map(t=>{
-          const pc=t.netPnl>=0?'pos':'neg';
-          const dc=t.direction==='Long'?'drawer-dir-long':'drawer-dir-short';
+        ${trades.slice().reverse().map(t => {
+          const pc = t.netPnl >= 0 ? 'pos' : 'neg';
+          const dc = t.direction === 'Long' ? 'drawer-dir-long' : 'drawer-dir-short';
           return `<div class="drawer-trade-row">
             <span>${t.closeDate.slice(5)}</span>
             <span style="font-weight:600">${t.instrument}</span>
             <span class="${dc}">${t.direction}</span>
             <span style="font-family:var(--font-mono)">${t.lots}</span>
-            <span style="font-family:var(--font-mono);color:${t.pips>=0?'var(--green)':'var(--red)'}">${t.pips>=0?'+':''}${t.pips}</span>
-            <span class="drawer-pnl ${pc}">${t.netPnl>=0?'+':''}${fmtFull(t.netPnl)}</span>
+            <span style="font-family:var(--font-mono);color:${t.pips >= 0 ? 'var(--green)' : 'var(--red)'}">${t.pips >= 0 ? '+' : ''}${t.pips}</span>
+            <span class="drawer-pnl ${pc}">${t.netPnl >= 0 ? '+' : ''}${fmtFull(t.netPnl)}</span>
           </div>`;
         }).join('')}
       </div>`;
   }
 
-  if(acc.type==='fund'&&acc.id==='1KHOOD') html+=drawerHoldings(KHOOD_HOLDINGS,'USD');
-  if(acc.type==='fund'&&acc.id==='NGX')    html+=drawerHoldings(NGX_HOLDINGS,'NGN');
+  if (acc.type === 'fund' && acc.id === '1KHOOD') html += drawerHoldings(KHOOD_HOLDINGS, 'USD');
+  if (acc.type === 'fund' && acc.id === 'NGX') html += drawerHoldings(NGX_HOLDINGS, 'NGN');
 
-  document.getElementById('drawerBody').innerHTML=html;
+  document.getElementById('drawerBody').innerHTML = html;
 
-  // Render equity curve after DOM insert
-  if(s&&s.equityCurve.length){
-    requestAnimationFrame(()=>{
-      const ec=document.getElementById('drawerEquity');if(!ec)return;
-      const labels=s.equityCurve.map(p=>new Date(p.date+'T00:00:00').toLocaleDateString('en-GB',{month:'short',day:'numeric'}));
-      const values=s.equityCurve.map(p=>p.cum);
-      const lc=values[values.length-1]>=0?'#16a34a':'#dc2626';
-      new Chart(ec.getContext('2d'),{type:'line',data:{labels,datasets:[{data:values,borderColor:lc,borderWidth:2.5,pointRadius:4,pointBackgroundColor:lc,pointBorderColor:'#fff',pointBorderWidth:2,tension:0.3,fill:true,backgroundColor:ctx=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,110);g.addColorStop(0,lc+'33');g.addColorStop(1,lc+'00');return g;}}]},options:{responsive:true,animation:{duration:600},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` Cumulative: ${fmtFull(ctx.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10}}},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},callback:v=>'$'+v}}}}});
+  if (s && s.equityCurve.length) {
+    requestAnimationFrame(() => {
+      const ec = document.getElementById('drawerEquity'); if (!ec) return;
+      const labels = s.equityCurve.map(p => new Date(p.date + 'T00:00:00').toLocaleDateString('en-GB', { month: 'short', day: 'numeric' }));
+      const values = s.equityCurve.map(p => p.cum);
+      const lc = values[values.length - 1] >= 0 ? '#16a34a' : '#dc2626';
+      new Chart(ec.getContext('2d'), { type: 'line', data: { labels, datasets: [{ data: values, borderColor: lc, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: lc, pointBorderColor: '#fff', pointBorderWidth: 2, tension: 0.3, fill: true, backgroundColor: ctx => { const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, 110); g.addColorStop(0, lc + '33'); g.addColorStop(1, lc + '00'); return g; } }] }, options: { responsive: true, animation: { duration: 600 }, plugins: { legend: { display: false }, tooltip: { ...TIP, callbacks: { label: ctx => ` Cumulative: ${fmtFull(ctx.raw)}` } } }, scales: { x: { grid: { display: false }, ticks: { color: '#7a9896', font: { size: 10 } } }, y: { grid: { color: '#eef5f4' }, ticks: { color: '#7a9896', font: { size: 10 }, callback: v => '$' + v } } } } });
     });
   }
 
   document.getElementById('accountDrawer').classList.add('open');
   document.getElementById('drawerOverlay').classList.add('open');
-  document.body.style.overflow='hidden';
+  document.body.style.overflow = 'hidden';
 }
 
 function drawerHoldings(holdings,cur) {
