@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════
    FIBAM PORTFOLIO — CSS DESIGN SYSTEM
-   Fonts: Outfit (display) + Plus Jakarta Sans (body) + JetBrains Mono (numbers)
+   Font: Public Sans (all weights) + JetBrains Mono (numbers/mono)
    Palette: Teal #40B5AD · White #fff · Slate greys · Green/Red PNL
 ════════════════════════════════════════════════ */
 
@@ -39,8 +39,8 @@
   --radius-lg:   18px;
   --radius-xl:   24px;
 
-  --font-display: 'Outfit', system-ui, sans-serif;
-  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display: 'Public Sans', system-ui, sans-serif;
+  --font-body:    'Public Sans', system-ui, sans-serif;
   --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
 
   --nav-h:       64px;
@@ -729,16 +729,20 @@ canvas { display: block; }
 }
 .account-card-name {
   font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--text-3);
-  margin-bottom: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 4px;
+  letter-spacing: 0.02em;
 }
 .account-card-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-1);
-  margin-bottom: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-3);
+  margin-bottom: 12px;
   line-height: 1.3;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 .account-card-period {
   font-size: 12px;
@@ -1752,3 +1756,35 @@ canvas { display: block; }
   .cal-day-pnl { font-size: 11px; }
   .cal-summary { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ════════════════════════════════════════════════
+   PHASE 3 — DATA PROVENANCE BADGES
+════════════════════════════════════════════════ */
+.drawer-source-badge {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  flex-direction: column;
+}
+.drawer-source-icon { font-size: 12px; }
+.drawer-source-tip {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 0.8;
+  line-height: 1.4;
+}
+.source-live    { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+.source-real    { background: var(--teal-light); color: var(--teal-dark); border: 1px solid #b6e8e6; }
+.source-partial { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+.source-est     { background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; }
+.source-journal { background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
+.source-none    { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
