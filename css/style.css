@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════
    FIBAM PORTFOLIO — CSS DESIGN SYSTEM
-   Fonts: Cormorant Garamond (display) + DM Sans (body) + DM Mono (numbers)
+   Fonts: Outfit (display) + Plus Jakarta Sans (body) + JetBrains Mono (numbers)
    Palette: Teal #40B5AD · White #fff · Slate greys · Green/Red PNL
 ════════════════════════════════════════════════ */
 
@@ -39,9 +39,9 @@
   --radius-lg:   18px;
   --radius-xl:   24px;
 
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body:    'DM Sans', system-ui, sans-serif;
-  --font-mono:    'DM Mono', 'Fira Code', monospace;
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
 
   --nav-h:       64px;
   --max-w:       1200px;
@@ -131,10 +131,10 @@ canvas { display: block; }
 }
 .nav-name {
   font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   color: var(--text-1);
-  letter-spacing: 0.04em;
+  letter-spacing: -0.02em;
 }
 .nav-links {
   display: flex;
@@ -252,28 +252,30 @@ canvas { display: block; }
 .hero-name {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(64px, 10vw, 112px);
-  font-weight: 600;
-  line-height: 0.9;
-  letter-spacing: -0.02em;
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
   color: var(--text-1);
 }
 .hero-sub {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(22px, 4vw, 36px);
-  font-weight: 300;
-  font-style: italic;
+  font-size: clamp(18px, 3vw, 28px);
+  font-weight: 400;
+  font-style: normal;
   color: var(--teal);
-  letter-spacing: 0.02em;
-  margin-top: 4px;
+  letter-spacing: -0.01em;
+  margin-top: 6px;
 }
 .hero-tagline {
-  font-family: var(--font-display);
-  font-size: 18px;
+  font-family: var(--font-body);
+  font-size: 16px;
   font-style: italic;
+  font-weight: 400;
   color: var(--text-3);
   margin-bottom: 20px;
+  letter-spacing: 0.01em;
 }
 .hero-desc {
   font-size: 16px;
@@ -302,11 +304,12 @@ canvas { display: block; }
 .hero-stat-num {
   display: block;
   font-family: var(--font-display);
-  font-size: 40px;
-  font-weight: 600;
+  font-size: 36px;
+  font-weight: 700;
   color: var(--teal-dark);
   line-height: 1;
   margin-bottom: 6px;
+  letter-spacing: -0.02em;
 }
 .hero-stat-label {
   font-size: 12px;
@@ -422,11 +425,11 @@ canvas { display: block; }
 }
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(34px, 5vw, 52px);
-  font-weight: 600;
+  font-size: clamp(30px, 4.5vw, 46px);
+  font-weight: 700;
   color: var(--text-1);
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   margin-bottom: 16px;
 }
 .section-desc {
@@ -475,11 +478,12 @@ canvas { display: block; }
 }
 .stat-card-value {
   font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
   color: var(--text-1);
   line-height: 1;
   margin-bottom: 6px;
+  letter-spacing: -0.02em;
 }
 .stat-card-label {
   font-size: 13px;
@@ -940,10 +944,11 @@ canvas { display: block; }
 .fund-card-badge--green { background: var(--green-bg); color: var(--green); }
 .fund-card-name {
   font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 700;
   color: var(--text-1);
   margin-bottom: 4px;
+  letter-spacing: -0.02em;
 }
 .fund-card-platform {
   font-size: 13px;
@@ -1141,10 +1146,19 @@ canvas { display: block; }
 }
 .drawer-title {
   font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--text-1);
   margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+.live-card-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
 }
 .drawer-subtitle {
   font-size: 13px;
@@ -1338,4 +1352,403 @@ canvas { display: block; }
   .overview-cards { grid-template-columns: 1fr; }
   .hero-cta { flex-direction: column; }
   .hero-cta .btn { text-align: center; justify-content: center; }
+}
+
+/* ════════════════════════════════════════════════
+   PHASE 2 — LIVE DASHBOARDS + PNL CALENDARS
+════════════════════════════════════════════════ */
+
+/* ── Live section tag ───────────────────────── */
+.live-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--teal-light);
+  color: var(--teal-dark);
+}
+.live-dot {
+  width: 7px; height: 7px;
+  background: var(--teal);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+/* ── Live Grid ──────────────────────────────── */
+.live-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+/* ── Live Card ──────────────────────────────── */
+.live-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.live-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--teal-dark));
+}
+
+.live-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 22px;
+  gap: 12px;
+}
+.live-card-platform {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--teal-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.live-card-id {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+/* ── Live Metrics Grid ──────────────────────── */
+.live-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  margin-bottom: 22px;
+  background: var(--border-soft);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.live-metric {
+  background: var(--white);
+  padding: 14px 12px;
+  text-align: center;
+}
+.live-metric-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 5px;
+}
+.live-metric-val {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-1);
+  line-height: 1;
+}
+.live-metric-val.pos  { color: var(--green); }
+.live-metric-val.neg  { color: var(--red); }
+.live-metric-val.neu  { color: var(--teal-dark); }
+.live-metric-val.small { font-size: 16px; }
+
+/* ── Progress Bars ──────────────────────────── */
+.live-progress-wrap {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: var(--bg);
+  border-radius: var(--radius-md);
+}
+.live-progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.live-progress-label {
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.live-progress-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+}
+.live-bar-track {
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.live-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1.2s cubic-bezier(0.22,1,0.36,1);
+}
+.live-bar-fill--profit { background: var(--green); }
+.live-bar-fill--danger {
+  background: linear-gradient(90deg, var(--amber) 0%, var(--red) 80%);
+}
+
+/* ── Equity Chart ───────────────────────────── */
+.live-equity-wrap {
+  padding-top: 4px;
+}
+.live-chart-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+/* ── Calendar ───────────────────────────────── */
+.cal-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.cal-tab {
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  background: var(--white);
+  border: 1px solid var(--border);
+  transition: all 0.15s;
+}
+.cal-tab:hover {
+  border-color: var(--teal);
+  color: var(--teal-dark);
+}
+.cal-tab.active {
+  background: var(--teal);
+  color: white;
+  border-color: var(--teal);
+}
+
+.cal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.cal-month-block {}
+.cal-month-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cal-month-total {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+.cal-month-total.pos { background: var(--green-bg);  color: var(--green); }
+.cal-month-total.neg { background: var(--red-bg);    color: var(--red);   }
+
+.cal-grid-wrap {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.cal-dow-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+}
+.cal-dow {
+  padding: 10px 0;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.cal-dow:first-child,
+.cal-dow:last-child {
+  color: var(--text-4);
+}
+
+.cal-weeks {
+  display: flex;
+  flex-direction: column;
+}
+.cal-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid var(--border-soft);
+}
+.cal-week:last-child { border-bottom: none; }
+
+.cal-day {
+  min-height: 72px;
+  padding: 10px 12px;
+  border-right: 1px solid var(--border-soft);
+  position: relative;
+  transition: background 0.15s;
+}
+.cal-day:last-child { border-right: none; }
+.cal-day--empty {
+  background: var(--bg);
+  opacity: 0.4;
+}
+.cal-day--weekend {
+  background: var(--bg);
+}
+.cal-day--profit {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  cursor: pointer;
+}
+.cal-day--loss {
+  background: linear-gradient(135deg, #fff5f5 0%, #fee2e2 100%);
+  cursor: pointer;
+}
+.cal-day--profit:hover { background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); }
+.cal-day--loss:hover   { background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); }
+
+.cal-day-num {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+.cal-day--profit .cal-day-num { color: var(--green); }
+.cal-day--loss   .cal-day-num { color: var(--red); }
+
+.cal-day-pnl {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.cal-day--profit .cal-day-pnl { color: var(--green); }
+.cal-day--loss   .cal-day-pnl { color: var(--red); }
+
+.cal-day-trades {
+  font-size: 10px;
+  color: var(--text-3);
+  margin-top: 4px;
+}
+.cal-day-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+/* Calendar Summary Row */
+.cal-summary {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+.cal-summary-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+}
+.cal-summary-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.cal-summary-val {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+.cal-summary-val.pos { color: var(--green); }
+.cal-summary-val.neg { color: var(--red); }
+
+/* Day tooltip popup */
+.cal-tooltip {
+  position: fixed;
+  z-index: 300;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 16px;
+  min-width: 260px;
+  max-width: 320px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s, transform 0.15s;
+}
+.cal-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cal-tooltip-date {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+.cal-tooltip-total {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.cal-tooltip-total.pos { color: var(--green); }
+.cal-tooltip-total.neg { color: var(--red); }
+.cal-tooltip-trade {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 4px 10px;
+  font-size: 12px;
+  color: var(--text-2);
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border-soft);
+  align-items: center;
+}
+.cal-tooltip-trade:last-child { border-bottom: none; }
+.cal-tooltip-instr { font-weight: 600; color: var(--text-1); }
+.cal-tooltip-dir   { font-size: 11px; color: var(--text-3); }
+.cal-tooltip-pnl   { font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-align: right; }
+.cal-tooltip-pnl.pos { color: var(--green); }
+.cal-tooltip-pnl.neg { color: var(--red); }
+
+/* Responsive tweaks for Phase 2 */
+@media (max-width: 1024px) {
+  .live-grid { grid-template-columns: 1fr; }
+  .live-metrics { grid-template-columns: repeat(4, 1fr); }
+  .cal-summary { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 640px) {
+  .live-metrics { grid-template-columns: repeat(2, 1fr); }
+  .cal-day { min-height: 54px; padding: 6px 8px; }
+  .cal-day-pnl { font-size: 11px; }
+  .cal-summary { grid-template-columns: repeat(2, 1fr); }
 }
