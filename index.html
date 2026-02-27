@@ -7,7 +7,7 @@
   <meta name="description" content="FIBAM Trading Portfolio — Spot FX, Futures, US Equities & Nigerian Stocks. Purpose not money, is your real asset.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -20,13 +20,15 @@
       <a href="#hero" class="nav-logo">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
-          <text x="18" y="24" text-anchor="middle" font-family="Cormorant Garamond" font-weight="600" font-size="20" fill="white">F</text>
+          <text x="18" y="24" text-anchor="middle" font-family="Outfit" font-weight="700" font-size="20" fill="white">F</text>
         </svg>
         <span class="nav-name">FIBAM</span>
       </a>
       <div class="nav-links">
         <a href="#overview" class="nav-link">Overview</a>
         <a href="#accounts" class="nav-link">Accounts</a>
+        <a href="#live" class="nav-link">Live</a>
+        <a href="#calendars" class="nav-link">Calendars</a>
         <a href="#trading" class="nav-link">Trading</a>
         <a href="#funds" class="nav-link">Funds</a>
         <a href="#performance" class="nav-link">Performance</a>
@@ -38,6 +40,8 @@
     <div class="nav-mobile" id="mobileMenu">
       <a href="#overview" class="nav-mobile-link">Overview</a>
       <a href="#accounts" class="nav-mobile-link">Accounts</a>
+      <a href="#live" class="nav-mobile-link">Live</a>
+      <a href="#calendars" class="nav-mobile-link">Calendars</a>
       <a href="#trading" class="nav-mobile-link">Trading</a>
       <a href="#funds" class="nav-mobile-link">Funds</a>
       <a href="#performance" class="nav-mobile-link">Performance</a>
@@ -250,6 +254,124 @@
 
       <div class="accounts-grid" id="accountsGrid">
         <!-- Populated by JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ACTIVE ACCOUNT DASHBOARDS
+  ══════════════════════════════════════════ -->
+  <section class="section section--alt" id="live">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag live-tag">
+          <span class="live-dot"></span> Live Now
+        </div>
+        <h2 class="section-title">Active Evaluations</h2>
+        <p class="section-desc">Real-time dashboards for both running prop firm evaluations, built from actual trade data.</p>
+      </div>
+
+      <div class="live-grid">
+
+        <!-- FDNT Dashboard -->
+        <div class="live-card" id="liveFDNT">
+          <div class="live-card-head">
+            <div>
+              <div class="live-card-platform">FundedNext · Phase 1 · $6,000</div>
+              <h3 class="live-card-name">FDNT Evaluation</h3>
+              <div class="live-card-id">FDNT$6KX1-STP-PFF · Started Feb 5, 2026</div>
+            </div>
+            <div class="live-card-status">
+              <span class="badge badge--active">● Active</span>
+            </div>
+          </div>
+
+          <div class="live-metrics" id="fdntMetrics"></div>
+
+          <div class="live-progress-wrap">
+            <div class="live-progress-row">
+              <span class="live-progress-label">Profit target ($600 · 10%)</span>
+              <span class="live-progress-val" id="fdntTargetPct">—</span>
+            </div>
+            <div class="live-bar-track">
+              <div class="live-bar-fill live-bar-fill--profit" id="fdntTargetBar" style="width:0%"></div>
+            </div>
+            <div class="live-progress-row" style="margin-top:10px">
+              <span class="live-progress-label">Max drawdown used ($600 · 10%)</span>
+              <span class="live-progress-val" id="fdntDDPct">—</span>
+            </div>
+            <div class="live-bar-track">
+              <div class="live-bar-fill live-bar-fill--danger" id="fdntDDBar" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="live-equity-wrap">
+            <div class="live-chart-label">Equity Curve — Cumulative P&L</div>
+            <canvas id="fdntEquity" height="90"></canvas>
+          </div>
+        </div>
+
+        <!-- T5RS Dashboard -->
+        <div class="live-card" id="liveT5RS">
+          <div class="live-card-head">
+            <div>
+              <div class="live-card-platform">The5ers · Phase 1 · $5,000</div>
+              <h3 class="live-card-name">T5RS Evaluation</h3>
+              <div class="live-card-id">T5RS$5KX1-STP-PFF · Started Feb 22, 2026</div>
+            </div>
+            <div class="live-card-status">
+              <span class="badge badge--active">● Active</span>
+            </div>
+          </div>
+
+          <div class="live-metrics" id="t5rsMetrics"></div>
+
+          <div class="live-progress-wrap">
+            <div class="live-progress-row">
+              <span class="live-progress-label">Profit target ($250 · 5%)</span>
+              <span class="live-progress-val" id="t5rsTargetPct">—</span>
+            </div>
+            <div class="live-bar-track">
+              <div class="live-bar-fill live-bar-fill--profit" id="t5rsTargetBar" style="width:0%"></div>
+            </div>
+            <div class="live-progress-row" style="margin-top:10px">
+              <span class="live-progress-label">Max drawdown used ($200 · 4%)</span>
+              <span class="live-progress-val" id="t5rsDDPct">—</span>
+            </div>
+            <div class="live-bar-track">
+              <div class="live-bar-fill live-bar-fill--danger" id="t5rsDDBar" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="live-equity-wrap">
+            <div class="live-chart-label">Equity Curve — Cumulative P&L</div>
+            <canvas id="t5rsEquity" height="90"></canvas>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       PNL CALENDARS
+  ══════════════════════════════════════════ -->
+  <section class="section" id="calendars">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">PNL Calendars</div>
+        <h2 class="section-title">Day by Day</h2>
+        <p class="section-desc">Every trading day mapped. Green days, red days — the honest picture of execution quality over time.</p>
+      </div>
+
+      <div class="cal-tabs" id="calTabs">
+        <button class="cal-tab active" data-account="FDNT-6KX1">FundedNext (FDNT)</button>
+        <button class="cal-tab" data-account="T5RS-5KX1">The5ers (T5RS)</button>
+      </div>
+
+      <div class="cal-container" id="calContainer">
+        <!-- populated by JS -->
       </div>
 
     </div>
@@ -480,7 +602,7 @@
         <div class="footer-brand">
           <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
             <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
-            <text x="18" y="24" text-anchor="middle" font-family="Cormorant Garamond" font-weight="600" font-size="20" fill="white">F</text>
+            <text x="18" y="24" text-anchor="middle" font-family="Outfit" font-weight="700" font-size="20" fill="white">F</text>
           </svg>
           <div>
             <div class="footer-name">FIBAM</div>
