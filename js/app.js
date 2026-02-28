@@ -666,16 +666,16 @@ function openDrawer(id) {
   document.getElementById('drawerSubtitle').textContent=`${acc.shortName} · ${acc.platform} · ${acc.marketLabel}`;
 
   const src = DATA_SOURCE[id] || { label:'Unknown', cls:'source-est', tip:'' };
-  let html=`
+  let html = `
     <div class="drawer-source-badge ${src.cls}" title="${src.tip}">
       <span class="drawer-source-icon">◈</span> ${src.label}
       <span class="drawer-source-tip">${src.tip}</span>
-    </div>`;
+    </div>
     <div class="drawer-stats">
-      <div class="drawer-stat"><div class="drawer-stat-label">Status</div><div class="drawer-stat-val">${acc.status==='active'?'● Active':'✓ Ended'}</div></div>
-      <div class="drawer-stat"><div class="drawer-stat-label">Account Size</div><div class="drawer-stat-val">${acc.currency==='NGN'?'NGN':fmt(acc.size)}</div></div>
-      <div class="drawer-stat"><div class="drawer-stat-label">Net P&L</div><div class="drawer-stat-val ${acc.pnl==null?'':acc.pnl>=0?'pos':'neg'}">${acc.pnl!=null?fmtFull(acc.pnl):'Active'}</div></div>
-      <div class="drawer-stat"><div class="drawer-stat-label">Return</div><div class="drawer-stat-val ${acc.performance==null?'':acc.performance>=0?'pos':'neg'}">${acc.performance!=null?fmtPct(acc.performance):'—'}</div></div>
+      <div class="drawer-stat"><div class="drawer-stat-label">Status</div><div class="drawer-stat-val">${acc.status === 'active' ? '● Active' : '✓ Ended'}</div></div>
+      <div class="drawer-stat"><div class="drawer-stat-label">Account Size</div><div class="drawer-stat-val">${acc.currency === 'NGN' ? 'NGN' : fmt(acc.size)}</div></div>
+      <div class="drawer-stat"><div class="drawer-stat-label">Net P&L</div><div class="drawer-stat-val ${acc.pnl == null ? '' : acc.pnl >= 0 ? 'pos' : 'neg'}">${acc.pnl != null ? fmtFull(acc.pnl) : 'Active'}</div></div>
+      <div class="drawer-stat"><div class="drawer-stat-label">Return</div><div class="drawer-stat-val ${acc.performance == null ? '' : acc.performance >= 0 ? 'pos' : 'neg'}">${acc.performance != null ? fmtPct(acc.performance) : '—'}</div></div>
       <div class="drawer-stat"><div class="drawer-stat-label">Period</div><div class="drawer-stat-val" style="font-size:12px">${fmtDate(acc.startDate)}</div></div>
       <div class="drawer-stat"><div class="drawer-stat-label">Duration</div><div class="drawer-stat-val" style="font-size:12px">${days} days · ${fmtDate(acc.endDate)}</div></div>
     </div>`;
