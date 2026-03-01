@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIBAM · Performance</title>
+  <meta name="description" content="Portfolio performance analysis — equity curve, monthly P&L, cost breakdown, and day-by-day trade calendars.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
+          <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
+        </svg>
+        <span class="nav-name">FIBAM</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Overview</a>
+        <a href="index.html#accounts" class="nav-link">Accounts</a>
+        <a href="funds.html" class="nav-link">Funds</a>
+        <a href="performance.html" class="nav-link nav-link--active">Performance</a>
+        <a href="analytics.html" class="nav-link">Analytics</a>
+      </div>
+      <button class="nav-menu-btn" id="menuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu">
+      <a href="index.html" class="nav-mobile-link">Overview</a>
+      <a href="index.html#accounts" class="nav-mobile-link">Accounts</a>
+      <a href="funds.html" class="nav-mobile-link">Funds</a>
+      <a href="performance.html" class="nav-mobile-link">Performance</a>
+      <a href="analytics.html" class="nav-mobile-link">Analytics</a>
+    </div>
+  </nav>
+
+  <!-- PAGE BANNER -->
+  <div style="margin-top:var(--nav-h);background:linear-gradient(135deg,#fafffe 0%,#f0fdf4 100%);border-bottom:1px solid var(--border);padding:48px 0 40px">
+    <div class="container">
+      <div class="section-tag" style="margin-bottom:12px">Performance Analysis</div>
+      <h1 style="font-size:clamp(28px,5vw,48px);font-weight:700;color:var(--text-1);margin-bottom:12px;letter-spacing:-0.03em">The Numbers</h1>
+      <p style="font-size:16px;color:var(--text-2);max-width:620px;line-height:1.6">Aggregated performance across all closed accounts. Monthly P&amp;L, cost analysis, equity curve, and day-by-day trade calendars.</p>
+    </div>
+  </div>
+
+  <!-- PERFORMANCE CHARTS SECTION -->
+  <section class="section" id="performance" style="padding-top:48px">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Charts</div>
+        <h2 class="section-title" style="font-size:clamp(22px,3.5vw,34px)">Performance Breakdown</h2>
+        <p class="section-desc">Closed accounts · USD · All prop firm and personal account data combined.</p>
+      </div>
+
+      <div class="perf-grid">
+
+        <div class="perf-card perf-card--wide">
+          <div class="perf-card-header">
+            <h3 class="perf-card-title">Monthly P&L — All Accounts</h3>
+            <span class="perf-card-note">Closed accounts · USD</span>
+          </div>
+          <canvas id="monthlyPnlChart" height="120"></canvas>
+        </div>
+
+        <div class="perf-card">
+          <div class="perf-card-header">
+            <h3 class="perf-card-title">Cost Breakdown</h3>
+            <span class="perf-card-note">All prop accounts</span>
+          </div>
+          <canvas id="costChart" width="220" height="220"></canvas>
+          <div class="cost-breakdown" id="costBreakdown"></div>
+        </div>
+
+        <div class="perf-card">
+          <div class="perf-card-header">
+            <h3 class="perf-card-title">By Market</h3>
+            <span class="perf-card-note">P&L split</span>
+          </div>
+          <div class="market-perf-list" id="marketPerfList"></div>
+        </div>
+
+        <div class="perf-card">
+          <div class="perf-card-header">
+            <h3 class="perf-card-title">Account Duration</h3>
+            <span class="perf-card-note">Days active per account</span>
+          </div>
+          <canvas id="durationChart" height="180"></canvas>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVE ACCOUNT DASHBOARDS -->
+  <section class="section section--alt" id="live">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Live Evaluations</div>
+        <h2 class="section-title">Active Accounts</h2>
+        <p class="section-desc">Real-time snapshots for currently active prop firm evaluations.</p>
+      </div>
+
+      <div class="live-grid">
+        <!-- FDNT Dashboard -->
+        <div class="live-card">
+          <div class="live-card-header">
+            <div>
+              <div class="live-card-firm">FundedNext</div>
+              <div class="live-card-id">FDNT X1 · $6k Evaluation</div>
+            </div>
+            <div class="live-card-status live-card-status--active">Phase 1</div>
+          </div>
+          <div class="live-stats-row">
+            <div class="live-stat">
+              <div class="live-stat-label">Net P&L</div>
+              <div class="live-stat-val neg" id="fdntPnl">—</div>
+            </div>
+            <div class="live-stat">
+              <div class="live-stat-label">Win Rate</div>
+              <div class="live-stat-val" id="fdntWr">—</div>
+            </div>
+            <div class="live-stat">
+              <div class="live-stat-label">Trades</div>
+              <div class="live-stat-val" id="fdntTrades">—</div>
+            </div>
+            <div class="live-stat">
+              <div class="live-stat-label">Days</div>
+              <div class="live-stat-val" id="fdntDays">—</div>
+            </div>
+          </div>
+          <div class="live-progress">
+            <div class="live-progress-label">
+              <span>Drawdown Used</span>
+              <span id="fdntDdPct">—</span>
+            </div>
+            <div class="live-progress-bar">
+              <div class="live-progress-fill live-progress-fill--danger" id="fdntDdBar" style="width:0%"></div>
+            </div>
+          </div>
+          <canvas id="fdntChart" height="80" style="margin-top:16px"></canvas>
+        </div>
+
+        <!-- T5RS Dashboard -->
+        <div class="live-card">
+          <div class="live-card-header">
+            <div>
+              <div class="live-card-firm">The5ers</div>
+              <div class="live-card-id">T5RS X1 · $5k Evaluation</div>
+            </div>
+            <div class="live-card-status live-card-status--active">Phase 1</div>
+          </div>
+          <div class="live-stats-row">
+            <div class="live-stat">
+              <div class="live-stat-label">Net P&L</div>
+              <div class="live-stat-val pos" id="t5rsPnl">—</div>
+            </div>
+            <div class="live-stat">
+              <div class="live-stat-label">Win Rate</div>
+              <div class="live-stat-val" id="t5rsWr">—</div>
+            </div>
+            <div class="live-stat">
+              <div class="live-stat-label">Trades</div>
+              <div class="live-stat-val" id="t5rsTrades">—</div>
+            </div>
+            <div class="live-stat">
+              <div class="live-stat-label">Days</div>
+              <div class="live-stat-val" id="t5rsDays">—</div>
+            </div>
+          </div>
+          <div class="live-progress">
+            <div class="live-progress-label">
+              <span>Target Progress</span>
+              <span id="t5rsTgtPct">—</span>
+            </div>
+            <div class="live-progress-bar">
+              <div class="live-progress-fill live-progress-fill--success" id="t5rsTgtBar" style="width:0%"></div>
+            </div>
+          </div>
+          <canvas id="t5rsChart" height="80" style="margin-top:16px"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDARS SECTION -->
+  <section class="section" id="calendars">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">PNL Calendars</div>
+        <h2 class="section-title">Day by Day</h2>
+        <p class="section-desc">Every trading day mapped. Green days, red days — the honest picture of execution quality over time.</p>
+      </div>
+
+      <div class="cal-tabs" id="calTabs">
+        <button class="cal-tab active" data-account="FDNT-6KX1">FundedNext (FDNT)</button>
+        <button class="cal-tab" data-account="T5RS-5KX1">The5ers (T5RS)</button>
+      </div>
+
+      <div class="cal-container" id="calContainer">
+        <!-- populated by JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
+            <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
+          </svg>
+          <div>
+            <div class="footer-name">FIBAM</div>
+            <div class="footer-tagline"><em>...purpose not money, is your real asset</em></div>
+          </div>
+        </div>
+        <div class="footer-meta">
+          <p>Trading Portfolio · 2020 – Present</p>
+          <p>Spot FX · US Futures · US Equities · Nigerian Stocks</p>
+        </div>
+        <div class="footer-update">
+          <span class="update-dot"></span>
+          <span id="lastUpdated">Data current as of Feb 2026</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
