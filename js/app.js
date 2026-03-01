@@ -9,80 +9,100 @@
    REAL TRADE DATA — extracted directly from spreadsheets
 ──────────────────────────────────────────── */
 const FDNT_TRADES = [
-  {"closeDate":"2026-02-17","openDate":"2026-02-17","instrument":"USDJPY","direction":"Short","lots":0.02,"entry":153.81,"exit":153.289,"pips":521,"grossPnl":6.8,"commission":0.1,"swap":0,"netPnl":6.7},
-  {"closeDate":"2026-02-17","openDate":"2026-02-17","instrument":"GBPUSD","direction":"Long","lots":0.02,"entry":1.35051,"exit":1.35592,"pips":541,"grossPnl":10.82,"commission":0.1,"swap":0,"netPnl":10.72},
-  {"closeDate":"2026-02-17","openDate":"2026-02-17","instrument":"EURUSD","direction":"Long","lots":0.02,"entry":1.18118,"exit":1.18478,"pips":361,"grossPnl":7.22,"commission":0.1,"swap":0,"netPnl":7.12},
-  {"closeDate":"2026-02-17","openDate":"2026-02-17","instrument":"GBPUSD","direction":"Short","lots":0.05,"entry":1.3511,"exit":1.34986,"pips":123,"grossPnl":6.15,"commission":0.25,"swap":0,"netPnl":5.9},
-  {"closeDate":"2026-02-17","openDate":"2026-02-17","instrument":"GBPUSD","direction":"Long","lots":0.03,"entry":1.35202,"exit":1.34965,"pips":-237,"grossPnl":-7.11,"commission":0.15,"swap":0,"netPnl":-7.26},
-  {"closeDate":"2026-02-17","openDate":"2026-02-17","instrument":"GBPUSD","direction":"Long","lots":0.03,"entry":1.35283,"exit":1.35043,"pips":-240,"grossPnl":-7.2,"commission":0.15,"swap":0,"netPnl":-7.35},
-  {"closeDate":"2026-02-17","openDate":"2026-02-09","instrument":"GBPUSD","direction":"Long","lots":0.02,"entry":1.36843,"exit":1.35265,"pips":-1578,"grossPnl":-31.56,"commission":0.1,"swap":3.0,"netPnl":-34.66},
-  {"closeDate":"2026-02-17","openDate":"2026-02-06","instrument":"GBPUSD","direction":"Long","lots":0.01,"entry":1.35122,"exit":1.35592,"pips":470,"grossPnl":4.7,"commission":0.05,"swap":2.0,"netPnl":2.65},
-  {"closeDate":"2026-02-17","openDate":"2026-02-05","instrument":"GBPUSD","direction":"Long","lots":0.01,"entry":1.35371,"exit":1.35023,"pips":-348,"grossPnl":-3.48,"commission":0.05,"swap":2.0,"netPnl":-5.53},
-  {"closeDate":"2026-02-17","openDate":"2026-02-05","instrument":"GBPUSD","direction":"Long","lots":0.01,"entry":1.3545,"exit":1.35004,"pips":-446,"grossPnl":-4.46,"commission":0.05,"swap":2.0,"netPnl":-6.51},
-  {"closeDate":"2026-02-17","openDate":"2026-02-05","instrument":"GBPUSD","direction":"Long","lots":0.02,"entry":1.35568,"exit":1.34975,"pips":-593,"grossPnl":-11.86,"commission":0.1,"swap":3.0,"netPnl":-14.96},
-  {"closeDate":"2026-02-18","openDate":"2026-02-18","instrument":"GBPUSD","direction":"Short","lots":0.04,"entry":1.35789,"exit":1.35683,"pips":106,"grossPnl":4.24,"commission":0.2,"swap":0,"netPnl":4.04},
-  {"closeDate":"2026-02-18","openDate":"2026-02-18","instrument":"USDJPY","direction":"Short","lots":0.06,"entry":153.823,"exit":154.49,"pips":-667,"grossPnl":-25.9,"commission":0.3,"swap":0,"netPnl":-26.2},
-  {"closeDate":"2026-02-18","openDate":"2026-02-18","instrument":"USDJPY","direction":"Short","lots":0.06,"entry":153.557,"exit":154.761,"pips":-1204,"grossPnl":-46.68,"commission":0.3,"swap":0,"netPnl":-46.98},
-  {"closeDate":"2026-02-18","openDate":"2026-02-18","instrument":"USDJPY","direction":"Short","lots":0.02,"entry":153.663,"exit":154.764,"pips":-1101,"grossPnl":-14.23,"commission":0.1,"swap":0,"netPnl":-14.33},
-  {"closeDate":"2026-02-19","openDate":"2026-02-19","instrument":"USDJPY","direction":"Short","lots":0.02,"entry":154.949,"exit":155.339,"pips":-390,"grossPnl":-5.02,"commission":0.1,"swap":0,"netPnl":-5.12},
-  {"closeDate":"2026-02-19","openDate":"2026-02-18","instrument":"USDJPY","direction":"Short","lots":0.02,"entry":154.452,"exit":155.062,"pips":-610,"grossPnl":-7.87,"commission":0.1,"swap":2.0,"netPnl":-9.97},
-  {"closeDate":"2026-02-19","openDate":"2026-02-18","instrument":"USDJPY","direction":"Short","lots":0.02,"entry":154.189,"exit":155.062,"pips":-873,"grossPnl":-11.26,"commission":0.1,"swap":2.0,"netPnl":-13.36},
-  {"closeDate":"2026-02-19","openDate":"2026-02-18","instrument":"USDJPY","direction":"Short","lots":0.04,"entry":154.057,"exit":155.062,"pips":-1005,"grossPnl":-25.93,"commission":0.2,"swap":3.0,"netPnl":-29.13},
-  {"closeDate":"2026-02-19","openDate":"2026-02-19","instrument":"USDJPY","direction":"Long","lots":0.04,"entry":155.157,"exit":154.813,"pips":-344,"grossPnl":-8.89,"commission":0.2,"swap":0,"netPnl":-9.09},
-  {"closeDate":"2026-02-19","openDate":"2026-02-19","instrument":"GBPUSD","direction":"Long","lots":0.04,"entry":1.34947,"exit":1.3475,"pips":-197,"grossPnl":-7.88,"commission":0.2,"swap":0,"netPnl":-8.08},
-  {"closeDate":"2026-02-19","openDate":"2026-02-18","instrument":"EURUSD","direction":"Long","lots":0.02,"entry":1.17867,"exit":1.17757,"pips":-110,"grossPnl":-2.2,"commission":0.1,"swap":1.0,"netPnl":-3.3},
-  {"closeDate":"2026-02-19","openDate":"2026-02-18","instrument":"GBPUSD","direction":"Long","lots":0.02,"entry":1.35381,"exit":1.3475,"pips":-631,"grossPnl":-12.62,"commission":0.1,"swap":1.0,"netPnl":-13.72},
-  {"closeDate":"2026-02-19","openDate":"2026-02-18","instrument":"GBPUSD","direction":"Long","lots":0.04,"entry":1.35442,"exit":1.3475,"pips":-692,"grossPnl":-27.68,"commission":0.2,"swap":2.0,"netPnl":-29.88},
-  {"closeDate":"2026-02-20","openDate":"2026-02-19","instrument":"GBPUSD","direction":"Long","lots":0.02,"entry":1.34544,"exit":1.34954,"pips":410,"grossPnl":8.2,"commission":0.1,"swap":0,"netPnl":8.1},
-  {"closeDate":"2026-02-20","openDate":"2026-02-19","instrument":"EURUSD","direction":"Long","lots":0.02,"entry":1.17635,"exit":1.18069,"pips":433,"grossPnl":8.66,"commission":0.1,"swap":0,"netPnl":8.56},
-  {"closeDate":"2026-02-23","openDate":"2026-02-23","instrument":"GBPUSD","direction":"Long","lots":0.1,"entry":1.3503,"exit":1.34864,"pips":-166,"grossPnl":-16.6,"commission":0.5,"swap":0,"netPnl":-17.1},
-  {"closeDate":"2026-02-23","openDate":"2026-02-23","instrument":"GBPUSD","direction":"Long","lots":0.05,"entry":1.35167,"exit":1.35027,"pips":-140,"grossPnl":-7.0,"commission":0.25,"swap":0,"netPnl":-7.25},
-  {"closeDate":"2026-02-23","openDate":"2026-02-23","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":154.619,"exit":154.463,"pips":-156,"grossPnl":-5.05,"commission":0.25,"swap":0,"netPnl":-5.3},
-  {"closeDate":"2026-02-24","openDate":"2026-02-23","instrument":"USDJPY","direction":"Long","lots":0.1,"entry":154.332,"exit":155.308,"pips":974,"grossPnl":62.71,"commission":0.5,"swap":1.0,"netPnl":61.21},
-  {"closeDate":"2026-02-24","openDate":"2026-02-24","instrument":"USDJPY","direction":"Long","lots":0.1,"entry":156.055,"exit":155.865,"pips":-190,"grossPnl":-12.19,"commission":0.5,"swap":0,"netPnl":-12.69},
-  {"closeDate":"2026-02-25","openDate":"2026-02-24","instrument":"USDJPY","direction":"Long","lots":0.1,"entry":155.722,"exit":156.633,"pips":911,"grossPnl":58.16,"commission":0.5,"swap":1.0,"netPnl":56.66},
-  {"closeDate":"2026-02-25","openDate":"2026-02-24","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17857,"exit":1.17888,"pips":31,"grossPnl":1.55,"commission":0.25,"swap":1.0,"netPnl":0.3},
-  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":156.777,"exit":156.69,"pips":-87,"grossPnl":-2.78,"commission":0.25,"swap":0,"netPnl":-3.03},
-  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"EURUSD","direction":"Long","lots":0.1,"entry":1.1772,"exit":1.17752,"pips":32,"grossPnl":3.2,"commission":0.5,"swap":0,"netPnl":2.7},
-  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"EURUSD","direction":"Long","lots":0.1,"entry":1.17916,"exit":1.17969,"pips":53,"grossPnl":5.3,"commission":0.5,"swap":0,"netPnl":4.8},
-  {"closeDate":"2026-02-26","openDate":"2026-02-25","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18109,"exit":1.1822,"pips":-111,"grossPnl":-5.55,"commission":0.25,"swap":0,"netPnl":-5.8},
-  {"closeDate":"2026-02-26","openDate":"2026-02-25","instrument":"EURUSD","direction":"Short","lots":0.1,"entry":1.18037,"exit":1.1822,"pips":-183,"grossPnl":-18.3,"commission":0.5,"swap":0,"netPnl":-18.8},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":155.998,"exit":156.014,"pips":15,"grossPnl":0.48,"commission":0.25,"swap":0,"netPnl":0.23},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":155.888,"exit":155.955,"pips":67,"grossPnl":2.15,"commission":0.25,"swap":0,"netPnl":1.9},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.18191,"exit":1.18146,"pips":-45,"grossPnl":-2.25,"commission":0.25,"swap":0,"netPnl":-2.5},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":155.901,"exit":155.888,"pips":13,"grossPnl":0.42,"commission":0.25,"swap":0,"netPnl":0.17},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Long","lots":0.1,"entry":1.18235,"exit":1.18145,"pips":-90,"grossPnl":-9.0,"commission":0.5,"swap":0,"netPnl":-9.5},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":156.02,"exit":155.897,"pips":-122,"grossPnl":-3.91,"commission":0.25,"swap":0,"netPnl":-4.16},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":156.041,"exit":155.974,"pips":68,"grossPnl":2.18,"commission":0.25,"swap":0,"netPnl":1.93},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17978,"exit":1.18142,"pips":164,"grossPnl":8.2,"commission":0.25,"swap":0,"netPnl":7.95},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":156.18,"exit":156.39,"pips":210,"grossPnl":6.71,"commission":0.25,"swap":0,"netPnl":6.46},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18056,"exit":1.17845,"pips":211,"grossPnl":10.55,"commission":0.25,"swap":0,"netPnl":10.3},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":155.942,"exit":156.391,"pips":448,"grossPnl":14.32,"commission":0.25,"swap":0,"netPnl":14.07},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18107,"exit":1.17844,"pips":263,"grossPnl":13.15,"commission":0.25,"swap":0,"netPnl":12.9}
+  {"closeDate":"2026-02-17","openDate":"2026-02-17","instrument":"USDJPY","direction":"Short","lots":0.02,"entry":153.81,"exit":153.289,"pips":521.0,"grossPnl":6.8,"commission":0.1,"swap":0.0,"netPnl":6.7},
+  {"closeDate":"2026-02-17","openDate":"2026-02-17","instrument":"GBPUSD","direction":"Long","lots":0.02,"entry":1.35051,"exit":1.35592,"pips":541.0,"grossPnl":10.82,"commission":0.1,"swap":0.0,"netPnl":10.72},
+  {"closeDate":"2026-02-17","openDate":"2026-02-17","instrument":"EURUSD","direction":"Long","lots":0.02,"entry":1.18118,"exit":1.18478,"pips":361.0,"grossPnl":7.22,"commission":0.1,"swap":0.0,"netPnl":7.12},
+  {"closeDate":"2026-02-17","openDate":"2026-02-17","instrument":"GBPUSD","direction":"Short","lots":0.05,"entry":1.3511,"exit":1.34986,"pips":123.0,"grossPnl":6.15,"commission":0.25,"swap":0.0,"netPnl":5.9},
+  {"closeDate":"2026-02-17","openDate":"2026-02-17","instrument":"GBPUSD","direction":"Long","lots":0.03,"entry":1.35202,"exit":1.34965,"pips":-237.0,"grossPnl":-7.11,"commission":0.15,"swap":0.0,"netPnl":-7.26},
+  {"closeDate":"2026-02-17","openDate":"2026-02-17","instrument":"GBPUSD","direction":"Long","lots":0.03,"entry":1.35283,"exit":1.35043,"pips":-240.0,"grossPnl":-7.2,"commission":0.15,"swap":0.0,"netPnl":-7.35},
+  {"closeDate":"2026-02-17","openDate":"2026-02-09","instrument":"GBPUSD","direction":"Long","lots":0.02,"entry":1.36843,"exit":1.35265,"pips":-1578.0,"grossPnl":-31.56,"commission":0.1,"swap":3.0,"netPnl":-34.66},
+  {"closeDate":"2026-02-17","openDate":"2026-02-06","instrument":"GBPUSD","direction":"Long","lots":0.01,"entry":1.35122,"exit":1.35592,"pips":470.0,"grossPnl":4.7,"commission":0.05,"swap":2.0,"netPnl":2.65},
+  {"closeDate":"2026-02-17","openDate":"2026-02-05","instrument":"GBPUSD","direction":"Long","lots":0.01,"entry":1.35371,"exit":1.35023,"pips":-348.0,"grossPnl":-3.48,"commission":0.05,"swap":2.0,"netPnl":-5.53},
+  {"closeDate":"2026-02-17","openDate":"2026-02-05","instrument":"GBPUSD","direction":"Long","lots":0.01,"entry":1.3545,"exit":1.35004,"pips":-446.0,"grossPnl":-4.46,"commission":0.05,"swap":2.0,"netPnl":-6.51},
+  {"closeDate":"2026-02-17","openDate":"2026-02-05","instrument":"GBPUSD","direction":"Long","lots":0.02,"entry":1.35568,"exit":1.34975,"pips":-593.0,"grossPnl":-11.86,"commission":0.1,"swap":3.0,"netPnl":-14.96},
+  {"closeDate":"2026-02-18","openDate":"2026-02-18","instrument":"GBPUSD","direction":"Short","lots":0.04,"entry":1.35789,"exit":1.35683,"pips":106.0,"grossPnl":4.24,"commission":0.2,"swap":0.0,"netPnl":4.04},
+  {"closeDate":"2026-02-19","openDate":"2026-02-19","instrument":"USDJPY","direction":"Short","lots":0.02,"entry":154.949,"exit":155.339,"pips":-390.0,"grossPnl":-5.02,"commission":0.1,"swap":0.0,"netPnl":-5.12},
+  {"closeDate":"2026-02-19","openDate":"2026-02-18","instrument":"USDJPY","direction":"Short","lots":0.02,"entry":154.452,"exit":155.062,"pips":-610.0,"grossPnl":-7.87,"commission":0.1,"swap":2.0,"netPnl":-9.97},
+  {"closeDate":"2026-02-19","openDate":"2026-02-18","instrument":"USDJPY","direction":"Short","lots":0.02,"entry":154.189,"exit":155.062,"pips":-873.0,"grossPnl":-11.26,"commission":0.1,"swap":2.0,"netPnl":-13.36},
+  {"closeDate":"2026-02-19","openDate":"2026-02-18","instrument":"USDJPY","direction":"Short","lots":0.04,"entry":154.057,"exit":155.062,"pips":-1005.0,"grossPnl":-25.93,"commission":0.2,"swap":3.0,"netPnl":-29.13},
+  {"closeDate":"2026-02-18","openDate":"2026-02-18","instrument":"USDJPY","direction":"Short","lots":0.06,"entry":153.823,"exit":154.49,"pips":-667.0,"grossPnl":-25.9,"commission":0.3,"swap":0.0,"netPnl":-26.2},
+  {"closeDate":"2026-02-18","openDate":"2026-02-18","instrument":"USDJPY","direction":"Short","lots":0.06,"entry":153.557,"exit":154.761,"pips":-1204.0,"grossPnl":-46.68,"commission":0.3,"swap":0.0,"netPnl":-46.98},
+  {"closeDate":"2026-02-18","openDate":"2026-02-18","instrument":"USDJPY","direction":"Short","lots":0.02,"entry":153.663,"exit":154.764,"pips":-1101.0,"grossPnl":-14.23,"commission":0.1,"swap":0.0,"netPnl":-14.33},
+  {"closeDate":"2026-02-19","openDate":"2026-02-19","instrument":"USDJPY","direction":"Long","lots":0.04,"entry":155.157,"exit":154.813,"pips":-344.0,"grossPnl":-8.89,"commission":0.2,"swap":0.0,"netPnl":-9.09},
+  {"closeDate":"2026-02-19","openDate":"2026-02-19","instrument":"GBPUSD","direction":"Long","lots":0.04,"entry":1.34947,"exit":1.3475,"pips":-197.0,"grossPnl":-7.88,"commission":0.2,"swap":0.0,"netPnl":-8.08},
+  {"closeDate":"2026-02-19","openDate":"2026-02-18","instrument":"EURUSD","direction":"Long","lots":0.02,"entry":1.17867,"exit":1.17757,"pips":-110.0,"grossPnl":-2.2,"commission":0.1,"swap":1.0,"netPnl":-3.3},
+  {"closeDate":"2026-02-19","openDate":"2026-02-18","instrument":"GBPUSD","direction":"Long","lots":0.02,"entry":1.35381,"exit":1.3475,"pips":-631.0,"grossPnl":-12.62,"commission":0.1,"swap":1.0,"netPnl":-13.72},
+  {"closeDate":"2026-02-19","openDate":"2026-02-18","instrument":"GBPUSD","direction":"Long","lots":0.04,"entry":1.35442,"exit":1.3475,"pips":-692.0,"grossPnl":-27.68,"commission":0.2,"swap":2.0,"netPnl":-29.88},
+  {"closeDate":"2026-02-20","openDate":"2026-02-19","instrument":"GBPUSD","direction":"Long","lots":0.02,"entry":1.34544,"exit":1.34954,"pips":410.0,"grossPnl":8.2,"commission":0.1,"swap":0.0,"netPnl":8.1},
+  {"closeDate":"2026-02-20","openDate":"2026-02-19","instrument":"EURUSD","direction":"Long","lots":0.02,"entry":1.17635,"exit":1.18069,"pips":433.0,"grossPnl":8.66,"commission":0.1,"swap":0.0,"netPnl":8.56},
+  {"closeDate":"2026-02-23","openDate":"2026-02-23","instrument":"GBPUSD","direction":"Long","lots":0.1,"entry":1.3503,"exit":1.34864,"pips":-166.0,"grossPnl":-16.6,"commission":0.5,"swap":0.0,"netPnl":-17.1},
+  {"closeDate":"2026-02-23","openDate":"2026-02-23","instrument":"GBPUSD","direction":"Long","lots":0.05,"entry":1.35167,"exit":1.35027,"pips":-140.0,"grossPnl":-7.0,"commission":0.25,"swap":0.0,"netPnl":-7.25},
+  {"closeDate":"2026-02-23","openDate":"2026-02-23","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":154.619,"exit":154.463,"pips":-156.0,"grossPnl":-5.05,"commission":0.25,"swap":0.0,"netPnl":-5.3},
+  {"closeDate":"2026-02-24","openDate":"2026-02-23","instrument":"USDJPY","direction":"Long","lots":0.1,"entry":154.332,"exit":155.308,"pips":974.0,"grossPnl":62.71,"commission":0.5,"swap":1.0,"netPnl":61.21},
+  {"closeDate":"2026-02-24","openDate":"2026-02-24","instrument":"USDJPY","direction":"Long","lots":0.1,"entry":156.055,"exit":155.865,"pips":-190.0,"grossPnl":-12.19,"commission":0.5,"swap":0.0,"netPnl":-12.69},
+  {"closeDate":"2026-02-25","openDate":"2026-02-24","instrument":"USDJPY","direction":"Long","lots":0.1,"entry":155.722,"exit":156.633,"pips":911.0,"grossPnl":58.16,"commission":0.5,"swap":1.0,"netPnl":56.66},
+  {"closeDate":"2026-02-25","openDate":"2026-02-24","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17857,"exit":1.17888,"pips":31.0,"grossPnl":1.55,"commission":0.25,"swap":1.0,"netPnl":0.3},
+  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":156.777,"exit":156.69,"pips":-87.0,"grossPnl":-2.78,"commission":0.25,"swap":0.0,"netPnl":-3.03},
+  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"EURUSD","direction":"Long","lots":0.1,"entry":1.1772,"exit":1.17752,"pips":32.0,"grossPnl":3.2,"commission":0.5,"swap":0.0,"netPnl":2.7},
+  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"EURUSD","direction":"Long","lots":0.1,"entry":1.17916,"exit":1.17969,"pips":53.0,"grossPnl":5.3,"commission":0.5,"swap":0.0,"netPnl":4.8},
+  {"closeDate":"2026-02-26","openDate":"2026-02-25","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18109,"exit":1.1822,"pips":-111.0,"grossPnl":-5.55,"commission":0.25,"swap":0.0,"netPnl":-5.8},
+  {"closeDate":"2026-02-26","openDate":"2026-02-25","instrument":"EURUSD","direction":"Short","lots":0.1,"entry":1.18037,"exit":1.1822,"pips":-183.0,"grossPnl":-18.3,"commission":0.5,"swap":0.0,"netPnl":-18.8},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":155.998,"exit":156.014,"pips":15.0,"grossPnl":0.48,"commission":0.25,"swap":0.0,"netPnl":0.23},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":155.888,"exit":155.955,"pips":67.0,"grossPnl":2.15,"commission":0.25,"swap":0.0,"netPnl":1.9},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.18191,"exit":1.18146,"pips":-45.0,"grossPnl":-2.25,"commission":0.25,"swap":0.0,"netPnl":-2.5},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":155.901,"exit":155.888,"pips":13.0,"grossPnl":0.42,"commission":0.25,"swap":0.0,"netPnl":0.17},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Long","lots":0.1,"entry":1.18235,"exit":1.18145,"pips":-90.0,"grossPnl":-9.0,"commission":0.5,"swap":0.0,"netPnl":-9.5},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":156.02,"exit":155.897,"pips":-122.0,"grossPnl":-3.91,"commission":0.25,"swap":0.0,"netPnl":-4.16},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":156.041,"exit":155.974,"pips":68.0,"grossPnl":2.18,"commission":0.25,"swap":0.0,"netPnl":1.93},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17978,"exit":1.18142,"pips":164.0,"grossPnl":8.2,"commission":0.25,"swap":0.0,"netPnl":7.95},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":156.18,"exit":156.39,"pips":210.0,"grossPnl":6.71,"commission":0.25,"swap":0.0,"netPnl":6.46},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18056,"exit":1.17845,"pips":211.0,"grossPnl":10.55,"commission":0.25,"swap":0.0,"netPnl":10.3},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":155.942,"exit":156.391,"pips":448.0,"grossPnl":14.32,"commission":0.25,"swap":0.0,"netPnl":14.07},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18107,"exit":1.17844,"pips":263.0,"grossPnl":13.15,"commission":0.25,"swap":0.0,"netPnl":12.9},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17923,"exit":1.18112,"pips":"=+193","grossPnl":9.65,"commission":0.25,"swap":0.0,"netPnl":9.4},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.18014,"exit":1.18112,"pips":"=+102","grossPnl":5.1,"commission":0.25,"swap":0.0,"netPnl":4.85},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":156.198,"exit":156.034,"pips":"=+164","grossPnl":5.26,"commission":0.25,"swap":0.0,"netPnl":5.01},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":156.057,"exit":156.034,"pips":"=+23","grossPnl":0.74,"commission":0.25,"swap":0.0,"netPnl":0.49},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"USDJPY","direction":"Short","lots":0.1,"entry":155.853,"exit":155.975,"pips":-122.0,"grossPnl":-7.82,"commission":0.5,"swap":0.0,"netPnl":-8.32},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Long","lots":0.1,"entry":1.18083,"exit":1.18112,"pips":"=+33","grossPnl":3.3,"commission":0.5,"swap":0.0,"netPnl":2.8},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18234,"exit":1.18158,"pips":"=+76","grossPnl":3.8,"commission":0.25,"swap":0.0,"netPnl":3.55},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Short","lots":0.1,"entry":1.18192,"exit":1.18158,"pips":"=+31","grossPnl":3.4,"commission":0.5,"swap":0.0,"netPnl":2.9},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Short","lots":0.1,"entry":1.18147,"exit":1.18158,"pips":-14.0,"grossPnl":-1.1,"commission":0.5,"swap":0.0,"netPnl":-1.6}
 ];
 
 const T5RS_TRADES = [
-  {"closeDate":"2026-02-24","openDate":"2026-02-24","instrument":"USDJPY","direction":"Long","lots":0.1,"entry":156.083,"exit":155.867,"pips":-216,"grossPnl":-13.86,"commission":0.4,"swap":0,"netPnl":-14.26},
-  {"closeDate":"2026-02-25","openDate":"2026-02-24","instrument":"USDJPY","direction":"Long","lots":0.1,"entry":155.71,"exit":156.613,"pips":903,"grossPnl":57.66,"commission":0.4,"swap":0.21,"netPnl":57.05},
-  {"closeDate":"2026-02-25","openDate":"2026-02-24","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17859,"exit":1.1789,"pips":31,"grossPnl":1.55,"commission":0.2,"swap":0.64,"netPnl":0.71},
-  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17727,"exit":1.17751,"pips":24,"grossPnl":1.2,"commission":0.2,"swap":0,"netPnl":1.0},
-  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":156.758,"exit":156.684,"pips":-74,"grossPnl":-2.36,"commission":0.2,"swap":0,"netPnl":-2.56},
-  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17887,"exit":1.17985,"pips":98,"grossPnl":4.9,"commission":0.2,"swap":0,"netPnl":4.7},
-  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17869,"exit":1.17985,"pips":116,"grossPnl":5.8,"commission":0.2,"swap":0,"netPnl":5.6},
-  {"closeDate":"2026-02-26","openDate":"2026-02-25","instrument":"EURUSD","direction":"Short","lots":0.1,"entry":1.18047,"exit":1.1822,"pips":-173,"grossPnl":-17.3,"commission":0.4,"swap":1.02,"netPnl":-18.72},
-  {"closeDate":"2026-02-26","openDate":"2026-02-25","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18106,"exit":1.1822,"pips":-114,"grossPnl":-5.7,"commission":0.2,"swap":0.51,"netPnl":-6.41},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":156.03,"exit":155.91,"pips":-120,"grossPnl":-3.85,"commission":0.2,"swap":0,"netPnl":-4.05},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Long","lots":0.1,"entry":1.18229,"exit":1.18146,"pips":-83,"grossPnl":-8.3,"commission":0.4,"swap":0,"netPnl":-8.7},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":155.895,"exit":155.878,"pips":17,"grossPnl":0.55,"commission":0.2,"swap":0,"netPnl":0.35},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.18193,"exit":1.18147,"pips":-46,"grossPnl":-2.3,"commission":0.2,"swap":0,"netPnl":-2.5},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":155.879,"exit":155.687,"pips":-192,"grossPnl":-6.17,"commission":0.2,"swap":0,"netPnl":-6.37},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":155.998,"exit":156.007,"pips":9,"grossPnl":0.29,"commission":0.2,"swap":0,"netPnl":0.09},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17983,"exit":1.18141,"pips":158,"grossPnl":7.9,"commission":0.2,"swap":0,"netPnl":7.7},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":156.036,"exit":155.982,"pips":54,"grossPnl":1.73,"commission":0.2,"swap":0,"netPnl":1.53},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18054,"exit":1.17846,"pips":208,"grossPnl":10.4,"commission":0.2,"swap":0,"netPnl":10.2},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":156.178,"exit":156.392,"pips":214,"grossPnl":6.84,"commission":0.2,"swap":0,"netPnl":6.64},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":155.934,"exit":156.392,"pips":458,"grossPnl":14.64,"commission":0.2,"swap":0,"netPnl":14.44},
-  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18118,"exit":1.1785,"pips":268,"grossPnl":13.4,"commission":0.2,"swap":0,"netPnl":13.2}
+  {"closeDate":"2026-02-24","openDate":"2026-02-24","instrument":"USDJPY","direction":"Long","lots":0.1,"entry":156.083,"exit":155.867,"pips":-216.0,"grossPnl":-13.86,"commission":0.4,"swap":0.0,"netPnl":-14.26},
+  {"closeDate":"2026-02-25","openDate":"2026-02-24","instrument":"USDJPY","direction":"Long","lots":0.1,"entry":155.71,"exit":156.613,"pips":903.0,"grossPnl":57.66,"commission":0.4,"swap":0.21,"netPnl":57.05},
+  {"closeDate":"2026-02-25","openDate":"2026-02-24","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17859,"exit":1.1789,"pips":31.0,"grossPnl":1.55,"commission":0.2,"swap":0.64,"netPnl":0.71},
+  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17727,"exit":1.17751,"pips":24.0,"grossPnl":1.2,"commission":0.2,"swap":0.0,"netPnl":1.0},
+  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":156.758,"exit":156.684,"pips":-74.0,"grossPnl":-2.36,"commission":0.2,"swap":0.0,"netPnl":-2.56},
+  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17887,"exit":1.17985,"pips":98.0,"grossPnl":4.9,"commission":0.2,"swap":0.0,"netPnl":4.7},
+  {"closeDate":"2026-02-25","openDate":"2026-02-25","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17869,"exit":1.17985,"pips":116.0,"grossPnl":5.8,"commission":0.2,"swap":0.0,"netPnl":5.6},
+  {"closeDate":"2026-02-26","openDate":"2026-02-25","instrument":"EURUSD","direction":"Short","lots":0.1,"entry":1.18047,"exit":1.1822,"pips":-173.0,"grossPnl":-17.3,"commission":0.4,"swap":1.02,"netPnl":-18.72},
+  {"closeDate":"2026-02-26","openDate":"2026-02-25","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18106,"exit":1.1822,"pips":-114.0,"grossPnl":-5.7,"commission":0.2,"swap":0.51,"netPnl":-6.41},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":156.03,"exit":155.91,"pips":-120.0,"grossPnl":-3.85,"commission":0.2,"swap":0.0,"netPnl":-4.05},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Long","lots":0.1,"entry":1.18229,"exit":1.18146,"pips":-83.0,"grossPnl":-8.3,"commission":0.4,"swap":0.0,"netPnl":-8.7},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":155.895,"exit":155.878,"pips":17.0,"grossPnl":0.55,"commission":0.2,"swap":0.0,"netPnl":0.35},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.18193,"exit":1.18147,"pips":-46.0,"grossPnl":-2.3,"commission":0.2,"swap":0.0,"netPnl":-2.5},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":155.879,"exit":155.687,"pips":-192.0,"grossPnl":-6.17,"commission":0.2,"swap":0.0,"netPnl":-6.37},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":155.998,"exit":156.007,"pips":9.0,"grossPnl":0.29,"commission":0.2,"swap":0.0,"netPnl":0.09},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17983,"exit":1.18141,"pips":158.0,"grossPnl":7.9,"commission":0.2,"swap":0.0,"netPnl":7.7},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":156.036,"exit":155.982,"pips":54.0,"grossPnl":1.73,"commission":0.2,"swap":0.0,"netPnl":1.53},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18054,"exit":1.17846,"pips":208.0,"grossPnl":10.4,"commission":0.2,"swap":0.0,"netPnl":10.2},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":156.178,"exit":156.392,"pips":214.0,"grossPnl":6.84,"commission":0.2,"swap":0.0,"netPnl":6.64},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"USDJPY","direction":"Long","lots":0.05,"entry":155.934,"exit":156.392,"pips":458.0,"grossPnl":14.64,"commission":0.2,"swap":0.0,"netPnl":14.44},
+  {"closeDate":"2026-02-26","openDate":"2026-02-26","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18118,"exit":1.1785,"pips":268.0,"grossPnl":13.4,"commission":0.2,"swap":0.0,"netPnl":13.2},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"USDJPY","direction":"Short","lots":0.1,"entry":155.823,"exit":155.982,"pips":-159.0,"grossPnl":-10.19,"commission":0.4,"swap":0.0,"netPnl":-10.59},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Long","lots":0.1,"entry":1.18088,"exit":1.18107,"pips":"=+19","grossPnl":1.9,"commission":0.4,"swap":0.0,"netPnl":1.5},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":156.053,"exit":155.985,"pips":"=+68","grossPnl":2.18,"commission":0.2,"swap":0.0,"netPnl":1.98},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":156.179,"exit":155.985,"pips":"=+194","grossPnl":6.22,"commission":0.2,"swap":0.0,"netPnl":6.02},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.18016,"exit":1.18107,"pips":"=+91","grossPnl":4.55,"commission":0.2,"swap":0.0,"netPnl":4.35},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.17926,"exit":1.18107,"pips":"=+181","grossPnl":9.05,"commission":0.2,"swap":0.0,"netPnl":8.85},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18107,"exit":1.18107,"pips":0.0,"grossPnl":0.0,"commission":0.2,"swap":0.0,"netPnl":-0.2},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Short","lots":0.05,"entry":1.18107,"exit":1.17985,"pips":"=+122","grossPnl":6.1,"commission":0.2,"swap":0.0,"netPnl":5.9},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"USDJPY","direction":"Short","lots":0.05,"entry":155.939,"exit":156.033,"pips":-94.0,"grossPnl":-3.01,"commission":0.2,"swap":0.0,"netPnl":-3.21},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.18158,"exit":1.18158,"pips":0.0,"grossPnl":0.0,"commission":0.2,"swap":0.0,"netPnl":-0.2},
+  {"closeDate":"2026-02-27","openDate":"2026-02-27","instrument":"EURUSD","direction":"Long","lots":0.05,"entry":1.18158,"exit":1.18151,"pips":-7.0,"grossPnl":-0.35,"commission":0.2,"swap":0.0,"netPnl":-0.55}
 ];
 
 const MFFU_X1_TRADES = [{"closeDate":"2024-04-10","openDate":"2024-04-10","instrument":"MNQM4","direction":"Short","contracts":2,"entry":18391.25,"exit":18378.5,"grossPnl":-51.0,"commission":0.0,"swap":0,"netPnl":-51.0},{"closeDate":"2024-04-10","openDate":"2024-04-10","instrument":"MNQM4","direction":"Short","contracts":2,"entry":18388.0,"exit":18375.5,"grossPnl":-50.0,"commission":0.0,"swap":0,"netPnl":-50.0},{"closeDate":"2024-04-10","openDate":"2024-04-10","instrument":"MNQM4","direction":"Short","contracts":1,"entry":18393.75,"exit":18374.25,"grossPnl":-39.0,"commission":0.0,"swap":0,"netPnl":-39.0},{"closeDate":"2024-04-10","openDate":"2024-04-10","instrument":"NQM4","direction":"Long","contracts":1,"entry":18158.5,"exit":18130.75,"grossPnl":-555.0,"commission":0.0,"swap":0,"netPnl":-555.0},{"closeDate":"2024-04-10","openDate":"2024-04-10","instrument":"NQM4","direction":"Short","contracts":1,"entry":18155.25,"exit":18164.25,"grossPnl":180.0,"commission":0.0,"swap":0,"netPnl":180.0},{"closeDate":"2024-04-11","openDate":"2024-04-11","instrument":"NQM4","direction":"Short","contracts":1,"entry":18191.75,"exit":18196.5,"grossPnl":95.0,"commission":0.0,"swap":0,"netPnl":95.0},{"closeDate":"2024-04-11","openDate":"2024-04-11","instrument":"NQM4","direction":"Long","contracts":1,"entry":18202.25,"exit":18199.0,"grossPnl":-65.0,"commission":0.0,"swap":0,"netPnl":-65.0},{"closeDate":"2024-04-11","openDate":"2024-04-11","instrument":"MNQM4","direction":"Long","contracts":1,"entry":18209.5,"exit":18200.5,"grossPnl":-18.0,"commission":0.0,"swap":0,"netPnl":-18.0},{"closeDate":"2024-04-11","openDate":"2024-04-11","instrument":"NQM4","direction":"Short","contracts":1,"entry":18199.25,"exit":18205.5,"grossPnl":125.0,"commission":0.0,"swap":0,"netPnl":125.0},{"closeDate":"2024-04-11","openDate":"2024-04-11","instrument":"NQM4","direction":"Long","contracts":1,"entry":18200.0,"exit":18210.25,"grossPnl":205.0,"commission":0.0,"swap":0,"netPnl":205.0},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Short","contracts":1,"entry":18491.5,"exit":18493.0,"grossPnl":30.0,"commission":5.87,"swap":0,"netPnl":24.13},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Short","contracts":1,"entry":18494.25,"exit":18493.25,"grossPnl":-20.0,"commission":5.87,"swap":0,"netPnl":-25.87},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Short","contracts":1,"entry":18494.5,"exit":18497.75,"grossPnl":65.0,"commission":5.87,"swap":0,"netPnl":59.13},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Short","contracts":1,"entry":18490.0,"exit":18492.75,"grossPnl":55.0,"commission":5.87,"swap":0,"netPnl":49.13},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Short","contracts":1,"entry":18488.75,"exit":18489.25,"grossPnl":10.0,"commission":5.87,"swap":0,"netPnl":4.13},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Short","contracts":1,"entry":18491.5,"exit":18488.0,"grossPnl":-70.0,"commission":5.87,"swap":0,"netPnl":-75.87},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Short","contracts":1,"entry":18490.0,"exit":18490.75,"grossPnl":15.0,"commission":5.87,"swap":0,"netPnl":9.13},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Short","contracts":1,"entry":18490.0,"exit":18493.25,"grossPnl":65.0,"commission":5.87,"swap":0,"netPnl":59.13},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Short","contracts":1,"entry":18491.0,"exit":18500.0,"grossPnl":180.0,"commission":5.87,"swap":0,"netPnl":174.13},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Short","contracts":1,"entry":18481.25,"exit":18488.0,"grossPnl":135.0,"commission":5.87,"swap":0,"netPnl":129.13},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Long","contracts":1,"entry":18475.75,"exit":18479.25,"grossPnl":70.0,"commission":5.87,"swap":0,"netPnl":64.13},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Long","contracts":1,"entry":18475.75,"exit":18479.25,"grossPnl":70.0,"commission":5.87,"swap":0,"netPnl":64.13},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Long","contracts":1,"entry":18471.75,"exit":18479.25,"grossPnl":150.0,"commission":5.87,"swap":0,"netPnl":144.13},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Long","contracts":1,"entry":18437.75,"exit":18372.75,"grossPnl":-1300.0,"commission":5.87,"swap":0,"netPnl":-1305.87},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"NQM4","direction":"Long","contracts":1,"entry":18427.25,"exit":18372.75,"grossPnl":-1090.0,"commission":5.87,"swap":0,"netPnl":-1095.87},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"MNQM4","direction":"Long","contracts":1,"entry":18331.5,"exit":18308.25,"grossPnl":-46.5,"commission":5.87,"swap":0,"netPnl":-52.37},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"MNQM4","direction":"Long","contracts":1,"entry":18304.75,"exit":18295.0,"grossPnl":-19.5,"commission":5.87,"swap":0,"netPnl":-25.37},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"MNQM4","direction":"Long","contracts":1,"entry":18302.75,"exit":18303.0,"grossPnl":0.5,"commission":5.87,"swap":0,"netPnl":-5.37},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"MNQM4","direction":"Long","contracts":1,"entry":18305.75,"exit":18307.0,"grossPnl":2.5,"commission":5.87,"swap":0,"netPnl":-3.37},{"closeDate":"2024-04-12","openDate":"2024-04-12","instrument":"MNQM4","direction":"Long","contracts":1,"entry":18307.5,"exit":18302.0,"grossPnl":-11.0,"commission":5.87,"swap":0,"netPnl":-16.87}];
@@ -144,10 +164,10 @@ const PROP_TARGETS = {
    ACCOUNT MASTER DATA
 ──────────────────────────────────────────── */
 const ACCOUNTS = [
-  { id:'FDNT-6KX1', name:'FundedNext Evaluation', shortName:'FDNT X1', accountId:'FDNT$6KX1-STP-PFF', platform:'FundedNext', type:'prop-eval', market:'spot', marketLabel:'Spot FX', status:'active', startDate:'2026-02-05', endDate:null, size:6000, costOfFund:63.21, fxRate:1471.05, pnl:-136.19, performance:-0.022698, trades:50, instruments:['GBPUSD','EURUSD','USDJPY'], currency:'USD', notes:'Phase 1 in progress. 50 trades · 8 trading days. Best day +$61.43 (Feb 25), worst −$121.65 (Feb 19). Win rate 44%. Recovering after early drawdown.' },
-  { id:'T5RS-5KX1', name:'The5ers Evaluation', shortName:'T5RS X1', accountId:'T5RS$5KX1-STP-PFF', platform:'The5ers', type:'prop-eval', market:'spot', marketLabel:'Spot FX', status:'active', startDate:'2026-02-22', endDate:null, size:5000, costOfFund:31.50, fxRate:1469.60, pnl:59.64, performance:0.011928, trades:21, instruments:['USDJPY','EURUSD','GBPUSD'], currency:'USD', notes:'Phase 1 in progress. 21 trades · 3 days. Win rate 62%, profit factor 1.94. Best day +$66.50 (Feb 25). Currently in profit.' },
-  { id:'1KHOOD', name:'1kHooD Fund', shortName:'1kHooD', accountId:'FIBAM-1kHooD', platform:'Robinhood', type:'fund', market:'stocks', marketLabel:'US Equities', status:'active', startDate:'2025-02-05', endDate:null, size:1000, costOfFund:0, fxRate:null, pnl:null, performance:null, trades:132, instruments:['AMZN','SNAP','TGT','NBIS','AAPL','RIVN','COIN','JD'], currency:'USD', notes:'Managed equity fund on Robinhood. $169.15 withdrawn (Sep/Oct 2025). 9 active positions as of Feb 2026.' },
-  { id:'NGX', name:'FIBAM NGX', shortName:'NGX', accountId:'FIBAM-NGX', platform:'NGX Exchange', type:'fund', market:'ngx', marketLabel:'Nigerian Stocks', status:'active', startDate:'2024-05-29', endDate:null, size:null, costOfFund:0, fxRate:null, pnl:null, performance:null, trades:34, instruments:['ACCESSCORP','ZENITHBANK','BUAFOODS','GEREGU','FIDELITYBK','MANSARD','CHAMS'], currency:'NGN', notes:'Nigerian equities portfolio. 7 holdings across banking, consumer goods, energy and insurance. Receipts: Sep 2025–Jan 2026. All figures in NGN.' },
+  { id:'FDNT-6KX1', name:'FundedNext Evaluation', shortName:'FDNT X1', accountId:'FDNT$6KX1-STP-PFF', platform:'FundedNext', type:'prop-eval', market:'spot', marketLabel:'Spot FX', status:'active', startDate:'2026-02-05', endDate:null, size:6000, costOfFund:63.21, fxRate:1471.05, pnl:-117.11, performance:-0.019518, trades:59, instruments:['GBPUSD','EURUSD','USDJPY'], currency:'USD', notes:'Phase 1 in progress. 59 trades · 9 trading days through Feb 27. Win rate 49.2%. Best day +$61.43 (Feb 25), worst −$121.65 (Feb 19). Recovering from early drawdown.' },
+  { id:'T5RS-5KX1', name:'The5ers Evaluation', shortName:'T5RS X1', accountId:'T5RS$5KX1-STP-PFF', platform:'The5ers', type:'prop-eval', market:'spot', marketLabel:'Spot FX', status:'active', startDate:'2026-02-22', endDate:null, size:5000, costOfFund:31.50, fxRate:1469.60, pnl:73.49, performance:0.014698, trades:32, instruments:['USDJPY','EURUSD'], currency:'USD', notes:'Phase 1 in progress. 32 trades · 4 trading days through Feb 27. Win rate 59.4%. Best day +$66.50 (Feb 25). Net P&L +$73.49 — solidly in profit.' },
+  { id:'1KHOOD', name:'1kHooD Fund', shortName:'1kHooD', accountId:'FIBAM-1kHooD', platform:'Robinhood', type:'fund', market:'stocks', marketLabel:'US Equities', status:'active', startDate:'2025-02-05', endDate:null, size:1000, costOfFund:0, fxRate:null, pnl:null, performance:null, trades:129, instruments:['PANW','HOOD','RKLB'], currency:'USD', notes:'Managed equity fund on Robinhood. 129 trades total (rows 2-129 in journal). $169.15 withdrawn (Sep/Oct 2025). 3 open positions as of Feb 2026: Palo Alto Networks, Robinhood, Rocket Lab.' },
+  { id:'NGX', name:'FIBAM NGX', shortName:'NGX', accountId:'FIBAM-NGX', platform:'NGX Exchange', type:'fund', market:'ngx', marketLabel:'Nigerian Stocks', status:'active', startDate:'2024-05-29', endDate:null, size:null, costOfFund:0, fxRate:null, pnl:null, performance:null, trades:34, instruments:['GEREGU','ACCESSCORP','ZENITHBANK'], currency:'NGN', notes:'Nigerian equities portfolio. 3 open positions as of Jan 2026: Geregu Power, Access Holdings, Zenith Bank. Multiple positions closed/liquidated in 2025. Most recent purchase: Zenith Bank (1,550 shares @ ₦67, Jan 9 2026). All figures in NGN.' },
   { id:'MFFX-X1', name:'MyFundedFX Spot #1', shortName:'MFFX X1', accountId:'MFFX$5kX1-STP_PFF', platform:'MyFundedFX', type:'prop-eval', market:'spot', marketLabel:'Spot FX', status:'completed', startDate:'2024-02-12', endDate:'2024-02-13', size:5000, costOfFund:42, fxRate:1600, pnl:-416.06, performance:-0.083212, trades:67, instruments:['GBPUSD','NAS100','WTI','XAUEUR','BTCUSD'], currency:'USD', notes:'2-day account, 67 trades. Breached daily drawdown on day 2. Heavy concentration in WTI and NAS100. Win rate 37% — overtrading and lack of edge clarity. Real trade-level data available.' },
   { id:'MFFX-X2', name:'MyFundedFX Spot #2', shortName:'MFFX X2', accountId:'MFFX$5kX2-STP_PFF', platform:'MyFundedFX', type:'prop-eval', market:'spot', marketLabel:'Spot FX', status:'completed', startDate:'2024-02-19', endDate:'2024-05-19', size:5000, costOfFund:42, fxRate:1600, pnl:-251.78, performance:-0.050356, trades:49, instruments:['GBPUSD','NAS100','WTI','XAUAUD'], currency:'USD', notes:'Longest spot account at 91 days. Early trade data extracted (Feb 19–21). Breached max drawdown gradually. Mixed instruments including NAS100 and WTI.' },
   { id:'MFFX-X3', name:'MyFundedFX Spot #3', shortName:'MFFX X3', accountId:'MFFX$5kX3-43075', platform:'MyFundedFX', type:'prop-eval', market:'spot', marketLabel:'Spot FX', status:'completed', startDate:'2024-09-29', endDate:'2024-10-31', size:5000, costOfFund:32.30, fxRate:1671.67, pnl:-399.19, performance:-0.079838, trades:99, instruments:['GBPUSD'], currency:'USD', notes:'99 trades across 14 trading days. Exclusively GBPUSD. Win rate 26% — worst of all spot accounts. Oct 31 collapse: −$233 in a single day. Fee −$34 distributed across trades. Gross −$365.19, net −$399.19.' },
@@ -165,34 +185,25 @@ const ACCOUNTS = [
    HOLDINGS + PERFORMANCE DATA
 ──────────────────────────────────────────── */
 const KHOOD_HOLDINGS = [
-  { ticker:'AMZN', name:'Amazon',             exchange:'NASDAQ', price:222.09, openPrice:236.07, qty:1.05903,  change:-0.0592 },
-  { ticker:'SNAP', name:'Snapchat',            exchange:'NYSE',   price:11.12,  openPrice:10.83,  qty:23.087,   change: 0.0268 },
-  { ticker:'TGT',  name:'Target',              exchange:'NYSE',   price:95.38,  openPrice:134.57, qty:3.71544,  change:-0.2912 },
-  { ticker:'NBIS', name:'Nebius Group',         exchange:'NASDAQ', price:45.96,  openPrice:42.56,  qty:5.874239, change: 0.0799 },
-  { ticker:'AAPL', name:'Apple',               exchange:'NASDAQ', price:245.90, openPrice:244.06, qty:0.51217,  change: 0.0075 },
-  { ticker:'RIVN', name:'Rivian',              exchange:'NASDAQ', price:14.14,  openPrice:14.02,  qty:8.91761,  change: 0.0086 },
-  { ticker:'ALGS', name:'Aligos Therapeutics', exchange:'NASDAQ', price:13.54,  openPrice:22.47,  qty:5.56331,  change:-0.3974 },
-  { ticker:'COIN', name:'Coinbase',            exchange:'NASDAQ', price:306.32, openPrice:266.40, qty:0.46921,  change: 0.1498 },
-  { ticker:'JD',   name:'JD.com',              exchange:'NASDAQ', price:31.16,  openPrice:43.16,  qty:1.1585,   change:-0.2780 },
+  // 3 open positions as of Feb 2026 (confirmed from journal — all others sold)
+  { ticker:'PANW', name:'Palo Alto Networks',    exchange:'NASDAQ', price:null, openPrice:150.17, qty:2.663647, change:null },
+  { ticker:'HOOD', name:'Robinhood Markets',      exchange:'NASDAQ', price:null, openPrice:74.44,  qty:1.33799,  change:null },
+  { ticker:'RKLB', name:'Rocket Lab Corporation', exchange:'NASDAQ', price:null, openPrice:71.84,  qty:3.479955, change:null },
 ];
 const NGX_HOLDINGS = [
-  // Updated from Bamboo trade receipts (Sep 2025 – Jan 2026)
-  { ticker:'ACCESSCORP', name:'Access Holdings',       price:22.90, openPrice:23.18, qty:3572, changeP:-0.0121,
+  // Active positions as of Jan 2026 (confirmed by Bamboo receipts)
+  { ticker:'GEREGU',     name:'Geregu Power',    price:1141.5, openPrice:900,   qty:6,    changeP: 0.2683 },
+  { ticker:'ACCESSCORP', name:'Access Holdings', price:22.90,  openPrice:23.18, qty:3572, changeP:-0.0121,
     trades:[
-      {date:'2025-10-14',type:'SELL',qty:950, price:25.80, total:24510, fee:454.58},
-      {date:'2025-10-24',type:'BUY', qty:1950,price:25.10, total:48945, fee:748.75},
-      {date:'2026-01-20',type:'BUY', qty:2280,price:22.90, total:52212, fee:781.40},
+      {date:'2025-10-14',type:'SELL',qty:950, price:25.80, total:24510,  fee:454.58},
+      {date:'2025-10-24',type:'BUY', qty:1950,price:25.10, total:48945,  fee:748.75},
+      {date:'2026-01-20',type:'BUY', qty:2280,price:22.90, total:52212,  fee:781.40},
     ]},
-  { ticker:'ZENITHBANK',  name:'Zenith Bank',           price:64.50, openPrice:67.00, qty:1198, changeP:-0.0373,
+  { ticker:'ZENITHBANK',  name:'Zenith Bank',     price:64.50,  openPrice:67.00, qty:1550, changeP:-0.0373,
     trades:[
-      {date:'2025-09-22',type:'SELL',qty:352, price:65.70, total:23126, fee:421.84},
-      {date:'2026-01-09',type:'BUY', qty:1550,price:67.00, total:103850,fee:1544.37},
+      {date:'2025-09-22',type:'SELL',qty:352, price:65.70, total:23126,  fee:421.84},
+      {date:'2026-01-09',type:'BUY', qty:1550,price:67.00, total:103850, fee:1544.37},
     ]},
-  { ticker:'MANSARD',    name:'AXA Mansard Insurance', price:9.25,  openPrice:9.35,  qty:1000, changeP:-0.0107 },
-  { ticker:'BUAFOODS',   name:'BUA Foods',             price:374,   openPrice:342,   qty:15,   changeP: 0.0936 },
-  { ticker:'CHAMS',      name:'Chams Plc',             price:2.10,  openPrice:1.55,  qty:3250, changeP: 0.3548 },
-  { ticker:'FIDELITYBK', name:'Fidelity Bank',         price:10.15, openPrice:9.60,  qty:527,  changeP: 0.0573 },
-  { ticker:'GEREGU',     name:'Geregu Power',          price:1141.5,openPrice:900,   qty:6,    changeP: 0.2683 },
 ];
 const KHOOD_PERF = [
   {date:'2025-02-05',val:-0.0021},{date:'2025-02-07',val:-0.0172},{date:'2025-02-10',val:-0.0181},
@@ -210,25 +221,75 @@ const NGX_PERF = [
   {date:'2025-03-25',val: 0.01800},{date:'2025-04-01',val: 0.02200},{date:'2025-04-10',val: 0.01500},
 ];
 /* ── Phase 5 Analytics Data ─────────────────── */
-const EQUITY_CURVE = [{"d":"2023-09-20","pnl":38.53,"eq":38.53},{"d":"2023-09-22","pnl":90.17,"eq":128.7},{"d":"2023-09-25","pnl":25.0,"eq":153.7},{"d":"2023-09-26","pnl":52.6,"eq":206.3},{"d":"2023-09-27","pnl":31.92,"eq":238.22},{"d":"2023-09-28","pnl":54.83,"eq":293.05},{"d":"2023-09-29","pnl":27.86,"eq":320.91},{"d":"2023-10-03","pnl":10.3,"eq":331.21},{"d":"2023-10-09","pnl":13.0,"eq":344.21},{"d":"2023-10-10","pnl":5.4,"eq":349.61},{"d":"2023-10-11","pnl":13.5,"eq":363.11},{"d":"2023-10-12","pnl":4.0,"eq":367.11},{"d":"2023-10-13","pnl":31.5,"eq":398.61},{"d":"2023-10-16","pnl":3.2,"eq":401.81},{"d":"2023-10-17","pnl":10.6,"eq":412.41},{"d":"2023-10-18","pnl":29.3,"eq":441.71},{"d":"2023-10-19","pnl":44.3,"eq":486.01},{"d":"2023-10-20","pnl":56.7,"eq":542.71},{"d":"2023-10-23","pnl":40.2,"eq":582.91},{"d":"2023-10-24","pnl":24.0,"eq":606.91},{"d":"2023-10-25","pnl":77.9,"eq":684.81},{"d":"2023-10-31","pnl":22.9,"eq":707.71},{"d":"2023-11-01","pnl":41.0,"eq":748.71},{"d":"2023-11-02","pnl":23.4,"eq":772.11},{"d":"2023-11-03","pnl":28.7,"eq":800.81},{"d":"2023-11-06","pnl":29.2,"eq":830.01},{"d":"2023-11-07","pnl":72.3,"eq":902.31},{"d":"2023-11-08","pnl":50.4,"eq":952.71},{"d":"2023-11-09","pnl":19.7,"eq":972.41},{"d":"2023-11-10","pnl":1.3,"eq":973.71},{"d":"2023-11-13","pnl":18.3,"eq":992.01},{"d":"2023-11-14","pnl":22.9,"eq":1014.91},{"d":"2023-11-15","pnl":70.4,"eq":1085.31},{"d":"2024-02-12","pnl":-178.29,"eq":907.02},{"d":"2024-02-13","pnl":-237.77,"eq":669.25},{"d":"2024-02-19","pnl":0.15,"eq":669.4},{"d":"2024-02-20","pnl":-89.86,"eq":579.54},{"d":"2024-02-21","pnl":-95.52,"eq":484.02},{"d":"2024-04-10","pnl":-515.0,"eq":-30.98},{"d":"2024-04-11","pnl":342.0,"eq":311.02},{"d":"2024-04-12","pnl":-1826.4,"eq":-1515.38},{"d":"2024-06-03","pnl":-505.58,"eq":-2020.96},{"d":"2024-06-04","pnl":-124.12,"eq":-2145.08},{"d":"2024-06-05","pnl":8.32,"eq":-2136.76},{"d":"2024-06-06","pnl":-978.58,"eq":-3115.34},{"d":"2024-06-07","pnl":-428.68,"eq":-3544.02},{"d":"2024-06-12","pnl":-398.53,"eq":-3942.55},{"d":"2024-06-13","pnl":-1559.94,"eq":-5502.49},{"d":"2024-06-14","pnl":12.92,"eq":-5489.57},{"d":"2024-07-08","pnl":353.78,"eq":-5135.79},{"d":"2024-07-10","pnl":-1213.16,"eq":-6348.95},{"d":"2024-07-11","pnl":1069.36,"eq":-5279.59},{"d":"2024-07-12","pnl":-1210.88,"eq":-6490.47},{"d":"2024-07-15","pnl":-806.12,"eq":-7296.59},{"d":"2024-07-16","pnl":-495.68,"eq":-7792.27},{"d":"2024-07-17","pnl":-616.36,"eq":-8408.63},{"d":"2024-07-18","pnl":-1221.29,"eq":-9629.92},{"d":"2024-07-19","pnl":-166.89,"eq":-9796.81},{"d":"2024-08-09","pnl":148.41,"eq":-9648.4},{"d":"2024-08-12","pnl":-128.26,"eq":-9776.66},{"d":"2024-08-13","pnl":296.7,"eq":-9479.96},{"d":"2024-08-14","pnl":-86.46,"eq":-9566.42},{"d":"2024-08-15","pnl":-105.72,"eq":-9672.14},{"d":"2024-08-16","pnl":-101.91,"eq":-9774.05},{"d":"2024-08-19","pnl":34.82,"eq":-9739.23},{"d":"2024-08-20","pnl":326.3,"eq":-9412.93},{"d":"2024-08-21","pnl":-361.52,"eq":-9774.45},{"d":"2024-08-22","pnl":311.8,"eq":-9462.65},{"d":"2024-08-23","pnl":-28.88,"eq":-9491.53},{"d":"2024-08-26","pnl":63.4,"eq":-9428.13},{"d":"2024-08-27","pnl":373.34,"eq":-9054.79},{"d":"2024-08-28","pnl":148.54,"eq":-8906.25},{"d":"2024-08-29","pnl":-363.85,"eq":-9270.1},{"d":"2024-08-30","pnl":-753.86,"eq":-10023.96},{"d":"2024-09-02","pnl":-1.36,"eq":-10025.32},{"d":"2024-09-03","pnl":-639.8,"eq":-10665.12},{"d":"2024-09-04","pnl":-521.25,"eq":-11186.37},{"d":"2024-09-05","pnl":-104.18,"eq":-11290.55},{"d":"2024-09-06","pnl":-102.0,"eq":-11392.55},{"d":"2024-09-11","pnl":-146.81,"eq":-11539.36},{"d":"2024-09-12","pnl":-17.22,"eq":-11556.58},{"d":"2024-09-13","pnl":-94.18,"eq":-11650.76},{"d":"2024-09-16","pnl":-473.52,"eq":-12124.28},{"d":"2024-09-17","pnl":130.47,"eq":-11993.81},{"d":"2024-09-18","pnl":-519.38,"eq":-12513.19},{"d":"2024-09-19","pnl":332.26,"eq":-12180.93},{"d":"2024-09-20","pnl":301.2,"eq":-11879.73},{"d":"2024-09-22","pnl":109.0,"eq":-11770.73},{"d":"2024-09-23","pnl":1341.84,"eq":-10428.89},{"d":"2024-09-24","pnl":-821.64,"eq":-11250.53},{"d":"2024-09-25","pnl":-857.8,"eq":-12108.33},{"d":"2024-09-26","pnl":-723.42,"eq":-12831.75},{"d":"2024-09-27","pnl":-62.32,"eq":-12894.07},{"d":"2024-09-30","pnl":-15.72,"eq":-12909.79},{"d":"2024-10-01","pnl":-15.72,"eq":-12925.51},{"d":"2024-10-02","pnl":-15.72,"eq":-12941.23},{"d":"2024-10-03","pnl":-15.72,"eq":-12956.95},{"d":"2024-10-04","pnl":-15.72,"eq":-12972.67},{"d":"2024-10-07","pnl":-15.72,"eq":-12988.39},{"d":"2024-10-08","pnl":-15.72,"eq":-13004.11},{"d":"2024-10-09","pnl":-15.72,"eq":-13019.83},{"d":"2024-10-10","pnl":-15.72,"eq":-13035.55},{"d":"2024-10-11","pnl":-15.72,"eq":-13051.27},{"d":"2024-10-14","pnl":-15.72,"eq":-13066.99},{"d":"2024-10-15","pnl":-15.72,"eq":-13082.71},{"d":"2024-10-16","pnl":-15.72,"eq":-13098.43},{"d":"2024-10-17","pnl":-15.72,"eq":-13114.15},{"d":"2024-10-18","pnl":-15.72,"eq":-13129.87},{"d":"2024-10-21","pnl":-15.72,"eq":-13145.59},{"d":"2024-10-22","pnl":-15.72,"eq":-13161.31},{"d":"2024-10-23","pnl":-15.72,"eq":-13177.03},{"d":"2024-10-24","pnl":-15.72,"eq":-13192.75},{"d":"2024-10-25","pnl":-15.72,"eq":-13208.47},{"d":"2024-10-28","pnl":-15.72,"eq":-13224.19},{"d":"2024-10-29","pnl":-15.72,"eq":-13239.91},{"d":"2024-10-30","pnl":-15.72,"eq":-13255.63},{"d":"2024-10-31","pnl":-15.72,"eq":-13271.35},{"d":"2024-11-13","pnl":-7.44,"eq":-13278.79},{"d":"2024-11-14","pnl":-7.44,"eq":-13286.23},{"d":"2024-11-15","pnl":-7.44,"eq":-13293.67},{"d":"2024-11-18","pnl":-7.44,"eq":-13301.11},{"d":"2024-11-19","pnl":-7.44,"eq":-13308.55},{"d":"2024-11-20","pnl":-7.44,"eq":-13315.99},{"d":"2024-11-21","pnl":-7.44,"eq":-13323.43},{"d":"2024-11-22","pnl":-7.44,"eq":-13330.87},{"d":"2024-11-25","pnl":-7.44,"eq":-13338.31},{"d":"2024-11-26","pnl":-7.44,"eq":-13345.75},{"d":"2024-11-27","pnl":-7.44,"eq":-13353.19},{"d":"2024-11-28","pnl":-7.44,"eq":-13360.63},{"d":"2024-11-29","pnl":-7.44,"eq":-13368.07},{"d":"2024-12-02","pnl":-7.44,"eq":-13375.51},{"d":"2024-12-03","pnl":-7.44,"eq":-13382.95},{"d":"2024-12-04","pnl":-7.44,"eq":-13390.39},{"d":"2024-12-05","pnl":-7.44,"eq":-13397.83},{"d":"2024-12-06","pnl":-7.44,"eq":-13405.27},{"d":"2024-12-09","pnl":-7.44,"eq":-13412.71},{"d":"2024-12-10","pnl":-7.44,"eq":-13420.15},{"d":"2024-12-11","pnl":-7.44,"eq":-13427.59},{"d":"2024-12-12","pnl":-7.44,"eq":-13435.03},{"d":"2024-12-13","pnl":-7.44,"eq":-13442.47},{"d":"2024-12-16","pnl":-7.44,"eq":-13449.91},{"d":"2024-12-17","pnl":-7.44,"eq":-13457.35},{"d":"2024-12-18","pnl":-7.44,"eq":-13464.79},{"d":"2024-12-19","pnl":-7.44,"eq":-13472.23},{"d":"2024-12-20","pnl":-7.44,"eq":-13479.67},{"d":"2024-12-23","pnl":-7.44,"eq":-13487.11},{"d":"2024-12-24","pnl":-7.44,"eq":-13494.55},{"d":"2024-12-25","pnl":-7.44,"eq":-13501.99},{"d":"2024-12-26","pnl":-7.44,"eq":-13509.43},{"d":"2024-12-27","pnl":-7.44,"eq":-13516.87},{"d":"2024-12-30","pnl":-7.44,"eq":-13524.31},{"d":"2024-12-31","pnl":-7.44,"eq":-13531.75},{"d":"2025-01-01","pnl":-7.44,"eq":-13539.19},{"d":"2025-01-02","pnl":-7.44,"eq":-13546.63},{"d":"2025-01-03","pnl":-7.44,"eq":-13554.07},{"d":"2025-01-06","pnl":-7.44,"eq":-13561.51},{"d":"2025-01-07","pnl":-7.44,"eq":-13568.95},{"d":"2025-01-08","pnl":-7.44,"eq":-13576.39},{"d":"2026-02-17","pnl":-43.18,"eq":-13619.57},{"d":"2026-02-18","pnl":-83.47,"eq":-13703.04},{"d":"2026-02-19","pnl":-121.65,"eq":-13824.69},{"d":"2026-02-20","pnl":16.66,"eq":-13808.03},{"d":"2026-02-23","pnl":-29.65,"eq":-13837.68},{"d":"2026-02-24","pnl":34.26,"eq":-13803.42},{"d":"2026-02-25","pnl":127.93,"eq":-13675.49},{"d":"2026-02-26","pnl":22.55,"eq":-13652.94}];
-const INSTR_STATS  = [{"instr":"MYMU4","n":502,"net":-782.13,"wr":0.3685},{"instr":"YMU4","n":205,"net":-5971.56,"wr":0.4098},{"instr":"NQM4","n":139,"net":-2803.58,"wr":0.5108},{"instr":"GBPUSD","n":101,"net":-918.65,"wr":0.1287},{"instr":"YMZ4","n":92,"net":-731.89,"wr":0.5109},{"instr":"MNQU4","n":33,"net":-772.68,"wr":0.2727},{"instr":"NAS100","n":33,"net":-13.99,"wr":0.5455},{"instr":"USDJPY","n":31,"net":22.83,"wr":0.4839},{"instr":"MYMZ4","n":27,"net":-37.9,"wr":0.4074},{"instr":"MNQM4","n":26,"net":-635.38,"wr":0.3846},{"instr":"EURUSD","n":24,"net":21.51,"wr":0.625},{"instr":"ESM4","n":22,"net":-384.97,"wr":0.3636},{"instr":"WTI","n":18,"net":-252.48,"wr":0.1667},{"instr":"NQU4","n":17,"net":-777.26,"wr":0.4706},{"instr":"USWTI","n":13,"net":-72.56,"wr":0.3846},{"instr":"MESM4","n":12,"net":-131.17,"wr":0.5},{"instr":"MESU4","n":11,"net":-276.63,"wr":0.1818},{"instr":"AUEUR","n":9,"net":-35.51,"wr":0.4444},{"instr":"AGUSD","n":7,"net":-72.97,"wr":0.2857},{"instr":"AUAUD","n":7,"net":-51.86,"wr":0.2857},{"instr":"MYMM4","n":6,"net":-72.94,"wr":0.5},{"instr":"AUUSD","n":5,"net":19.98,"wr":0.4}];
-const ACC_STATS    = [{"acc":"FDNT","label":"FDNT","n":50,"net":-136.19,"wr":0.44,"comm":11.6,"gross":-98.59},{"acc":"T5RS","label":"T5RS","n":21,"net":59.64,"wr":0.619,"comm":5.0,"gross":67.02},{"acc":"MFFU-X1","label":"MFFU X1","n":30,"net":-1999.4,"wr":0.5,"comm":117.4,"gross":-1882.0},{"acc":"MFFU-X2","label":"MFFU X2","n":175,"net":-2028.64,"wr":0.4743,"comm":684.87,"gross":-1343.77},{"acc":"MFFU-X3","label":"MFFU X3","n":112,"net":-1945.55,"wr":0.3661,"comm":244.8,"gross":-1700.75},{"acc":"MFFU-X4","label":"MFFU X4","n":584,"net":-5902.98,"wr":0.3921,"comm":2016.48,"gross":-3886.5},{"acc":"MFFU-X5","label":"MFFU X5","n":191,"net":-1501.52,"wr":0.3979,"comm":1139.52,"gross":-362.0},{"acc":"MFFX-X1","label":"MFFX X1","n":67,"net":-416.06,"wr":0.3731,"comm":34.02,"gross":-377.21},{"acc":"MFFX-X2","label":"MFFX X2","n":49,"net":-185.23,"wr":0.4286,"comm":2.3,"gross":-182.57},{"acc":"MFFX-X3","label":"MFFX X3","n":99,"net":-399.19,"wr":0.2626,"comm":34.0,"gross":-365.19},{"acc":"MFFX-X4","label":"MFFX X4","n":1,"net":-284.86,"wr":0,"comm":0.4,"gross":-284.46},{"acc":"ALPARI-2023","label":"ALP '23","n":274,"net":1085.31,"wr":1.0,"comm":0,"gross":1085.31}];
-const DIR_STATS    = [{"dir":"Long","n":730,"wr":0.3781,"net":-7595.88,"avgW":45.98,"avgL":-44.69},{"dir":"Short","n":614,"wr":0.4055,"net":-7142.37,"avgW":51.27,"avgL":-54.54}];
-const ANALYTICS_SUMMARY = {"totalTrades":1346,"winRate":0.3906,"avgWin":48.49,"avgLoss":-49.08,"totalCommission":4322.06,"totalGross":-10416.19,"commDragPct":0.4149,"tradingDays":166,"peakEquity":1085.31,"maxDrawdown":14922.99,"profitFactor":0.6333};
+const EQUITY_CURVE = [{"d":"2023-09-20","pnl":38.53,"eq":38.53},{"d":"2023-09-22","pnl":90.17,"eq":128.7},{"d":"2023-09-25","pnl":25.0,"eq":153.7},{"d":"2023-09-26","pnl":52.6,"eq":206.3},{"d":"2023-09-27","pnl":31.92,"eq":238.22},{"d":"2023-09-28","pnl":54.83,"eq":293.05},{"d":"2023-09-29","pnl":27.86,"eq":320.91},{"d":"2023-10-03","pnl":10.3,"eq":331.21},{"d":"2023-10-09","pnl":13.0,"eq":344.21},{"d":"2023-10-10","pnl":5.4,"eq":349.61},{"d":"2023-10-11","pnl":13.5,"eq":363.11},{"d":"2023-10-12","pnl":4.0,"eq":367.11},{"d":"2023-10-13","pnl":31.5,"eq":398.61},{"d":"2023-10-16","pnl":3.2,"eq":401.81},{"d":"2023-10-17","pnl":10.6,"eq":412.41},{"d":"2023-10-18","pnl":29.3,"eq":441.71},{"d":"2023-10-19","pnl":44.3,"eq":486.01},{"d":"2023-10-20","pnl":56.7,"eq":542.71},{"d":"2023-10-23","pnl":40.2,"eq":582.91},{"d":"2023-10-24","pnl":24.0,"eq":606.91},{"d":"2023-10-25","pnl":77.9,"eq":684.81},{"d":"2023-10-31","pnl":22.9,"eq":707.71},{"d":"2023-11-01","pnl":41.0,"eq":748.71},{"d":"2023-11-02","pnl":23.4,"eq":772.11},{"d":"2023-11-03","pnl":28.7,"eq":800.81},{"d":"2023-11-06","pnl":29.2,"eq":830.01},{"d":"2023-11-07","pnl":72.3,"eq":902.31},{"d":"2023-11-08","pnl":50.4,"eq":952.71},{"d":"2023-11-09","pnl":19.7,"eq":972.41},{"d":"2023-11-10","pnl":1.3,"eq":973.71},{"d":"2023-11-13","pnl":18.3,"eq":992.01},{"d":"2023-11-14","pnl":22.9,"eq":1014.91},{"d":"2023-11-15","pnl":70.4,"eq":1085.31},{"d":"2024-02-12","pnl":-178.29,"eq":907.02},{"d":"2024-02-13","pnl":-237.77,"eq":669.25},{"d":"2024-02-19","pnl":0.15,"eq":669.4},{"d":"2024-02-20","pnl":-89.86,"eq":579.54},{"d":"2024-02-21","pnl":-95.52,"eq":484.02},{"d":"2024-04-10","pnl":-515.0,"eq":-30.98},{"d":"2024-04-11","pnl":342.0,"eq":311.02},{"d":"2024-04-12","pnl":-1826.4,"eq":-1515.38},{"d":"2024-06-03","pnl":-505.58,"eq":-2020.96},{"d":"2024-06-04","pnl":-124.12,"eq":-2145.08},{"d":"2024-06-05","pnl":8.32,"eq":-2136.76},{"d":"2024-06-06","pnl":-978.58,"eq":-3115.34},{"d":"2024-06-07","pnl":-428.68,"eq":-3544.02},{"d":"2024-06-12","pnl":-398.53,"eq":-3942.55},{"d":"2024-06-13","pnl":-1559.94,"eq":-5502.49},{"d":"2024-06-14","pnl":12.92,"eq":-5489.57},{"d":"2024-07-08","pnl":353.78,"eq":-5135.79},{"d":"2024-07-10","pnl":-1213.16,"eq":-6348.95},{"d":"2024-07-11","pnl":1069.36,"eq":-5279.59},{"d":"2024-07-12","pnl":-1210.88,"eq":-6490.47},{"d":"2024-07-15","pnl":-806.12,"eq":-7296.59},{"d":"2024-07-16","pnl":-495.68,"eq":-7792.27},{"d":"2024-07-17","pnl":-616.36,"eq":-8408.63},{"d":"2024-07-18","pnl":-1221.29,"eq":-9629.92},{"d":"2024-07-19","pnl":-166.89,"eq":-9796.81},{"d":"2024-08-09","pnl":148.41,"eq":-9648.4},{"d":"2024-08-12","pnl":-128.26,"eq":-9776.66},{"d":"2024-08-13","pnl":296.7,"eq":-9479.96},{"d":"2024-08-14","pnl":-86.46,"eq":-9566.42},{"d":"2024-08-15","pnl":-105.72,"eq":-9672.14},{"d":"2024-08-16","pnl":-101.91,"eq":-9774.05},{"d":"2024-08-19","pnl":34.82,"eq":-9739.23},{"d":"2024-08-20","pnl":326.3,"eq":-9412.93},{"d":"2024-08-21","pnl":-361.52,"eq":-9774.45},{"d":"2024-08-22","pnl":311.8,"eq":-9462.65},{"d":"2024-08-23","pnl":-28.88,"eq":-9491.53},{"d":"2024-08-26","pnl":63.4,"eq":-9428.13},{"d":"2024-08-27","pnl":373.34,"eq":-9054.79},{"d":"2024-08-28","pnl":148.54,"eq":-8906.25},{"d":"2024-08-29","pnl":-363.85,"eq":-9270.1},{"d":"2024-08-30","pnl":-753.86,"eq":-10023.96},{"d":"2024-09-02","pnl":-1.36,"eq":-10025.32},{"d":"2024-09-03","pnl":-639.8,"eq":-10665.12},{"d":"2024-09-04","pnl":-521.25,"eq":-11186.37},{"d":"2024-09-05","pnl":-104.18,"eq":-11290.55},{"d":"2024-09-06","pnl":-102.0,"eq":-11392.55},{"d":"2024-09-11","pnl":-146.81,"eq":-11539.36},{"d":"2024-09-12","pnl":-17.22,"eq":-11556.58},{"d":"2024-09-13","pnl":-94.18,"eq":-11650.76},{"d":"2024-09-16","pnl":-473.52,"eq":-12124.28},{"d":"2024-09-17","pnl":130.47,"eq":-11993.81},{"d":"2024-09-18","pnl":-519.38,"eq":-12513.19},{"d":"2024-09-19","pnl":332.26,"eq":-12180.93},{"d":"2024-09-20","pnl":301.2,"eq":-11879.73},{"d":"2024-09-22","pnl":109.0,"eq":-11770.73},{"d":"2024-09-23","pnl":1341.84,"eq":-10428.89},{"d":"2024-09-24","pnl":-821.64,"eq":-11250.53},{"d":"2024-09-25","pnl":-857.8,"eq":-12108.33},{"d":"2024-09-26","pnl":-723.42,"eq":-12831.75},{"d":"2024-09-27","pnl":-62.32,"eq":-12894.07},{"d":"2024-09-30","pnl":-15.72,"eq":-12909.79},{"d":"2024-10-01","pnl":-15.72,"eq":-12925.51},{"d":"2024-10-02","pnl":-15.72,"eq":-12941.23},{"d":"2024-10-03","pnl":-15.72,"eq":-12956.95},{"d":"2024-10-04","pnl":-15.72,"eq":-12972.67},{"d":"2024-10-07","pnl":-15.72,"eq":-12988.39},{"d":"2024-10-08","pnl":-15.72,"eq":-13004.11},{"d":"2024-10-09","pnl":-15.72,"eq":-13019.83},{"d":"2024-10-10","pnl":-15.72,"eq":-13035.55},{"d":"2024-10-11","pnl":-15.72,"eq":-13051.27},{"d":"2024-10-14","pnl":-15.72,"eq":-13066.99},{"d":"2024-10-15","pnl":-15.72,"eq":-13082.71},{"d":"2024-10-16","pnl":-15.72,"eq":-13098.43},{"d":"2024-10-17","pnl":-15.72,"eq":-13114.15},{"d":"2024-10-18","pnl":-15.72,"eq":-13129.87},{"d":"2024-10-21","pnl":-15.72,"eq":-13145.59},{"d":"2024-10-22","pnl":-15.72,"eq":-13161.31},{"d":"2024-10-23","pnl":-15.72,"eq":-13177.03},{"d":"2024-10-24","pnl":-15.72,"eq":-13192.75},{"d":"2024-10-25","pnl":-15.72,"eq":-13208.47},{"d":"2024-10-28","pnl":-15.72,"eq":-13224.19},{"d":"2024-10-29","pnl":-15.72,"eq":-13239.91},{"d":"2024-10-30","pnl":-15.72,"eq":-13255.63},{"d":"2024-10-31","pnl":-15.72,"eq":-13271.35},{"d":"2024-11-13","pnl":-7.44,"eq":-13278.79},{"d":"2024-11-14","pnl":-7.44,"eq":-13286.23},{"d":"2024-11-15","pnl":-7.44,"eq":-13293.67},{"d":"2024-11-18","pnl":-7.44,"eq":-13301.11},{"d":"2024-11-19","pnl":-7.44,"eq":-13308.55},{"d":"2024-11-20","pnl":-7.44,"eq":-13315.99},{"d":"2024-11-21","pnl":-7.44,"eq":-13323.43},{"d":"2024-11-22","pnl":-7.44,"eq":-13330.87},{"d":"2024-11-25","pnl":-7.44,"eq":-13338.31},{"d":"2024-11-26","pnl":-7.44,"eq":-13345.75},{"d":"2024-11-27","pnl":-7.44,"eq":-13353.19},{"d":"2024-11-28","pnl":-7.44,"eq":-13360.63},{"d":"2024-11-29","pnl":-7.44,"eq":-13368.07},{"d":"2024-12-02","pnl":-7.44,"eq":-13375.51},{"d":"2024-12-03","pnl":-7.44,"eq":-13382.95},{"d":"2024-12-04","pnl":-7.44,"eq":-13390.39},{"d":"2024-12-05","pnl":-7.44,"eq":-13397.83},{"d":"2024-12-06","pnl":-7.44,"eq":-13405.27},{"d":"2024-12-09","pnl":-7.44,"eq":-13412.71},{"d":"2024-12-10","pnl":-7.44,"eq":-13420.15},{"d":"2024-12-11","pnl":-7.44,"eq":-13427.59},{"d":"2024-12-12","pnl":-7.44,"eq":-13435.03},{"d":"2024-12-13","pnl":-7.44,"eq":-13442.47},{"d":"2024-12-16","pnl":-7.44,"eq":-13449.91},{"d":"2024-12-17","pnl":-7.44,"eq":-13457.35},{"d":"2024-12-18","pnl":-7.44,"eq":-13464.79},{"d":"2024-12-19","pnl":-7.44,"eq":-13472.23},{"d":"2024-12-20","pnl":-7.44,"eq":-13479.67},{"d":"2024-12-23","pnl":-7.44,"eq":-13487.11},{"d":"2024-12-24","pnl":-7.44,"eq":-13494.55},{"d":"2024-12-25","pnl":-7.44,"eq":-13501.99},{"d":"2024-12-26","pnl":-7.44,"eq":-13509.43},{"d":"2024-12-27","pnl":-7.44,"eq":-13516.87},{"d":"2024-12-30","pnl":-7.44,"eq":-13524.31},{"d":"2024-12-31","pnl":-7.44,"eq":-13531.75},{"d":"2025-01-01","pnl":-7.44,"eq":-13539.19},{"d":"2025-01-02","pnl":-7.44,"eq":-13546.63},{"d":"2025-01-03","pnl":-7.44,"eq":-13554.07},{"d":"2025-01-06","pnl":-7.44,"eq":-13561.51},{"d":"2025-01-07","pnl":-7.44,"eq":-13568.95},{"d":"2025-01-08","pnl":-7.44,"eq":-13576.39},{"d":"2026-02-17","pnl":-43.18,"eq":-13619.57},{"d":"2026-02-18","pnl":-83.47,"eq":-13703.04},{"d":"2026-02-19","pnl":-121.65,"eq":-13824.69},{"d":"2026-02-20","pnl":16.66,"eq":-13808.03},{"d":"2026-02-23","pnl":-29.65,"eq":-13837.68},{"d":"2026-02-24","pnl":34.26,"eq":-13803.42},{"d":"2026-02-25","pnl":127.93,"eq":-13675.49},{"d":"2026-02-26","pnl":22.55,"eq":-13652.94},{"d":"2026-02-27","pnl":32.93,"eq":-13620.01}];
+const INSTR_STATS  = [{"instr":"MYMU4","n":502,"net":-782.13,"wr":0.3685},{"instr":"YMU4","n":205,"net":-5971.56,"wr":0.4098},{"instr":"NQM4","n":139,"net":-2803.58,"wr":0.5108},{"instr":"GBPUSD","n":135,"net":-635.18,"wr":0.2815},{"instr":"YMZ4","n":92,"net":-731.89,"wr":0.5109},{"instr":"USDJPY","n":38,"net":14.21,"wr":0.5},{"instr":"EURUSD","n":37,"net":63.06,"wr":0.6486},{"instr":"MNQU4","n":33,"net":-772.68,"wr":0.2727},{"instr":"NAS100","n":33,"net":-13.99,"wr":0.5455},{"instr":"WTI","n":31,"net":-325.04,"wr":0.2581},{"instr":"MYMZ4","n":27,"net":-37.9,"wr":0.4074},{"instr":"MNQM4","n":26,"net":-635.38,"wr":0.3846},{"instr":"ESM4","n":22,"net":-384.97,"wr":0.3636},{"instr":"NQU4","n":17,"net":-777.26,"wr":0.4706},{"instr":"MESM4","n":12,"net":-131.17,"wr":0.5},{"instr":"MESU4","n":11,"net":-276.63,"wr":0.1818},{"instr":"XAUEUR","n":9,"net":-35.51,"wr":0.4444},{"instr":"XAGUSD","n":7,"net":-72.97,"wr":0.2857},{"instr":"XAUAUD","n":7,"net":-51.86,"wr":0.2857},{"instr":"MYMM4","n":6,"net":-72.94,"wr":0.5},{"instr":"XAUUSD","n":5,"net":19.98,"wr":0.4},{"instr":"BTCUSD","n":4,"net":-6.46,"wr":0.5}];
+const ACC_STATS    = [{"acc":"FDNT","label":"FDNT","n":59,"net":-117.11,"wr":0.4915,"comm":14.85,"gross":-76.26},{"acc":"T5RS","label":"T5RS","n":32,"net":73.49,"wr":0.5938,"comm":7.6,"gross":83.47},{"acc":"MFFU-X1","label":"MFFU X1","n":30,"net":-1999.4,"wr":0.5,"comm":117.4,"gross":-1882},{"acc":"MFFU-X2","label":"MFFU X2","n":175,"net":-2028.64,"wr":0.4743,"comm":684.87,"gross":-1343.77},{"acc":"MFFU-X3","label":"MFFU X3","n":112,"net":-1945.55,"wr":0.3661,"comm":244.8,"gross":-1700.75},{"acc":"MFFU-X4","label":"MFFU X4","n":584,"net":-5902.98,"wr":0.3921,"comm":2016.48,"gross":-3886.5},{"acc":"MFFU-X5","label":"MFFU X5","n":191,"net":-1501.52,"wr":0.3979,"comm":1139.52,"gross":-362},{"acc":"MFFX-X1","label":"MFFX X1","n":67,"net":-416.06,"wr":0.3731,"comm":34.02,"gross":-377.21},{"acc":"MFFX-X2","label":"MFFX X2","n":49,"net":-185.23,"wr":0.4286,"comm":2.3,"gross":-182.57},{"acc":"MFFX-X3","label":"MFFX X3","n":99,"net":-398.85,"wr":0.2525,"comm":34,"gross":-365.19},{"acc":"MFFX-X4","label":"MFFX X4","n":0,"net":-284.86,"wr":0,"comm":0.4,"gross":-284.46},{"acc":"ALPARI-2023","label":"ALP '23","n":275,"net":-325.16,"wr":0.76,"comm":0,"gross":-325.16},{"acc":"ALPARI-2020","label":"ALP '20","n":0,"net":-208.9,"wr":0,"comm":0,"gross":-208.9}];
+const DIR_STATS    = [{"dir":"Long","n":831,"wr":0.4477,"net":-6591.47,"avgW":36.67,"avgL":-44.08},{"dir":"Short","n":842,"wr":0.5523,"net":-8155.54,"avgW":28.42,"avgL":-56.69}];
+const ANALYTICS_SUMMARY = {"totalTrades":1673,"winRate":0.5003,"avgWin":32.09,"avgLoss":-49.77,"totalCommission":4295.84,"totalGross":-10417.94,"commDragPct":0.4123,"tradingDays":116,"peakEquity":1085.31,"maxDrawdown":14922.99,"profitFactor":0.6455};
 
 const MONTHLY_PNL = [
   {month:'Mar 2020',pnl:-80.20},{month:'Apr 2020',pnl:-62.30},{month:'May 2020',pnl:-66.40},
   {month:'Sep 2023',pnl:-128.53},{month:'Oct 2023',pnl:-140.45},{month:'Nov 2023',pnl:-56.18},
-  {month:'Feb 2024',pnl:-601.29},{month:'Mar 2024',pnl:-40.00},{month:'Apr 2024',pnl:-2514.40},
-  {month:'May 2024',pnl:-40.78},{month:'Jun 2024',pnl:-3974.19},{month:'Jul 2024',pnl:-2716.96},
-  {month:'Aug 2024',pnl:-281.54},{month:'Sep 2024',pnl:-2793.16},{month:'Oct 2024',pnl:-377.28},
+  {month:'Feb 2024',pnl:-601.29},{month:'Mar 2024',pnl:-40.00},{month:'Apr 2024',pnl:-1999.40},
+  {month:'May 2024',pnl:-40.78},{month:'Jun 2024',pnl:-3974.19},{month:'Jul 2024',pnl:-4307.24},
+  {month:'Aug 2024',pnl:-227.15},{month:'Sep 2024',pnl:-2879.65},{month:'Oct 2024',pnl:-389.31},
   {month:'Nov 2024',pnl:-183.40},{month:'Dec 2024',pnl:-90.00},{month:'Jan 2025',pnl:-31.64},
-  {month:'Feb 2026',pnl:-76.55},
+  {month:'Feb 2026',pnl:-43.62},
 ];
 const MARKET_PNL = [
   {name:'US Futures',  pnl:-13377.09, color:'#6366f1'},
   {name:'Spot FX',     pnl:-1268.63,  color:'#40B5AD'},
   {name:'Personal FX', pnl:-534.06,   color:'#7c3aed'},
+];
+
+/* ────────────────────────────────────────────
+   INVESTORS / FUNDING DATA
+──────────────────────────────────────────── */
+const FUNDING_DATA = [
+  {
+    group: 'Personal Accounts (Alpari)',
+    totalUSD: 340.31,
+    sources: [
+      { tag:'IF', name:'Internal Funding',  usd:75.35,  pct:22, ngn:null },
+      { tag:'MO', name:'MO (Investor)',      usd:108.69, pct:32, ngn:100000 },
+      { tag:'TA', name:'TA (Investor)',      usd:156.27, pct:46, ngn:null   },
+    ]
+  },
+  {
+    group: 'MyFundedFutures X1–X5 (Eval Fees)',
+    totalUSD: 552.50,
+    sources: [
+      { tag:'IF', name:'Internal Funding', usd:552.50, pct:100, ngn:null },
+    ]
+  },
+  {
+    group: 'MyFundedFX Spot X1–X4 (Eval Fees)',
+    totalUSD: 148.22,
+    sources: [
+      { tag:'IF', name:'Internal Funding', usd:148.22, pct:100, ngn:null },
+    ]
+  },
+  {
+    group: 'Active Evaluations (FDNT + T5RS)',
+    totalUSD: 94.71,
+    sources: [
+      { tag:'IF', name:'Internal Funding', usd:94.71, pct:100, ngn:null },
+    ]
+  },
+  {
+    group: '1kHooD Fund',
+    totalUSD: 1000,
+    sources: [
+      { tag:'TA', name:'TA (Investor)', usd:1000, pct:100, ngn:null },
+    ]
+  },
+  {
+    group: 'FIBAM NGX Fund',
+    totalUSD: 107.64,
+    sources: [
+      { tag:'IF', name:'Internal Funding', usd:107.64, pct:100, ngn:161452.90 },
+    ]
+  },
 ];
 
 /* ────────────────────────────────────────────
@@ -369,7 +430,11 @@ function buildAccountCards(filter='all') {
   });
   grid.innerHTML=list.map(acc=>{
     const days=daysBetween(acc.startDate,acc.endDate);
-    const sB=acc.status==='active'?`<span class="badge badge--active">● Active</span>`:`<span class="badge badge--completed">✓ Ended</span>`;
+    const sB=acc.status==='active'
+      ? `<span class="badge badge--active">● Active</span>`
+      : acc.type==='personal'
+        ? `<span class="badge badge--completed">✓ Closed</span>`
+        : `<span class="badge badge--completed">✓ Ended</span>`;
     const tB=acc.type==='prop-eval'?`<span class="badge badge--eval">Prop Eval</span>`:acc.type==='fund'?`<span class="badge badge--fund">Fund</span>`:`<span class="badge badge--personal">Personal</span>`;
     const mB=`<span class="badge badge--${acc.market}">${acc.marketLabel}</span>`;
     const sV=acc.currency==='NGN'?`<span class="account-card-stat-val neutral">NGN</span>`:`<span class="account-card-stat-val neutral">${fmt(acc.size)}</span>`;
@@ -591,8 +656,16 @@ function buildTradingTable() {
   const list=ACCOUNTS.filter(a=>a.type==='prop-eval'||a.type==='personal');
   rows.innerHTML=list.map(acc=>{
     const days=daysBetween(acc.startDate,acc.endDate);
-    const sc=acc.status==='active'?'active':acc.pnl<0?'lost':'completed';
-    const sl=acc.status==='active'?'● Active':acc.pnl<0?'× Lost':'✓ Done';
+    let sc, sl;
+    if(acc.status==='active') {
+      sc='active'; sl='● Active';
+    } else if(acc.type==='personal') {
+      sc='completed'; sl='✓ Closed';
+    } else if(acc.pnl<0) {
+      sc='lost'; sl='× Failed';
+    } else {
+      sc='completed'; sl='✓ Done';
+    }
     const pc=acc.pnl==null?'':(acc.pnl>=0?'pos':'neg');
     return `<div class="tat-row" onclick="openDrawer('${acc.id}')" style="cursor:pointer">
       <div><span class="tat-account-name">${acc.shortName}</span><span class="tat-account-id">${acc.platform} · ${acc.marketLabel}</span></div>
@@ -614,9 +687,14 @@ function buildTradingTable() {
 ──────────────────────────────────────────── */
 function buildFunds() {
   const kc=document.getElementById('khoodHoldings');if(kc)kc.textContent=KHOOD_HOLDINGS.length+' positions';
-  const nc=document.getElementById('ngxHoldings');if(nc)nc.textContent=NGX_HOLDINGS.length+' positions';
+  const nc=document.getElementById('ngxHoldings');if(nc)nc.textContent=NGX_HOLDINGS.length+' open positions';
   const kl=document.getElementById('khoodHoldingsList');
-  if(kl)kl.innerHTML=KHOOD_HOLDINGS.slice(0,6).map(h=>`<div class="holding-row"><span class="holding-ticker">${h.ticker}</span><span class="holding-name">${h.name}</span><span class="holding-change ${h.change>=0?'pos':'neg'}">${(h.change>=0?'+':'')+(h.change*100).toFixed(1)}%</span></div>`).join('');
+  if(kl)kl.innerHTML=KHOOD_HOLDINGS.slice(0,6).map(h=>{
+    const chgHtml = h.change!=null
+      ? `<span class="holding-change ${h.change>=0?'pos':'neg'}">${(h.change>=0?'+':'')+(h.change*100).toFixed(1)}%</span>`
+      : `<span class="holding-change neutral">Live ↗</span>`;
+    return `<div class="holding-row"><span class="holding-ticker">${h.ticker}</span><span class="holding-name">${h.name}</span>${chgHtml}</div>`;
+  }).join('');
   const nl=document.getElementById('ngxHoldingsList');
   if(nl)nl.innerHTML=NGX_HOLDINGS.slice(0,6).map(h=>`<div class="holding-row"><span class="holding-ticker">${h.ticker}</span><span class="holding-name">${h.name}</span><span class="holding-change ${h.changeP>=0?'pos':'neg'}">${(h.changeP>=0?'+':'')+(h.changeP*100).toFixed(1)}%</span></div>`).join('');
   buildFundChart('khoodChart',KHOOD_PERF);
@@ -666,16 +744,16 @@ function openDrawer(id) {
   document.getElementById('drawerSubtitle').textContent=`${acc.shortName} · ${acc.platform} · ${acc.marketLabel}`;
 
   const src = DATA_SOURCE[id] || { label:'Unknown', cls:'source-est', tip:'' };
-  let html = `
+  let html=`
     <div class="drawer-source-badge ${src.cls}" title="${src.tip}">
       <span class="drawer-source-icon">◈</span> ${src.label}
       <span class="drawer-source-tip">${src.tip}</span>
     </div>
     <div class="drawer-stats">
-      <div class="drawer-stat"><div class="drawer-stat-label">Status</div><div class="drawer-stat-val">${acc.status === 'active' ? '● Active' : '✓ Ended'}</div></div>
-      <div class="drawer-stat"><div class="drawer-stat-label">Account Size</div><div class="drawer-stat-val">${acc.currency === 'NGN' ? 'NGN' : fmt(acc.size)}</div></div>
-      <div class="drawer-stat"><div class="drawer-stat-label">Net P&L</div><div class="drawer-stat-val ${acc.pnl == null ? '' : acc.pnl >= 0 ? 'pos' : 'neg'}">${acc.pnl != null ? fmtFull(acc.pnl) : 'Active'}</div></div>
-      <div class="drawer-stat"><div class="drawer-stat-label">Return</div><div class="drawer-stat-val ${acc.performance == null ? '' : acc.performance >= 0 ? 'pos' : 'neg'}">${acc.performance != null ? fmtPct(acc.performance) : '—'}</div></div>
+      <div class="drawer-stat"><div class="drawer-stat-label">Status</div><div class="drawer-stat-val">${acc.status==='active'?'● Active':'✓ Ended'}</div></div>
+      <div class="drawer-stat"><div class="drawer-stat-label">Account Size</div><div class="drawer-stat-val">${acc.currency==='NGN'?'NGN':fmt(acc.size)}</div></div>
+      <div class="drawer-stat"><div class="drawer-stat-label">Net P&L</div><div class="drawer-stat-val ${acc.pnl==null?'':acc.pnl>=0?'pos':'neg'}">${acc.pnl!=null?fmtFull(acc.pnl):'Active'}</div></div>
+      <div class="drawer-stat"><div class="drawer-stat-label">Return</div><div class="drawer-stat-val ${acc.performance==null?'':acc.performance>=0?'pos':'neg'}">${acc.performance!=null?fmtPct(acc.performance):'—'}</div></div>
       <div class="drawer-stat"><div class="drawer-stat-label">Period</div><div class="drawer-stat-val" style="font-size:12px">${fmtDate(acc.startDate)}</div></div>
       <div class="drawer-stat"><div class="drawer-stat-label">Duration</div><div class="drawer-stat-val" style="font-size:12px">${days} days · ${fmtDate(acc.endDate)}</div></div>
     </div>`;
@@ -817,7 +895,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   initCalendars();
   buildTradingTable();
   buildFunds();
+  buildFundingSection();
   buildPerformance();
+  fetchLivePrices();
 
   document.getElementById('drawerClose').addEventListener('click',closeDrawer);
   document.getElementById('drawerOverlay').addEventListener('click',closeDrawer);
@@ -828,7 +908,94 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
   buildAnalytics();
   requestAnimationFrame(()=>initScrollReveal());
+
+  // Refresh live prices every 60 seconds
+  setInterval(fetchLivePrices, 60000);
 });
+
+/* ════════════════════════════════════════════════
+   INVESTORS / FUNDING SECTION
+════════════════════════════════════════════════ */
+function buildFundingSection() {
+  const grid = document.getElementById('fundingGrid');
+  if (!grid) return;
+  const TAG_CLASS = { IF:'if', TA:'ta', MO:'mo' };
+  grid.innerHTML = FUNDING_DATA.map(group => {
+    const rows = group.sources.map(s => {
+      const tc = TAG_CLASS[s.tag] || 'if';
+      const ngnNote = s.ngn ? `<span style="font-size:11px;color:var(--text-3);margin-left:4px">(₦${(s.ngn/1000).toFixed(0)}k)</span>` : '';
+      return `<div class="funder-row">
+        <span class="funder-tag funder-tag--${tc}">${s.tag}</span>
+        <span class="funder-name">${s.name}</span>
+        <span class="funder-amount">$${s.usd.toFixed(2)}${ngnNote}</span>
+        <span class="funder-pct">${s.pct}%</span>
+      </div>`;
+    }).join('');
+    return `<div class="funding-card">
+      <div class="funding-card-header">
+        <div class="funding-card-title">${group.group}</div>
+        <div class="funding-card-total">$${group.totalUSD.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+      </div>
+      ${rows}
+    </div>`;
+  }).join('');
+}
+
+/* ════════════════════════════════════════════════
+   LIVE PRICE FEED — FX via Frankfurter, Stocks via Yahoo Finance
+════════════════════════════════════════════════ */
+async function fetchLivePrices() {
+  // ── Forex ──────────────────────────────────────
+  try {
+    const [usdRes, eurRes] = await Promise.all([
+      fetch('https://api.frankfurter.app/latest?from=USD&to=JPY'),
+      fetch('https://api.frankfurter.app/latest?from=EUR&to=USD')
+    ]);
+    const usdData = await usdRes.json();
+    const eurData = await eurRes.json();
+    const ujEl = document.getElementById('tickerUSDJPY');
+    const euEl = document.getElementById('tickerEURUSD');
+    if (ujEl && usdData.rates?.JPY) ujEl.textContent = usdData.rates.JPY.toFixed(3);
+    if (euEl && eurData.rates?.USD) euEl.textContent = eurData.rates.USD.toFixed(5);
+  } catch(e) { console.log('FX fetch failed:', e.message); }
+
+  // ── 1kHooD open positions only: CRWD, HOOD, RKLB ──
+  const openPositions = [
+    { ticker:'PANW', openPrice:150.17 },
+    { ticker:'HOOD', openPrice:74.44  },
+    { ticker:'RKLB', openPrice:71.84  },
+  ];
+  try {
+    const results = await Promise.allSettled(
+      openPositions.map(pos =>
+        fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${pos.ticker}?interval=1d&range=1d`)
+          .then(r => r.json())
+          .then(d => {
+            const meta = d?.chart?.result?.[0]?.meta;
+            if (!meta) return null;
+            const price = meta.regularMarketPrice ?? meta.chartPreviousClose;
+            const chg   = pos.openPrice ? (price - pos.openPrice) / pos.openPrice : 0;
+            return { ticker:pos.ticker, price, chg };
+          })
+      )
+    );
+    results.forEach(r => {
+      if (r.status !== 'fulfilled' || !r.value) return;
+      const { ticker, price, chg } = r.value;
+      const priceEl = document.getElementById(`ticker${ticker}`);
+      const chgEl   = document.getElementById(`ticker${ticker}chg`);
+      if (priceEl) priceEl.textContent = `$${price.toFixed(2)}`;
+      if (chgEl) {
+        const pos = chg >= 0;
+        chgEl.textContent = `${pos?'+':''}${(chg*100).toFixed(1)}%`;
+        chgEl.className = `ticker-change ${pos?'pos':'neg'}`;
+      }
+      // Also update KHOOD_HOLDINGS in memory so fund card refreshes
+      const h = KHOOD_HOLDINGS.find(h => h.ticker === ticker);
+      if (h) { h.price = price; h.change = chg; }
+    });
+  } catch(e) { console.log('Stock fetch failed:', e.message); }
+}
 
 /* ════════════════════════════════════════════════
    PHASE 5 — ANALYTICS CHARTS
