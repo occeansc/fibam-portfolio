@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIBAM — Analytics & Performance</title>
+  <meta name="description" content="FIBAM Deep Analytics — Portfolio Equity Curve, Monthly P&L, Instrument Breakdown, Commission Analysis. 1,673 real trades.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="FIBAM — Analytics & Performance">
+  <meta property="og:description" content="1,673 real trades · Equity Curve · Monthly P&L · Instrument Breakdown · Win Rate Analysis">
+  <meta property="og:site_name" content="FIBAM">
+  <meta name="theme-color" content="#40B5AD">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
+          <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
+        </svg>
+        <span>FI<span>BAM</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Overview</a>
+        <a href="index.html#accounts" class="nav-link">Accounts</a>
+        <a href="funds.html#calendars" class="nav-link">Calendars</a>
+        <a href="funds.html#trading" class="nav-link">Trading</a>
+        <a href="funds.html#funds" class="nav-link">Funds</a>
+        <a href="funds.html#funding" class="nav-link">Funding</a>
+        <a href="analytics.html" class="nav-link nav-link--active">Analytics</a>
+      </div>
+      <button class="nav-menu-btn" id="menuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu">
+      <a href="index.html" class="nav-mobile-link">Overview</a>
+      <a href="index.html#accounts" class="nav-mobile-link">Accounts</a>
+      <a href="funds.html#calendars" class="nav-mobile-link">Calendars</a>
+      <a href="funds.html#trading" class="nav-mobile-link">Trading</a>
+      <a href="funds.html#funds" class="nav-mobile-link">Funds</a>
+      <a href="funds.html#funding" class="nav-mobile-link">Funding</a>
+      <a href="analytics.html" class="nav-mobile-link">Analytics</a>
+    </div>
+  </nav>
+
+  <!-- Page hero — uses padding-top to clear fixed nav -->
+  <div style="background:var(--bg-alt);border-bottom:1px solid var(--border);padding:calc(var(--nav-h) + 40px) 0 32px">
+    <div class="container">
+      <div class="section-tag" style="margin-bottom:12px;display:inline-block">Performance &amp; Analytics</div>
+      <h1 style="font-size:clamp(28px,5vw,48px);font-weight:700;color:var(--text-1);line-height:1.1;margin-bottom:12px">The Full Picture</h1>
+      <p style="font-size:16px;color:var(--text-2);max-width:580px;line-height:1.65">1,673 trades across 15 accounts from 2020–2026. Every number computed from raw Rithmic and MT5 trade data.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:28px">
+        <div style="text-align:center;padding:14px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg)">
+          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text-1)">1,673</div>
+          <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Total Trades</div>
+        </div>
+        <div style="text-align:center;padding:14px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg)">
+          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text-1)">15</div>
+          <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Accounts</div>
+        </div>
+        <div style="text-align:center;padding:14px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg)">
+          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:#dc2626">−$10.4k</div>
+          <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Net P&L</div>
+        </div>
+        <div style="text-align:center;padding:14px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg)">
+          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:#16a34a">+$1,085</div>
+          <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Peak Equity</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERFORMANCE SECTION -->
+  <section class="section" id="performance">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Performance Analysis</div>
+        <h2 class="section-title">The Numbers</h2>
+        <p class="section-desc">Aggregated performance across all closed trading accounts. Monthly P&amp;L, cost analysis, and instrument breakdown.</p>
+      </div>
+      <div class="perf-grid">
+        <div class="perf-card perf-card--wide">
+          <div class="perf-card-header">
+            <h3 class="perf-card-title">Monthly P&L — All Accounts</h3>
+            <span class="perf-card-note">Closed accounts · USD</span>
+          </div>
+          <canvas id="monthlyPnlChart" height="120"></canvas>
+        </div>
+        <div class="perf-card">
+          <div class="perf-card-header">
+            <h3 class="perf-card-title">Cost Breakdown</h3>
+            <span class="perf-card-note">All prop accounts</span>
+          </div>
+          <canvas id="costChart" width="220" height="220"></canvas>
+          <div class="cost-breakdown" id="costBreakdown"></div>
+        </div>
+        <div class="perf-card">
+          <div class="perf-card-header">
+            <h3 class="perf-card-title">By Market</h3>
+            <span class="perf-card-note">P&L split</span>
+          </div>
+          <div class="market-perf-list" id="marketPerfList"></div>
+        </div>
+        <div class="perf-card">
+          <div class="perf-card-header">
+            <h3 class="perf-card-title">Account Duration</h3>
+            <span class="perf-card-note">Days active per account</span>
+          </div>
+          <canvas id="durationChart" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEEP ANALYTICS SECTION -->
+  <section class="section section--alt" id="analytics">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Deep Analytics</div>
+        <h2 class="section-title">Trade-Level Breakdown</h2>
+        <p class="section-desc">1,548 prop firm trades across 10 accounts · 166 trading days. Every number from raw Rithmic and MT5 trade data.</p>
+      </div>
+
+      <div class="an-stat-strip">
+        <div class="an-stat"><div class="an-stat-val" id="anTotalTrades">—</div><div class="an-stat-label">Total Trades</div></div>
+        <div class="an-stat-divider"></div>
+        <div class="an-stat"><div class="an-stat-val" id="anWinRate">—</div><div class="an-stat-label">Win Rate</div></div>
+        <div class="an-stat-divider"></div>
+        <div class="an-stat"><div class="an-stat-val" id="anAvgWin">—</div><div class="an-stat-label">Avg Winner</div></div>
+        <div class="an-stat-divider"></div>
+        <div class="an-stat"><div class="an-stat-val" id="anAvgLoss">—</div><div class="an-stat-label">Avg Loser</div></div>
+        <div class="an-stat-divider"></div>
+        <div class="an-stat"><div class="an-stat-val" id="anCommDrag">—</div><div class="an-stat-label">Commission Drag</div></div>
+        <div class="an-stat-divider"></div>
+        <div class="an-stat"><div class="an-stat-val" id="anPF">—</div><div class="an-stat-label">Profit Factor</div></div>
+      </div>
+
+      <div class="an-grid an-grid--2-1">
+        <div class="an-card an-card--equity">
+          <div class="an-card-head">
+            <div>
+              <div class="an-card-title">Portfolio Equity Curve</div>
+              <div class="an-card-sub">All accounts combined · Sep 2023 – Feb 2026</div>
+            </div>
+            <div class="an-peak-badge">
+              <span class="an-peak-label">Peak</span>
+              <span class="an-peak-val">+$1,085</span>
+            </div>
+          </div>
+          <canvas id="equityChart" height="180"></canvas>
+        </div>
+        <div class="an-card">
+          <div class="an-card-head">
+            <div class="an-card-title">Long vs Short</div>
+            <div class="an-card-sub">Excluding journal entries</div>
+          </div>
+          <div class="an-dir-wrap" id="dirStats"></div>
+        </div>
+      </div>
+
+      <div class="an-grid an-grid--1-1">
+        <div class="an-card">
+          <div class="an-card-head">
+            <div class="an-card-title">Instrument Breakdown</div>
+            <div class="an-card-sub">Net P&amp;L by symbol · ≥5 trades</div>
+          </div>
+          <canvas id="instrChart" height="260"></canvas>
+        </div>
+        <div class="an-card">
+          <div class="an-card-head">
+            <div class="an-card-title">Commission Drag per Account</div>
+            <div class="an-card-sub">Gross P&amp;L vs commission cost</div>
+          </div>
+          <canvas id="commChart" height="260"></canvas>
+        </div>
+      </div>
+
+      <div class="an-grid an-grid--1-1">
+        <div class="an-card">
+          <div class="an-card-head">
+            <div class="an-card-title">Win Rate by Account</div>
+            <div class="an-card-sub">% of profitable trades per account</div>
+          </div>
+          <canvas id="wrChart" height="240"></canvas>
+        </div>
+        <div class="an-card">
+          <div class="an-card-head">
+            <div class="an-card-title">Trade Size Distribution</div>
+            <div class="an-card-sub">Count of trades per P&amp;L bucket</div>
+          </div>
+          <canvas id="distChart" height="240"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
+            <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
+          </svg>
+          <div>
+            <div class="footer-name">FIBAM</div>
+            <div class="footer-tagline"><em>...purpose not money, is your real asset</em></div>
+          </div>
+        </div>
+        <div class="footer-meta">
+          <p>Trading Portfolio · 2020 – Present</p>
+          <p>Spot FX · US Futures · US Equities · Nigerian Stocks</p>
+        </div>
+        <div class="footer-update">
+          <span class="update-dot"></span>
+          <span id="lastUpdated">Data current as of Feb 2026</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
