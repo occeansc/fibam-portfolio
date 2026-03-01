@@ -20,7 +20,7 @@
       <a href="#hero" class="nav-logo">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
-          <text x="18" y="24" text-anchor="middle" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
+          <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
         </svg>
         <span class="nav-name">FIBAM</span>
       </a>
@@ -31,6 +31,7 @@
         <a href="#calendars" class="nav-link">Calendars</a>
         <a href="#trading" class="nav-link">Trading</a>
         <a href="#funds" class="nav-link">Funds</a>
+        <a href="#funding" class="nav-link">Funding</a>
         <a href="#performance" class="nav-link">Performance</a>
         <a href="#analytics" class="nav-link">Analytics</a>
       </div>
@@ -45,10 +46,63 @@
       <a href="#calendars" class="nav-mobile-link">Calendars</a>
       <a href="#trading" class="nav-mobile-link">Trading</a>
       <a href="#funds" class="nav-mobile-link">Funds</a>
+      <a href="#funding" class="nav-mobile-link">Funding</a>
       <a href="#performance" class="nav-mobile-link">Performance</a>
       <a href="#analytics" class="nav-mobile-link">Analytics</a>
     </div>
   </nav>
+
+  <!-- Live Price Ticker Bar -->
+  <div class="live-ticker-bar" id="tickerBar">
+    <div class="live-ticker-inner">
+      <div class="ticker-item">
+        <span class="ticker-dot"></span>
+        <span class="ticker-label">Live</span>
+      </div>
+      <!-- FX: active eval pairs -->
+      <div class="ticker-item">
+        <span class="ticker-pair">USD/JPY</span>
+        <span class="ticker-price" id="tickerUSDJPY">—</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-pair">EUR/USD</span>
+        <span class="ticker-price" id="tickerEURUSD">—</span>
+      </div>
+      <!-- 1kHooD open positions -->
+      <div class="ticker-item" style="border-left:1px solid rgba(255,255,255,0.15);padding-left:32px">
+        <span class="ticker-pair">PANW</span>
+        <span class="ticker-price" id="tickerPANW">—</span>
+        <span class="ticker-change" id="tickerPANWchg"></span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-pair">HOOD</span>
+        <span class="ticker-price" id="tickerHOOD">—</span>
+        <span class="ticker-change" id="tickerHOODchg"></span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-pair">RKLB</span>
+        <span class="ticker-price" id="tickerRKLB">—</span>
+        <span class="ticker-change" id="tickerRKLBchg"></span>
+      </div>
+      <!-- NGX positions -->
+      <div class="ticker-item" style="border-left:1px solid rgba(255,255,255,0.15);padding-left:48px">
+        <span class="ticker-pair">GEREGU</span>
+        <span class="ticker-price" id="tickerGEREGU">₦1,141.50</span>
+        <span class="ticker-change pos">+26.8%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-pair">ACCESSCORP</span>
+        <span class="ticker-price" id="tickerACCESS">₦22.90</span>
+        <span class="ticker-change neg">−1.2%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-pair">ZENITHBANK</span>
+        <span class="ticker-price" id="tickerZENITH">₦64.50</span>
+        <span class="ticker-change neg">−3.7%</span>
+      </div>
+      <span class="ticker-ngx-note">NGX: manual · US stocks: Yahoo Finance · FX: Frankfurter</span>
+    </div>
+  </div>
 
   <!-- ══════════════════════════════════════════
        HERO
@@ -83,7 +137,7 @@
           </div>
           <div class="hero-stat-divider"></div>
           <div class="hero-stat">
-            <span class="hero-stat-num" data-target="1476" data-suffix="+">0</span>
+            <span class="hero-stat-num" data-target="1673" data-suffix="+">0</span>
             <span class="hero-stat-label">Trades Executed</span>
           </div>
           <div class="hero-stat-divider"></div>
@@ -134,7 +188,7 @@
           </div>
           <div class="stat-card">
             <div class="stat-card-icon">↗</div>
-            <div class="stat-card-value">$1,669</div>
+            <div class="stat-card-value">$1,699</div>
             <div class="stat-card-label">Total Evaluation Fees</div>
             <div class="stat-card-note">Across 13 prop firm attempts</div>
           </div>
@@ -411,12 +465,12 @@
           <div class="tstat-divider"></div>
           <div class="tstat-block">
             <div class="tstat-label">Total Eval Fees</div>
-            <div class="tstat-value tstat-value--red">$1,669</div>
+            <div class="tstat-value tstat-value--red">$1,699</div>
           </div>
           <div class="tstat-divider"></div>
           <div class="tstat-block">
             <div class="tstat-label">Total Closed P&L</div>
-            <div class="tstat-value tstat-value--red">−$11,301</div>
+            <div class="tstat-value tstat-value--red">−$15,264</div>
           </div>
           <div class="tstat-divider"></div>
           <div class="tstat-block">
@@ -539,6 +593,48 @@
           </div>
         </div>
 
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       INVESTORS / FUNDING
+  ══════════════════════════════════════════ -->
+  <section class="section" id="funding">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Capital Sources</div>
+        <h2 class="section-title">Investors &amp; Funding</h2>
+        <p class="section-desc">All capital deployed across trading campaigns — personal funds, investor contributions, and their allocation across accounts.</p>
+      </div>
+
+      <!-- Summary strip -->
+      <div class="funding-summary" style="margin-bottom:32px">
+        <div class="funding-summary-item">
+          <div class="funding-summary-val">$2,280</div>
+          <div class="funding-summary-label">Total Deployed</div>
+          <div class="funding-summary-sub">All capital incl. eval fees</div>
+        </div>
+        <div class="funding-summary-item">
+          <div class="funding-summary-val">3</div>
+          <div class="funding-summary-label">Contributors</div>
+          <div class="funding-summary-sub">IF · TA · MO</div>
+        </div>
+        <div class="funding-summary-item">
+          <div class="funding-summary-val">$264</div>
+          <div class="funding-summary-label">External Capital</div>
+          <div class="funding-summary-sub">TA $265 · MO $109</div>
+        </div>
+        <div class="funding-summary-item">
+          <div class="funding-summary-val">88%</div>
+          <div class="funding-summary-label">Self-Funded</div>
+          <div class="funding-summary-sub">Internal / personal capital</div>
+        </div>
+      </div>
+
+      <div class="funding-grid" id="fundingGrid">
+        <!-- populated by JS -->
       </div>
 
     </div>
@@ -721,7 +817,7 @@
         <div class="footer-brand">
           <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
             <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
-            <text x="18" y="24" text-anchor="middle" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
+            <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
           </svg>
           <div>
             <div class="footer-name">FIBAM</div>
