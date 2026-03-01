@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIBAM · Data Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0b0c10; --surface:#13151c; --border:#1e2130; --border2:#2a2d3e;
+  --accent:#4ade80; --accent2:#3b82f6; --warn:#f59e0b; --danger:#ef4444;
+  --text:#e8eaf0; --text2:#8b90a8; --text3:#555a72;
+  --mono:'JetBrains Mono',monospace; --sans:'Public Sans',sans-serif; --radius:8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;gap:16px}
+.header-logo{font-size:18px;font-weight:700;letter-spacing:-.5px}
+.header-logo span{color:var(--accent)}
+.header-tag{background:rgba(251,191,36,.15);color:var(--warn);font-size:10px;font-weight:600;letter-spacing:1px;padding:3px 8px;border-radius:4px;border:1px solid rgba(251,191,36,.3)}
+.header-back{margin-left:auto;color:var(--text2);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:6px;transition:color .2s}
+.header-back:hover{color:var(--text)}
+.main{max-width:1200px;margin:0 auto;padding:32px 24px;display:grid;gap:32px}
+.section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.section-header{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.section-title{font-size:13px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text2);display:flex;align-items:center;gap:10px}
+.step-badge{background:var(--accent);color:#000;font-size:10px;font-weight:700;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.section-body{padding:24px}
+label{display:block;font-size:12px;font-weight:500;color:var(--text2);margin-bottom:6px;letter-spacing:.3px}
+select,input[type="text"],input[type="number"],input[type="date"],textarea{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-family:var(--sans);font-size:14px;padding:9px 12px;outline:none;transition:border-color .2s;-webkit-appearance:none}
+select:focus,input:focus,textarea:focus{border-color:var(--accent2)}
+textarea{font-family:var(--mono);font-size:12px;resize:vertical;min-height:180px;line-height:1.5}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:16px}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:6px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:#22c55e}
+.btn-secondary{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--border2)}
+.btn-secondary:hover{background:rgba(255,255,255,.1)}
+.btn-blue{background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.3)}
+.btn-blue:hover{background:rgba(59,130,246,.25)}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);padding:0 24px}
+.tab{padding:12px 16px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;margin-bottom:-1px}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab:hover:not(.active){color:var(--text)}
+.tab-content{display:none;padding:24px}
+.tab-content.active{display:block}
+.table-wrap{overflow-x:auto;border-radius:6px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:#0e1018;padding:9px 12px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:8px 12px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:12px;color:var(--text);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+.pos{color:var(--accent)}.neg{color:var(--danger)}.dir-long{color:#60a5fa}.dir-short{color:#f472b6}
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:20px}
+.stat-cell{background:var(--bg);padding:12px 16px}
+.stat-label{font-size:10px;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
+.stat-val{font-family:var(--mono);font-size:15px;font-weight:600}
+.output-area{background:#060709;border:1px solid var(--border);border-radius:6px;padding:16px;font-family:var(--mono);font-size:11.5px;color:#a9b1d6;max-height:320px;overflow-y:auto;white-space:pre-wrap;word-break:break-all;line-height:1.6}
+.alert{padding:12px 16px;border-radius:6px;font-size:13px;display:flex;align-items:flex-start;gap:10px;margin-bottom:16px}
+.alert-info{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:#93c5fd}
+.alert-warn{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);color:#fde68a}
+.alert-ok{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);color:#86efac}
+.alert-err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+.accs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.acc-card{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:14px 16px;cursor:pointer;transition:border-color .15s}
+.acc-card:hover{border-color:var(--border2)}
+.acc-card.selected{border-color:var(--accent);background:rgba(74,222,128,.04)}
+.acc-card--locked{opacity:.55}
+.acc-card--locked.selected{border-color:var(--text3);background:transparent}
+.acc-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.acc-name{font-weight:600;font-size:13px}
+.acc-badge{font-size:10px;padding:2px 7px;border-radius:3px;font-weight:600;letter-spacing:.3px}
+.badge-active{background:rgba(74,222,128,.15);color:var(--accent)}
+.badge-done{background:rgba(139,144,168,.15);color:var(--text2)}
+.acc-meta{font-size:12px;color:var(--text2)}
+.acc-meta span{color:var(--text3);margin-right:3px}
+.format-block{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:14px 16px;margin-top:12px}
+.format-block h4{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px}
+.format-block code{font-family:var(--mono);font-size:11px;color:#93c5fd;background:rgba(59,130,246,.08);padding:2px 5px;border-radius:3px}
+.format-block p{font-size:12.5px;color:var(--text2);margin-bottom:6px}
+.meta-form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+@media(max-width:640px){.meta-form{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">FIBAM <span>·</span> Admin</div>
+  <div class="header-tag">DATA MANAGER</div>
+  <a href="index.html" class="header-back">← Back to Portfolio</a>
+</div>
+
+<div class="main">
+
+  <!-- STEP 1 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title"><div class="step-badge">1</div>Select Account to Update</div>
+      <span id="selectedLabel" style="font-size:12px;color:var(--accent)"></span>
+    </div>
+    <div class="section-body">
+      <div class="accs-grid" id="accGrid"></div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title"><div class="step-badge">2</div>Enter Trade Data</div>
+    </div>
+    <div class="tabs">
+      <div class="tab active" data-tab="paste">Paste from PDF / CSV</div>
+      <div class="tab" data-tab="manual">Manual Entry</div>
+      <div class="tab" data-tab="format">Format Guide</div>
+    </div>
+
+    <div class="tab-content active" id="tab-paste">
+      <div class="alert alert-info">
+        <span>ℹ</span>
+        <span>Paste raw PDF or CSV trade data below. Supports <strong>MFFU Futures</strong> (Rithmic format with buyFillId/sellFillId columns) and <strong>MFFX/MT5 Spot FX</strong> format. The parser auto-detects the format from the header row.</span>
+      </div>
+      <div style="margin-bottom:14px">
+        <label>Paste trade data (include the header row):</label>
+        <textarea id="pasteInput" placeholder="Paste raw trade data from PDF here...&#10;&#10;MFFU Futures header:  symbol  _priceFormat  _priceFormatType  _tickSize  buyFillId  sellFillId  qty  buyPrice  sellPrice  pnl  boughtTimestamp  soldTimestamp  duration&#10;&#10;MFFX Spot header:  instrument  direction  lots  entry  exit  pips  grossPnl  commission  swap  netPnl  openDate  closeDate"></textarea>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div>
+          <label style="margin-bottom:4px">Commission handling:</label>
+          <select id="commissionMode" style="width:auto;min-width:230px">
+            <option value="keep">Use commission from data (or 0 if absent)</option>
+            <option value="fixed">Fixed commission per trade</option>
+            <option value="distribute">Distribute total commission evenly</option>
+          </select>
+        </div>
+        <div>
+          <label style="margin-bottom:4px">Value ($):</label>
+          <input type="number" id="commissionVal" placeholder="0.00" style="width:130px" step="0.01" min="0" value="">
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="parsePaste()">▶ Parse Data</button>
+        <button class="btn btn-secondary btn-sm" onclick="clearPaste()">Clear</button>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-manual">
+      <div style="margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div>
+          <label>Trade type:</label>
+          <select id="manualType" onchange="updateManualForm()" style="width:auto;min-width:200px">
+            <option value="futures">Futures (MFFU / Rithmic)</option>
+            <option value="spot">Spot FX (MFFX / MT5)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-grid" id="manualFields"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="addManualTrade()">+ Add Trade to Preview</button>
+        <button class="btn btn-secondary btn-sm" onclick="clearManualFields()">Clear Fields</button>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-format">
+      <div class="format-block" style="margin-top:0">
+        <h4>📊 MFFU Futures — Rithmic PDF Format</h4>
+        <p>From the MFFU (MyFundedFutures) daily trade report PDFs. Copy all text from the table pages. The header row is:</p>
+        <p><code>symbol  _priceFormat  _priceFormatType  _tickSize  buyFillId  sellFillId  qty  buyPrice  sellPrice  pnl  boughtTimestamp  soldTimestamp  duration</code></p>
+        <p style="margin-top:8px">Direction is inferred from timestamps and P&L direction. Commission is not in Rithmic data — use the "Fixed" or "Distribute" option above and enter the value from the daily summary page.</p>
+        <p style="color:#86efac;margin-top:6px">✓ Dates auto-converted DD/MM/YYYY → YYYY-MM-DD · Summary/header rows auto-skipped</p>
+      </div>
+      <div class="format-block">
+        <h4>💱 MFFX Spot FX — MT5 / Broker CSV</h4>
+        <p>Tab or comma-separated from MT5 export or broker report. Flexible column order. Accepted aliases:</p>
+        <p><code>instrument / symbol · direction / side · lots / volume · entry / open_price · exit / close_price · grossPnl / profit · commission / fee · openDate / datetime · closeDate / close_date</code></p>
+        <p style="color:#86efac;margin-top:6px">✓ Supports YYYY-MM-DD and DD/MM/YYYY date formats</p>
+      </div>
+      <div class="format-block">
+        <h4>📋 Workflow — PDF Reports</h4>
+        <p><strong>1.</strong> Open the PDF in your browser or Preview</p>
+        <p><strong>2.</strong> Select all text in the trade table section (avoid page totals if possible)</p>
+        <p><strong>3.</strong> Paste into the "Paste from PDF" tab — summary rows are auto-skipped</p>
+        <p><strong>4.</strong> Set commission if not embedded in the data</p>
+        <p><strong>5.</strong> Parse → review preview → Generate JS → Copy → paste into app.js</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="section" id="previewSection" style="display:none">
+    <div class="section-header">
+      <div class="section-title"><div class="step-badge">3</div>Preview Parsed Trades</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span id="parseStatus" style="font-size:12px;color:var(--text2)"></span>
+        <button class="btn btn-secondary btn-sm" onclick="clearPreview()">✕ Clear All</button>
+      </div>
+    </div>
+    <div class="section-body">
+      <div id="statsBar" class="stats-bar"></div>
+      <div id="alertArea"></div>
+      <div class="table-wrap" style="max-height:360px;overflow-y:auto">
+        <table id="previewTable">
+          <thead><tr>
+            <th>#</th><th>Close Date</th><th>Open Date</th><th>Instrument</th>
+            <th>Dir</th><th>Qty/Lots</th><th>Entry</th><th>Exit</th>
+            <th>Gross P&amp;L</th><th>Comm</th><th>Net P&amp;L</th><th></th>
+          </tr></thead>
+          <tbody id="previewBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="section" id="outputSection" style="display:none">
+    <div class="section-header">
+      <div class="section-title"><div class="step-badge">4</div>Generate &amp; Copy JavaScript</div>
+    </div>
+    <div class="section-body">
+      <div class="alert alert-warn" style="margin-bottom:16px">
+        <span>⚠</span>
+        <div>In <strong>js/app.js</strong>, find the line <code>const CONST_NAME = [</code> and replace the <em>entire array</em> (from <code>[</code> to <code>];</code>) with the generated output below.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px">
+        <div>
+          <label>Mode:</label>
+          <select id="mergeMode" style="width:auto;min-width:200px">
+            <option value="replace">Replace all trades for this account</option>
+            <option value="append">Append new trades (add to end)</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="generateOutput()">⟳ Generate JS</button>
+        <button class="btn btn-blue" id="copyBtn" onclick="copyOutput()" style="display:none">⎘ Copy to Clipboard</button>
+      </div>
+      <div class="output-area" id="outputArea">// Select an account (Step 1), parse trades (Step 2), then click Generate JS</div>
+      <div id="lineToReplace" style="margin-top:10px;font-size:12px;color:var(--text2)"></div>
+    </div>
+  </div>
+
+  <!-- EQUITY CURVE MANAGER -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">
+        <div class="step-badge" style="background:#6366f1">▲</div>
+        Equity Curve Manager
+      </div>
+      <span style="font-size:12px;color:var(--text3)">Append new daily P&amp;L entries to EQUITY_CURVE in app.js</span>
+    </div>
+    <div class="section-body">
+      <div class="alert alert-info" style="margin-bottom:20px">
+        <span>ℹ</span>
+        <span>The equity curve tracks cumulative portfolio P&amp;L across all active accounts. Each entry is one trading day. The last recorded entry is shown below — add entries for any days that have traded since.</span>
+      </div>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px 16px;margin-bottom:20px;font-family:var(--mono);font-size:12px;color:var(--text2)">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:8px;font-family:var(--font)">LAST RECORDED ENTRY IN EQUITY_CURVE</div>
+        <span style="color:#6366f1">d:</span> <span id="ecLastDate" style="color:#a5f3fc">2026-02-27</span> &nbsp;|&nbsp;
+        <span style="color:#6366f1">pnl:</span> <span id="ecLastPnl" style="color:#4ade80">+32.93</span> &nbsp;|&nbsp;
+        <span style="color:#6366f1">eq:</span> <span id="ecLastEq" style="color:#ef4444">−13,620.01</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+        <div>
+          <label>Trading Date</label>
+          <input type="date" id="ecDate" onchange="ecPreview()" oninput="ecPreview()">
+        </div>
+        <div>
+          <label>Daily Net P&amp;L (USD) — sum all accounts</label>
+          <input type="number" id="ecPnl" step="0.01" placeholder="e.g. 47.82 or -23.10" oninput="ecPreview()">
+        </div>
+      </div>
+      <div id="ecPreviewBox" style="display:none;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px 16px;margin-bottom:16px;font-family:var(--mono);font-size:12px">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:6px;font-family:var(--font)">ENTRY TO APPEND</div>
+        <span id="ecPreviewLine" style="color:#e2e8f0"></span>
+        <div style="margin-top:8px;font-size:11px;color:var(--text3);font-family:var(--font)">New cumulative equity: <span id="ecNewEq" style="color:#a5f3fc;font-family:var(--mono)"></span></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="ecGenerate()">Generate Append Line</button>
+        <button class="btn btn-secondary btn-sm" onclick="ecClear()">Clear</button>
+      </div>
+      <div id="ecOutput" class="output-area" style="margin-top:16px;display:none"></div>
+      <div id="ecCopyRow" style="margin-top:8px;display:none">
+        <button class="btn btn-blue btn-sm" onclick="ecCopy()">⎘ Copy Line</button>
+        <span style="font-size:12px;color:var(--text2);margin-left:10px">In app.js, find the EQUITY_CURVE array and paste this <strong>before the closing</strong> <code>];</code></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANALYTICS RECALCULATOR -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">
+        <div class="step-badge" style="background:#f59e0b">∑</div>
+        Analytics Recalculator
+      </div>
+      <span style="font-size:12px;color:var(--text3)">Recompute ANALYTICS_SUMMARY after any data update</span>
+    </div>
+    <div class="section-body">
+      <div class="alert alert-info" style="margin-bottom:20px">
+        <span>ℹ</span>
+        <span>After updating trade data for active accounts (FDNT, T5RS), the analytics summary needs to be recomputed. Enter the updated totals below and generate a new <code>ANALYTICS_SUMMARY</code> constant to paste into app.js.</span>
+      </div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:12px">
+        Current values (as of Feb 27 2026) — only override what changed:
+      </div>
+      <div class="meta-form" style="grid-template-columns:repeat(3,1fr)">
+        <div><label>Total Trades</label><input type="number" id="anTrades" value="1673" step="1"></div>
+        <div><label>Win Rate (decimal)</label><input type="number" id="anWr" value="0.5003" step="0.0001"></div>
+        <div><label>Avg Win (USD)</label><input type="number" id="anAvgW" value="32.09" step="0.01"></div>
+        <div><label>Avg Loss (USD, negative)</label><input type="number" id="anAvgL" value="-49.77" step="0.01"></div>
+        <div><label>Total Commission (USD)</label><input type="number" id="anComm" value="4295.84" step="0.01"></div>
+        <div><label>Total Gross P&amp;L (USD)</label><input type="number" id="anGross" value="-10417.94" step="0.01"></div>
+        <div><label>Trading Days</label><input type="number" id="anDays" value="116" step="1"></div>
+        <div><label>Peak Equity (USD)</label><input type="number" id="anPeak" value="1085.31" step="0.01"></div>
+        <div><label>Max Drawdown (USD, positive)</label><input type="number" id="anDD" value="14922.99" step="0.01"></div>
+        <div><label>Gross Winners Total</label><input type="number" id="anGrossW" value="" step="0.01" placeholder="Sum of all positive gross P&Ls"></div>
+        <div><label>Gross Losers Total (positive)</label><input type="number" id="anGrossL" value="" step="0.01" placeholder="Sum of abs(negative gross P&Ls)"></div>
+        <div><label>Profit Factor (auto if above filled)</label><input type="number" id="anPF" value="0.6455" step="0.0001" placeholder="grossWins / grossLosses"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="anGenerate()">Generate ANALYTICS_SUMMARY</button>
+        <button class="btn btn-secondary btn-sm" onclick="anReset()">Reset to Current</button>
+      </div>
+      <div id="anOutput" class="output-area" style="margin-top:16px;display:none"></div>
+      <div id="anCopyRow" style="margin-top:8px;display:none">
+        <button class="btn btn-blue btn-sm" onclick="anCopy()">⎘ Copy</button>
+        <span style="font-size:12px;color:var(--text2);margin-left:10px">In app.js, find <code>const ANALYTICS_SUMMARY = {</code> and replace the entire line.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT STATUS MANAGER -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">
+        <div class="step-badge" style="background:#10b981">⇄</div>
+        Account Status Manager
+      </div>
+      <span style="font-size:12px;color:var(--text3)">Close out active prop evaluations — mark as passed or failed</span>
+    </div>
+    <div class="section-body">
+      <div class="alert alert-info" style="margin-bottom:20px">
+        <span>ℹ</span>
+        <span>When an active evaluation concludes (pass or fail), use this tool to generate the ACCOUNTS[] patch to update its status, set an end date, and optionally add a final P&amp;L snapshot.</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+        <!-- FDNT Card -->
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+            <span style="font-weight:700;color:#e2e8f0">FDNT X1</span>
+            <span class="acc-badge badge-active" style="font-size:11px">FundedNext · Phase 1</span>
+          </div>
+          <div style="display:grid;gap:8px">
+            <div><label style="font-size:11px">Outcome</label>
+              <select id="fdntOutcome" style="width:100%" onchange="smPreview('fdnt')">
+                <option value="active">Still Active</option>
+                <option value="passed">✓ Phase Passed</option>
+                <option value="failed">✗ Failed / Breached</option>
+              </select>
+            </div>
+            <div><label style="font-size:11px">End Date</label>
+              <input type="date" id="fdntEnd" oninput="smPreview('fdnt')">
+            </div>
+            <div><label style="font-size:11px">Final Net P&amp;L (USD)</label>
+              <input type="number" id="fdntPnl" step="0.01" placeholder="-117.11" oninput="smPreview('fdnt')">
+            </div>
+            <div><label style="font-size:11px">Final Trade Count</label>
+              <input type="number" id="fdntTrades" step="1" placeholder="59" oninput="smPreview('fdnt')">
+            </div>
+            <div><label style="font-size:11px">Notes Update</label>
+              <textarea id="fdntNotes" style="min-height:60px;font-size:12px" oninput="smPreview('fdnt')" placeholder="Short summary of outcome..."></textarea>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" style="margin-top:10px;width:100%" onclick="smGenerate('fdnt')">Generate FDNT Patch</button>
+        </div>
+        <!-- T5RS Card -->
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+            <span style="font-weight:700;color:#e2e8f0">T5RS X1</span>
+            <span class="acc-badge badge-active" style="font-size:11px">The5ers · Phase 1</span>
+          </div>
+          <div style="display:grid;gap:8px">
+            <div><label style="font-size:11px">Outcome</label>
+              <select id="t5rsOutcome" style="width:100%" onchange="smPreview('t5rs')">
+                <option value="active">Still Active</option>
+                <option value="passed">✓ Phase Passed</option>
+                <option value="failed">✗ Failed / Breached</option>
+              </select>
+            </div>
+            <div><label style="font-size:11px">End Date</label>
+              <input type="date" id="t5rsEnd" oninput="smPreview('t5rs')">
+            </div>
+            <div><label style="font-size:11px">Final Net P&amp;L (USD)</label>
+              <input type="number" id="t5rsPnl" step="0.01" placeholder="73.49" oninput="smPreview('t5rs')">
+            </div>
+            <div><label style="font-size:11px">Final Trade Count</label>
+              <input type="number" id="t5rsTrades" step="1" placeholder="32" oninput="smPreview('t5rs')">
+            </div>
+            <div><label style="font-size:11px">Notes Update</label>
+              <textarea id="t5rsNotes" style="min-height:60px;font-size:12px" oninput="smPreview('t5rs')" placeholder="Short summary of outcome..."></textarea>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" style="margin-top:10px;width:100%" onclick="smGenerate('t5rs')">Generate T5RS Patch</button>
+        </div>
+      </div>
+      <div id="smOutput" class="output-area" style="display:none"></div>
+      <div id="smCopyRow" style="margin-top:8px;display:none">
+        <button class="btn btn-blue btn-sm" onclick="smCopy()">⎘ Copy Patch</button>
+        <span style="font-size:12px;color:var(--text2);margin-left:10px">Find the account object in <code>ACCOUNTS[]</code> in app.js and update the fields shown.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- META UPDATE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">
+        <div class="step-badge" style="background:var(--accent2)">+</div>
+        Update Account Metadata
+      </div>
+      <span style="font-size:12px;color:var(--text3)">P&amp;L, trade count, notes, dates — without touching trade records</span>
+    </div>
+    <div class="section-body">
+      <div class="alert alert-info" style="margin-bottom:20px">
+        <span>ℹ</span>
+        <span>Fill only the fields you want to change. Click <strong>Generate Patch</strong> to get a snippet showing which lines to update in the ACCOUNTS[] array in app.js.</span>
+      </div>
+      <div style="margin-bottom:16px">
+        <label>Account:</label>
+        <select id="metaAccount" style="width:auto;min-width:260px" onchange="loadMetaForAccount()">
+          <option value="">— select account —</option>
+        </select>
+      </div>
+      <div class="meta-form">
+        <div><label>Net P&amp;L (USD)</label><input type="number" id="metaPnl" step="0.01" placeholder="e.g. -362.00"></div>
+        <div><label>Performance (decimal)</label><input type="number" id="metaPerf" step="0.000001" placeholder="e.g. -0.007240"></div>
+        <div><label>Total Trades</label><input type="number" id="metaTrades" step="1" placeholder="e.g. 208"></div>
+        <div><label>Cost of Fund (USD)</label><input type="number" id="metaCost" step="0.01" placeholder="e.g. 76.00"></div>
+        <div><label>Start Date</label><input type="date" id="metaStart"></div>
+        <div><label>End Date (leave blank if active)</label><input type="date" id="metaEnd"></div>
+        <div style="grid-column:1/-1"><label>Notes</label><textarea id="metaNotes" style="min-height:80px" placeholder="Full notes string for this account..."></textarea></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="generateMetaPatch()">Generate Patch</button>
+        <button class="btn btn-secondary btn-sm" onclick="clearMeta()">Clear</button>
+      </div>
+      <div id="metaOutput" class="output-area" style="margin-top:16px;display:none"></div>
+      <div id="metaCopyRow" style="margin-top:8px;display:none;align-items:center;gap:10px">
+        <button class="btn btn-blue btn-sm" onclick="copyMeta()">⎘ Copy Patch</button>
+        <span style="font-size:12px;color:var(--text2)">Find the account object in ACCOUNTS[] and update the fields shown.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const ACCOUNTS = [
+  // ── ACTIVE ACCOUNTS (ongoing updates) ──────────────────────────────────
+  { id:'FDNT-6KX1',   shortName:'FDNT X1',  platform:'FundedNext',      market:'spot',    constName:'FDNT_TRADES',     trades:59,   status:'active',    pnl:-117.11 },
+  { id:'T5RS-5KX1',   shortName:'T5RS X1',  platform:'The5ers',          market:'spot',    constName:'T5RS_TRADES',     trades:32,   status:'active',    pnl:73.49   },
+  { id:'1KHOOD',      shortName:'1kHooD',   platform:'Robinhood',        market:'stocks',  constName:null,              trades:129,  status:'active',    pnl:null,    summaryOnly:true, note:'Manually maintained. No individual trade import. Update ACCOUNTS[] notes and position data directly.' },
+  { id:'NGX',         shortName:'NGX',      platform:'NGX Exchange',     market:'ngx',     constName:null,              trades:34,   status:'active',    pnl:null,    summaryOnly:true, note:'Nigerian equities. No individual trade import. Update ACCOUNTS[] notes and open positions directly.' },
+  // ── CONCLUDED ACCOUNTS (frozen — no changes needed) ────────────────────
+  { id:'MFFU-X1',     shortName:'MFFU X1',  platform:'MyFundedFutures',  market:'futures', constName:'MFFU_X1_TRADES',  trades:30,   status:'completed', pnl:-1999.40 },
+  { id:'MFFU-X2',     shortName:'MFFU X2',  platform:'MyFundedFutures',  market:'futures', constName:'MFFU_X2_TRADES',  trades:175,  status:'completed', pnl:-2028.64 },
+  { id:'MFFU-X3',     shortName:'MFFU X3',  platform:'MyFundedFutures',  market:'futures', constName:'MFFU_X3_TRADES',  trades:112,  status:'completed', pnl:-1945.55 },
+  { id:'MFFU-X4',     shortName:'MFFU X4',  platform:'MyFundedFutures',  market:'futures', constName:'MFFU_X4_TRADES',  trades:584,  status:'completed', pnl:-5902.98 },
+  { id:'MFFU-X5',     shortName:'MFFU X5',  platform:'MyFundedFutures',  market:'futures', constName:'MFFU_X5_TRADES',  trades:191,  status:'completed', pnl:-1501.52 },
+  { id:'MFFX-X1',     shortName:'MFFX X1',  platform:'MyFundedFX',       market:'spot',    constName:'MFFX_X1_TRADES',  trades:67,   status:'completed', pnl:-416.06  },
+  { id:'MFFX-X2',     shortName:'MFFX X2',  platform:'MyFundedFX',       market:'spot',    constName:'MFFX_X2_TRADES',  trades:49,   status:'completed', pnl:-251.78  },
+  { id:'MFFX-X3',     shortName:'MFFX X3',  platform:'MyFundedFX',       market:'spot',    constName:'MFFX_X3_TRADES',  trades:99,   status:'completed', pnl:-399.19  },
+  { id:'MFFX-X4',     shortName:'MFFX X4',  platform:'MyFundedFX',       market:'spot',    constName:null,              trades:0,    status:'completed', pnl:-284.86, summaryOnly:true, note:'Summary data only — no individual trade records available.' },
+  { id:'ALPARI-2023', shortName:"ALP '23",  platform:'Alpari',            market:'spot',    constName:'ALPARI23_TRADES', trades:275,  status:'completed', pnl:-325.16  },
+  { id:'ALPARI-2020', shortName:"ALP '20",  platform:'Alpari',            market:'spot',    constName:null,              trades:0,    status:'completed', pnl:-208.90, summaryOnly:true, note:'Summary data only — no individual trade records available.' },
+];
+
+let selectedAcc = null;
+let parsedTrades = [];
+
+/* ── Render accounts ── */
+function renderAccCards() {
+  const grid = document.getElementById('accGrid');
+  const active = ACCOUNTS.filter(a => a.status === 'active');
+  const concluded = ACCOUNTS.filter(a => a.status === 'completed');
+
+  const renderCard = (a) => {
+    const isLocked = a.status === 'completed';
+    const pnlStr = a.pnl !== null
+      ? `<span style="color:${a.pnl>=0?'#4ade80':'#ef4444'}">${a.pnl>=0?'+':''}$${Math.abs(a.pnl).toFixed(2)}</span>`
+      : '<span style="color:var(--text3)">—</span>';
+    const markers = [];
+    if (a.summaryOnly) markers.push('<span style="color:var(--warn);font-size:10px;font-weight:600">SUMMARY ONLY</span>');
+    return `
+    <div class="acc-card${isLocked?' acc-card--locked':''}" id="card-${a.id}" onclick="selectAcc('${a.id}')">
+      <div class="acc-card-head">
+        <div class="acc-name">${a.shortName}</div>
+        <div class="acc-badge ${a.status==='active'?'badge-active':'badge-done'}">${isLocked?'concluded':'active'}</div>
+      </div>
+      <div class="acc-meta">
+        <span>Platform:</span>${a.platform}<br>
+        <span>Trades:</span>${a.trades || 0}&nbsp;·&nbsp;
+        <span>P&L:</span>${pnlStr}
+        ${markers.length ? '<br>'+markers.join(' ') : ''}
+      </div>
+    </div>`;
+  };
+
+  grid.innerHTML =
+    `<div style="grid-column:1/-1;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);padding:2px 0 6px">⬤ Active — Ongoing Updates</div>` +
+    active.map(renderCard).join('') +
+    `<div style="grid-column:1/-1;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);padding:12px 0 6px;border-top:1px solid var(--border);margin-top:4px">◉ Concluded — Frozen</div>` +
+    concluded.map(renderCard).join('');
+
+  const sel = document.getElementById('metaAccount');
+  sel.innerHTML = '<option value="">— select account —</option>' +
+    ACCOUNTS.map(a => `<option value="${a.id}">${a.shortName} — ${a.platform}${a.status==='completed'?' (concluded)':''}</option>`).join('');
+}
+
+function selectAcc(id) {
+  selectedAcc = ACCOUNTS.find(a => a.id === id);
+  document.querySelectorAll('.acc-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById(`card-${id}`).classList.add('selected');
+
+  const isLocked = selectedAcc.status === 'completed';
+  const constInfo = selectedAcc.constName ? `const: ${selectedAcc.constName}` : 'no trade array';
+
+  if (isLocked) {
+    document.getElementById('selectedLabel').innerHTML =
+      `<span style="color:var(--text3)">🔒 ${selectedAcc.shortName} · CONCLUDED · ${constInfo}</span>` +
+      (selectedAcc.note ? `<br><span style="color:var(--text3);font-size:11px">↳ ${selectedAcc.note}</span>` : '');
+    showAlert('info', `${selectedAcc.shortName} is a concluded account — data is frozen. ` +
+      (selectedAcc.summaryOnly ? selectedAcc.note : `Trade array (${selectedAcc.constName}) is preserved as-is in app.js.`));
+  } else if (selectedAcc.summaryOnly) {
+    document.getElementById('selectedLabel').innerHTML =
+      `<span style="color:var(--warn)">⚠ ${selectedAcc.shortName} selected · Summary-only account · no trade array</span>` +
+      `<br><span style="color:var(--text3);font-size:11px">↳ ${selectedAcc.note}</span>`;
+    showAlert('warn', selectedAcc.note + ' Use the Account Metadata Editor below to update notes and position data.');
+  } else {
+    document.getElementById('selectedLabel').textContent = `✓ ${selectedAcc.shortName} selected · ${constInfo}`;
+    clearAlert();
+  }
+}
+
+/* ── Tabs ── */
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    const name = t.dataset.tab;
+    document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x.dataset.tab===name));
+    document.querySelectorAll('.tab-content').forEach(x => x.classList.toggle('active', x.id===`tab-${name}`));
+  });
+});
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PASTE PARSER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function parsePaste() {
+  const raw = document.getElementById('pasteInput').value.trim();
+  if (!raw) { alert('Paste trade data first.'); return; }
+  const lines = raw.split('\n').map(l=>l.trim()).filter(Boolean);
+  if (lines.length < 2) { alert('Need header row + at least one data row.'); return; }
+
+  const headerLower = lines[0].toLowerCase().replace(/\s+/g,' ');
+  let trades = [], fmt = '';
+
+  if (headerLower.includes('buyfillid') || headerLower.includes('buyprice') || headerLower.includes('_ticksize')) {
+    fmt = 'MFFU Futures'; trades = parseMFFU(lines);
+  } else {
+    fmt = 'MFFX Spot FX'; trades = parseMFFX(lines);
+  }
+
+  applyCommission(trades);
+  if (!trades.length) { showAlert('err','No valid trades parsed. Check the format or the Format Guide tab.'); return; }
+  parsedTrades = trades;
+  showPreview(trades, `${trades.length} trades parsed (${fmt})`);
+}
+
+function parseMFFU(lines) {
+  // Try tab first, fall back to 2+ spaces
+  const hasTabs = lines[0].includes('\t');
+  const split = line => hasTabs ? line.split('\t') : line.split(/\s{2,}/);
+
+  const headers = split(lines[0]).map(h=>h.trim().toLowerCase().replace(/[^a-z]/g,''));
+  const idx = k => headers.findIndex(h => h.includes(k));
+
+  const iSym=idx('symbol'), iQty=idx('qty'), iBP=idx('buyprice'), iSP=idx('sellprice');
+  const iPnl=idx('pnl'),    iBT=idx('boughttimestamp'), iST=idx('soldtimestamp');
+  const iBFid=idx('buyfillid');
+
+  const parseTs = ts => {
+    const m = ts && ts.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+    return m ? `${m[3]}-${m[2]}-${m[1]}` : (ts||'').split(' ')[0];
+  };
+
+  const trades = [];
+  for (let i=1; i<lines.length; i++) {
+    const ln = lines[i];
+    // Skip non-trade rows
+    if (!ln || /symbol|account\s*id|opening|closing|commission|volume|manager|total|asr|september|october|change|^\d+\.\d{2}\s+-?\$/i.test(ln)) continue;
+
+    const p = split(ln);
+    if (p.length < 8) continue;
+
+    const pnlStr = (p[iPnl]||'').replace(/[$,]/g,'');
+    const pnl = parseFloat(pnlStr);
+    if (isNaN(pnl)) continue;
+
+    const boughtTs = (p[iBT]||'').trim();
+    const soldTs   = (p[iST]||'').trim();
+
+    const buyP  = parseFloat((p[iBP]||'').replace(/,/g,'')) || 0;
+    const sellP = parseFloat((p[iSP]||'').replace(/,/g,'')) || 0;
+
+    // Direction from price move + P&L
+    let direction = 'Long';
+    if      (pnl > 0 && buyP < sellP) direction = 'Long';
+    else if (pnl > 0 && buyP > sellP) direction = 'Short';
+    else if (pnl < 0 && buyP > sellP) direction = 'Long';
+    else if (pnl < 0 && buyP < sellP) direction = 'Short';
+
+    // openDate = earlier of the two timestamps
+    const bDate = new Date(boughtTs.replace(/(\d{2})\/(\d{2})\/(\d{4})/,'$3-$2-$1'));
+    const sDate = new Date(soldTs.replace  (/(\d{2})\/(\d{2})\/(\d{4})/,'$3-$2-$1'));
+    const openDate  = parseTs(bDate<=sDate ? boughtTs : soldTs);
+    const closeDate = parseTs(bDate<=sDate ? soldTs   : boughtTs);
+
+    trades.push({
+      closeDate, openDate,
+      instrument: (p[iSym]||'').trim(),
+      direction,
+      contracts: parseInt(p[iQty])||1,
+      entry: buyP, exit: sellP,
+      grossPnl: pnl, commission: 0, swap: 0, netPnl: pnl
+    });
+  }
+  return trades;
+}
+
+function parseMFFX(lines) {
+  const sep = lines[0].includes('\t') ? '\t' : ',';
+  const rawH = lines[0].split(sep).map(h=>h.replace(/"/g,'').trim().toLowerCase().replace(/[\s_]/g,''));
+
+  const col = (...aliases) => rawH.findIndex(h => aliases.some(a => h.includes(a)));
+
+  const ci = {
+    instrument: col('instrument','symbol','pair'),
+    direction:  col('direction','side','type'),
+    lots:       col('lots','volume','size','qty'),
+    entry:      col('entry','openprice','openprce','entryprice'),
+    exit:       col('exit','closeprice','exitprice'),
+    pips:       col('pips'),
+    grossPnl:   col('grosspnl','gross','profit'),
+    commission: col('commission','fee','fees'),
+    swap:       col('swap'),
+    netPnl:     col('netpnl','net'),
+    openDate:   col('opendate','opentime','datetime'),
+    closeDate:  col('closedate','closetime'),
+  };
+
+  const parseDate = s => {
+    if (!s) return '';
+    const m = s.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+    if (m) return `${m[3]}-${m[2]}-${m[1]}`;
+    return s.split(' ')[0]; // trim time component
+  };
+
+  const g = (parts, i) => i>=0 ? (parts[i]||'').replace(/["$,\s]/g,'') : '';
+
+  const trades = [];
+  for (let i=1; i<lines.length; i++) {
+    const parts = lines[i].split(sep).map(p=>p.replace(/"/g,'').trim());
+    if (parts.length < 5) continue;
+    const grossPnl   = parseFloat(g(parts,ci.grossPnl))   || 0;
+    const commission = Math.abs(parseFloat(g(parts,ci.commission))) || 0;
+    const swap       = parseFloat(g(parts,ci.swap))        || 0;
+    const netPnl     = ci.netPnl>=0 ? (parseFloat(g(parts,ci.netPnl))||0) : +(grossPnl-commission+swap).toFixed(2);
+    trades.push({
+      closeDate:  ci.closeDate>=0  ? parseDate(parts[ci.closeDate])  : '',
+      openDate:   ci.openDate>=0   ? parseDate(parts[ci.openDate])   : '',
+      instrument: ci.instrument>=0 ? parts[ci.instrument]            : '',
+      direction:  ci.direction>=0  ? parts[ci.direction]             : 'Long',
+      lots:       parseFloat(g(parts,ci.lots)) || 0.01,
+      entry:      parseFloat(g(parts,ci.entry)) || 0,
+      exit:       parseFloat(g(parts,ci.exit))  || 0,
+      pips:       ci.pips>=0 ? (parseFloat(g(parts,ci.pips))||null) : null,
+      grossPnl, commission, swap, netPnl
+    });
+  }
+  return trades;
+}
+
+function applyCommission(trades) {
+  if (!trades.length) return;
+  const mode = document.getElementById('commissionMode').value;
+  const val  = parseFloat(document.getElementById('commissionVal').value) || 0;
+  if (mode==='fixed' && val>0) {
+    trades.forEach(t => { t.commission=val; t.netPnl=+(t.grossPnl-val+(t.swap||0)).toFixed(2); });
+  } else if (mode==='distribute' && val>0) {
+    const per = +(val/trades.length).toFixed(4);
+    trades.forEach(t => { t.commission=per; t.netPnl=+(t.grossPnl-per+(t.swap||0)).toFixed(2); });
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   MANUAL ENTRY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+const FIELDS = {
+  futures:[
+    {id:'m_closeDate',label:'Close Date',type:'date'},
+    {id:'m_openDate',label:'Open Date',type:'date'},
+    {id:'m_instrument',label:'Instrument',type:'text',placeholder:'MYMU4'},
+    {id:'m_direction',label:'Direction',type:'select',options:['Long','Short']},
+    {id:'m_contracts',label:'Contracts',type:'number',placeholder:'1'},
+    {id:'m_entry',label:'Entry Price',type:'number',placeholder:'41250'},
+    {id:'m_exit',label:'Exit Price',type:'number',placeholder:'41300'},
+    {id:'m_grossPnl',label:'Gross P&L ($)',type:'number',placeholder:'25.00'},
+    {id:'m_commission',label:'Commission ($)',type:'number',placeholder:'2.21'},
+    {id:'m_swap',label:'Swap ($)',type:'number',placeholder:'0'},
+  ],
+  spot:[
+    {id:'m_closeDate',label:'Close Date',type:'date'},
+    {id:'m_openDate',label:'Open Date',type:'date'},
+    {id:'m_instrument',label:'Instrument',type:'text',placeholder:'GBPUSD'},
+    {id:'m_direction',label:'Direction',type:'select',options:['Long','Short']},
+    {id:'m_lots',label:'Lots',type:'number',placeholder:'0.01'},
+    {id:'m_entry',label:'Entry Price',type:'number',placeholder:'1.3012'},
+    {id:'m_exit',label:'Exit Price',type:'number',placeholder:'1.3050'},
+    {id:'m_pips',label:'Pips',type:'number',placeholder:'38'},
+    {id:'m_grossPnl',label:'Gross P&L ($)',type:'number',placeholder:'38.00'},
+    {id:'m_commission',label:'Commission ($)',type:'number',placeholder:'0.70'},
+    {id:'m_swap',label:'Swap ($)',type:'number',placeholder:'0'},
+  ]
+};
+
+function updateManualForm() {
+  const type = document.getElementById('manualType').value;
+  document.getElementById('manualFields').innerHTML = FIELDS[type].map(f => {
+    if (f.type==='select') return `<div><label>${f.label}</label><select id="${f.id}" style="width:100%">${f.options.map(o=>`<option>${o}</option>`).join('')}</select></div>`;
+    return `<div><label>${f.label}</label><input type="${f.type}" id="${f.id}" placeholder="${f.placeholder||''}" step="any"></div>`;
+  }).join('');
+}
+
+function clearManualFields() {
+  document.querySelectorAll('#manualFields input, #manualFields select').forEach(el => { el.value = el.tagName==='SELECT' ? el.options[0].value : ''; });
+}
+
+function gv(id) { const el=document.getElementById(id); return el?el.value:''; }
+
+function addManualTrade() {
+  const type = document.getElementById('manualType').value;
+  const grossPnl   = parseFloat(gv('m_grossPnl'))   || 0;
+  const commission = Math.abs(parseFloat(gv('m_commission'))) || 0;
+  const swap       = parseFloat(gv('m_swap')) || 0;
+  const netPnl     = +(grossPnl - commission + swap).toFixed(2);
+  const instr = gv('m_instrument');
+  if (!instr) { alert('Instrument is required.'); return; }
+  const trade = {
+    closeDate: gv('m_closeDate'), openDate: gv('m_openDate'),
+    instrument: instr, direction: gv('m_direction'),
+    entry: parseFloat(gv('m_entry'))||0, exit: parseFloat(gv('m_exit'))||0,
+    grossPnl, commission, swap, netPnl
+  };
+  if (type==='futures') trade.contracts = parseInt(gv('m_contracts'))||1;
+  else { trade.lots=parseFloat(gv('m_lots'))||0.01; trade.pips=parseFloat(gv('m_pips'))||null; }
+  parsedTrades.push(trade);
+  showPreview(parsedTrades, `${parsedTrades.length} trade(s) — manual`);
+  clearManualFields();
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PREVIEW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function showPreview(trades, status) {
+  document.getElementById('previewSection').style.display = '';
+  document.getElementById('outputSection').style.display  = '';
+  document.getElementById('parseStatus').textContent = status;
+  document.getElementById('alertArea').innerHTML = '';
+
+  const wins  = trades.filter(t=>t.netPnl>0).length;
+  const gross = trades.reduce((s,t)=>s+t.grossPnl,0);
+  const net   = trades.reduce((s,t)=>s+t.netPnl,0);
+  const comms = trades.reduce((s,t)=>s+(t.commission||0),0);
+  const wr    = trades.length?(wins/trades.length*100).toFixed(1):'0';
+
+  document.getElementById('statsBar').innerHTML = [
+    {l:'Trades',    v:trades.length,fmt:v=>v},
+    {l:'Win Rate',  v:wr,           fmt:v=>v+'%'},
+    {l:'Gross P&L', v:gross,        fmt:v=>(v>=0?'+':'')+v.toFixed(2), c:gross>=0?'pos':'neg'},
+    {l:'Commission',v:-comms,       fmt:v=>v.toFixed(2), c:'neg'},
+    {l:'Net P&L',   v:net,          fmt:v=>(v>=0?'+':'')+v.toFixed(2), c:net>=0?'pos':'neg'},
+  ].map(s=>`<div class="stat-cell"><div class="stat-label">${s.l}</div><div class="stat-val ${s.c||''}">${s.fmt(s.v)}</div></div>`).join('');
+
+  document.getElementById('previewBody').innerHTML = trades.map((t,i)=>`
+    <tr>
+      <td>${i+1}</td><td>${t.closeDate||'—'}</td><td>${t.openDate||'—'}</td>
+      <td style="font-weight:600">${t.instrument||'—'}</td>
+      <td class="${t.direction==='Long'?'dir-long':'dir-short'}">${t.direction}</td>
+      <td>${t.contracts||t.lots||'1'}</td><td>${t.entry||'—'}</td><td>${t.exit||'—'}</td>
+      <td class="${t.grossPnl>=0?'pos':'neg'}">${t.grossPnl>=0?'+':''}${t.grossPnl.toFixed(2)}</td>
+      <td class="neg">${(t.commission||0).toFixed(2)}</td>
+      <td class="${t.netPnl>=0?'pos':'neg'}">${t.netPnl>=0?'+':''}${t.netPnl.toFixed(2)}</td>
+      <td><button onclick="removeTrade(${i})" style="background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.2);border-radius:4px;padding:2px 7px;font-size:11px;cursor:pointer">✕</button></td>
+    </tr>`).join('');
+}
+
+function removeTrade(i) {
+  parsedTrades.splice(i,1);
+  if (!parsedTrades.length) { clearPreview(); return; }
+  showPreview(parsedTrades, `${parsedTrades.length} trade(s)`);
+}
+
+function clearPreview() {
+  parsedTrades=[];
+  document.getElementById('previewSection').style.display='none';
+  document.getElementById('outputSection').style.display='none';
+}
+
+function clearAlert() {
+  document.getElementById('alertArea').innerHTML = '';
+}
+function showAlert(type,msg) {
+  const icons={info:'ℹ',warn:'⚠',ok:'✓',err:'✕'};
+  document.getElementById('alertArea').innerHTML=`<div class="alert alert-${type}"><span>${icons[type]}</span><span>${msg}</span></div>`;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   OUTPUT GENERATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function generateOutput() {
+  if (!selectedAcc) { alert('Select an account in Step 1 first.'); return; }
+  if (!parsedTrades.length) { alert('No trades to output. Parse data in Step 2 first.'); return; }
+
+  const constName = selectedAcc.constName;
+  // Compact JSON per trade, one per line
+  const lines = parsedTrades.map(t => JSON.stringify(t));
+  const output = `const ${constName} = [${lines.join(',\n')}];`;
+
+  document.getElementById('outputArea').textContent = output;
+  document.getElementById('copyBtn').style.display = '';
+  document.getElementById('lineToReplace').textContent =
+    `→ In js/app.js, find "const ${constName} = [" and replace the full array (from [ to ];) with the output above.`;
+}
+
+function copyOutput() {
+  const text = document.getElementById('outputArea').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Copied!';
+    setTimeout(()=>btn.textContent='⎘ Copy to Clipboard', 2200);
+  }).catch(() => {
+    const ta = document.createElement('textarea'); ta.value=text;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+
+function clearPaste() { document.getElementById('pasteInput').value=''; clearPreview(); }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   META PATCH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function loadMetaForAccount() {
+  const id = document.getElementById('metaAccount').value;
+  const acc = ACCOUNTS.find(a=>a.id===id);
+  if (!acc) return;
+  document.getElementById('metaPnl').value    = acc.pnl;
+  document.getElementById('metaTrades').value = acc.trades;
+}
+
+function generateMetaPatch() {
+  const id  = document.getElementById('metaAccount').value;
+  const acc = ACCOUNTS.find(a=>a.id===id);
+  if (!acc) { alert('Select an account.'); return; }
+
+  const fields = {};
+  const pnl    = document.getElementById('metaPnl').value;
+  const perf   = document.getElementById('metaPerf').value;
+  const trades = document.getElementById('metaTrades').value;
+  const cost   = document.getElementById('metaCost').value;
+  const start  = document.getElementById('metaStart').value;
+  const end    = document.getElementById('metaEnd').value;
+  const notes  = document.getElementById('metaNotes').value.trim();
+
+  if (pnl    !== '') fields.pnl         = parseFloat(pnl);
+  if (perf   !== '') fields.performance  = parseFloat(perf);
+  if (trades !== '') fields.trades       = parseInt(trades);
+  if (cost   !== '') fields.costOfFund   = parseFloat(cost);
+  if (start  !== '') fields.startDate    = start;
+  if (end    !== '') fields.endDate      = end;
+  if (notes  !== '') fields.notes        = notes;
+
+  if (!Object.keys(fields).length) { alert('Fill at least one field.'); return; }
+
+  const patch = `// ── Update ACCOUNTS[] entry for id:'${id}' ──\n// Locate: { id:'${id}', ... } in js/app.js\n// Change these fields:\n` +
+    Object.entries(fields).map(([k,v]) => `  ${k}: ${typeof v==='string' ? `'${v.replace(/'/g,"\\'")}' ` : v},`).join('\n');
+
+  const out = document.getElementById('metaOutput');
+  out.textContent = patch; out.style.display='';
+  const row = document.getElementById('metaCopyRow');
+  row.style.display='flex';
+}
+
+function copyMeta() {
+  navigator.clipboard.writeText(document.getElementById('metaOutput').textContent).catch(()=>{});
+}
+
+function clearMeta() {
+  ['metaPnl','metaPerf','metaTrades','metaCost','metaStart','metaEnd','metaNotes'].forEach(id=>{document.getElementById(id).value='';});
+  document.getElementById('metaOutput').style.display='none';
+  document.getElementById('metaCopyRow').style.display='none';
+}
+
+/* ════════════════════════════════════════
+   EQUITY CURVE MANAGER
+   ════════════════════════════════════════ */
+const EC_LAST = { date: '2026-02-27', pnl: 32.93, eq: -13620.01 };
+
+function ecPreview() {
+  const d = document.getElementById('ecDate').value;
+  const p = parseFloat(document.getElementById('ecPnl').value);
+  const box = document.getElementById('ecPreviewBox');
+  if (!d || isNaN(p)) { box.style.display='none'; return; }
+  const newEq = +(EC_LAST.eq + p).toFixed(2);
+  const entry = `{"d":"${d}","pnl":${p},"eq":${newEq}}`;
+  document.getElementById('ecPreviewLine').textContent = entry + ',';
+  document.getElementById('ecNewEq').textContent = '$' + newEq.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('ecNewEq').style.color = newEq >= 0 ? '#4ade80' : '#ef4444';
+  box.style.display = 'block';
+}
+
+function ecGenerate() {
+  const d = document.getElementById('ecDate').value;
+  const p = parseFloat(document.getElementById('ecPnl').value);
+  if (!d || isNaN(p)) { alert('Please enter both date and P&L'); return; }
+  const newEq = +(EC_LAST.eq + p).toFixed(2);
+  const line = `{"d":"${d}","pnl":${p},"eq":${newEq}}`;
+  const out = document.getElementById('ecOutput');
+  out.style.display='block';
+  out.textContent = line;
+  document.getElementById('ecCopyRow').style.display='flex';
+}
+
+function ecCopy() {
+  const txt = document.getElementById('ecOutput').textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn = document.querySelector('#ecCopyRow button');
+    const orig = btn.textContent; btn.textContent='✓ Copied!'; btn.style.background='#059669';
+    setTimeout(()=>{btn.textContent=orig;btn.style.background='';},2200);
+  });
+}
+
+function ecClear() {
+  document.getElementById('ecDate').value = '';
+  document.getElementById('ecPnl').value = '';
+  document.getElementById('ecPreviewBox').style.display = 'none';
+  document.getElementById('ecOutput').style.display = 'none';
+  document.getElementById('ecCopyRow').style.display = 'none';
+}
+
+/* ════════════════════════════════════════
+   ANALYTICS RECALCULATOR
+   ════════════════════════════════════════ */
+const AN_DEFAULTS = {
+  totalTrades:1673, winRate:0.5003, avgWin:32.09, avgLoss:-49.77,
+  totalCommission:4295.84, totalGross:-10417.94, tradingDays:116,
+  peakEquity:1085.31, maxDrawdown:14922.99, profitFactor:0.6455
+};
+
+function anGenerate() {
+  const n    = parseInt(document.getElementById('anTrades').value)||0;
+  const wr   = parseFloat(document.getElementById('anWr').value)||0;
+  const avgW = parseFloat(document.getElementById('anAvgW').value)||0;
+  const avgL = parseFloat(document.getElementById('anAvgL').value)||0;
+  const comm = parseFloat(document.getElementById('anComm').value)||0;
+  const gross= parseFloat(document.getElementById('anGross').value)||0;
+  const days = parseInt(document.getElementById('anDays').value)||0;
+  const peak = parseFloat(document.getElementById('anPeak').value)||0;
+  const dd   = parseFloat(document.getElementById('anDD').value)||0;
+  // Profit factor — compute from gross W/L if provided, else use manual
+  const gw   = parseFloat(document.getElementById('anGrossW').value);
+  const gl   = parseFloat(document.getElementById('anGrossL').value);
+  let pf     = parseFloat(document.getElementById('anPF').value)||0;
+  if (!isNaN(gw) && !isNaN(gl) && gl > 0) pf = +(gw/gl).toFixed(4);
+  // CommDrag = commission / |gross|
+  const commDrag = gross !== 0 ? +(comm / Math.abs(gross)).toFixed(4) : 0;
+  const obj = {totalTrades:n, winRate:wr, avgWin:avgW, avgLoss:avgL,
+    totalCommission:comm, totalGross:gross, commDragPct:commDrag,
+    tradingDays:days, peakEquity:peak, maxDrawdown:dd, profitFactor:pf};
+  const line = `const ANALYTICS_SUMMARY = ${JSON.stringify(obj)};`;
+  const out = document.getElementById('anOutput');
+  out.style.display = 'block';
+  out.textContent = line;
+  document.getElementById('anCopyRow').style.display = 'flex';
+}
+
+function anReset() {
+  document.getElementById('anTrades').value = AN_DEFAULTS.totalTrades;
+  document.getElementById('anWr').value     = AN_DEFAULTS.winRate;
+  document.getElementById('anAvgW').value   = AN_DEFAULTS.avgWin;
+  document.getElementById('anAvgL').value   = AN_DEFAULTS.avgLoss;
+  document.getElementById('anComm').value   = AN_DEFAULTS.totalCommission;
+  document.getElementById('anGross').value  = AN_DEFAULTS.totalGross;
+  document.getElementById('anDays').value   = AN_DEFAULTS.tradingDays;
+  document.getElementById('anPeak').value   = AN_DEFAULTS.peakEquity;
+  document.getElementById('anDD').value     = AN_DEFAULTS.maxDrawdown;
+  document.getElementById('anPF').value     = AN_DEFAULTS.profitFactor;
+  document.getElementById('anGrossW').value = '';
+  document.getElementById('anGrossL').value = '';
+  document.getElementById('anOutput').style.display = 'none';
+  document.getElementById('anCopyRow').style.display = 'none';
+}
+
+function anCopy() {
+  const txt = document.getElementById('anOutput').textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn = document.querySelector('#anCopyRow button');
+    const orig = btn.textContent; btn.textContent='✓ Copied!'; btn.style.background='#059669';
+    setTimeout(()=>{btn.textContent=orig;btn.style.background='';},2200);
+  });
+}
+
+/* ════════════════════════════════════════
+   ACCOUNT STATUS MANAGER
+   ════════════════════════════════════════ */
+const SM_ACCOUNTS = {
+  fdnt: { id:'FDNT-6KX1', constName:'FDNT_TRADES', accountId:'FDNT$6KX1-STP-PFF',
+    platform:'FundedNext', size:6000, costOfFund:63.21, fxRate:1471.05, startDate:'2026-02-05' },
+  t5rs: { id:'T5RS-5KX1', constName:'T5RS_TRADES', accountId:'T5RS$5KX1-STP-PFF',
+    platform:'The5ers', size:5000, costOfFund:31.50, fxRate:1469.60, startDate:'2026-02-22' },
+};
+
+function smPreview(key) { /* live preview not needed — generate on button click */ }
+
+function smGenerate(key) {
+  const a    = SM_ACCOUNTS[key];
+  const outcome = document.getElementById(key+'Outcome').value;
+  const endDate = document.getElementById(key+'End').value;
+  const pnl     = parseFloat(document.getElementById(key+'Pnl').value);
+  const trades  = parseInt(document.getElementById(key+'Trades').value);
+  const notes   = document.getElementById(key+'Notes').value.trim();
+
+  const status = outcome === 'active' ? 'active' : 'completed';
+  const perf   = !isNaN(pnl) ? +(pnl / a.size).toFixed(6) : null;
+
+  let patch = `// ── Update ACCOUNTS[] entry for id:'${a.id}' ──\n`;
+  patch += `// Locate: { id:'${a.id}', ... } in js/app.js\n`;
+  patch += `// Change these fields:\n`;
+  patch += `  status: '${status}',\n`;
+  if (endDate)        patch += `  endDate: '${endDate}',\n`;
+  else if (outcome === 'active') patch += `  endDate: null,\n`;
+  if (!isNaN(pnl))    patch += `  pnl: ${pnl},\n`;
+  if (perf !== null)  patch += `  performance: ${perf},\n`;
+  if (!isNaN(trades)) patch += `  trades: ${trades},\n`;
+  if (notes)          patch += `  notes: '${notes.replace(/'/g,"\\'")}',\n`;
+
+  if (outcome !== 'active') {
+    patch += `\n// ALSO update account card label if needed:\n`;
+    patch += `// Status: '${outcome}' — change card to show "concluded" badge\n`;
+    patch += `// Suggested notes suffix:\n`;
+    if (outcome === 'passed') {
+      patch += `// "Phase 1 passed on ${endDate||'[date]'}. Moved to Phase 2 / Funded stage."\n`;
+    } else {
+      patch += `// "Phase 1 failed on ${endDate||'[date]'}. Account breached drawdown limits."\n`;
+    }
+  }
+
+  const out = document.getElementById('smOutput');
+  out.style.display = 'block';
+  out.textContent = patch;
+  document.getElementById('smCopyRow').style.display = 'flex';
+}
+
+function smCopy() {
+  const txt = document.getElementById('smOutput').textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn = document.querySelector('#smCopyRow button');
+    const orig = btn.textContent; btn.textContent='✓ Copied!'; btn.style.background='#059669';
+    setTimeout(()=>{btn.textContent=orig;btn.style.background='';},2200);
+  });
+}
+
+/* ── Init ── */
+renderAccCards();
+updateManualForm();
+</script>
+</body>
+</html>
