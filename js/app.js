@@ -207,11 +207,8 @@ const NGX_HOLDINGS = [
     ]},
 ];
 const KHOOD_PERF = [
-  // Real monthly P&L from FIBAM-1kHooD.xlsx — cumulative from $1,000 seed
-  {date:'2025-02',val: 0.02868},{date:'2025-03',val:-0.04968},{date:'2025-06',val:-0.12122},
-  {date:'2025-07',val: 0.14236},{date:'2025-08',val:-0.05258},{date:'2025-09',val: 0.13613},
-  {date:'2025-10',val: 0.06704},{date:'2025-12',val:-0.08234},{date:'2026-01',val: 0.01980},
-  {date:'2026-02',val:-0.15453},
+  // Real daily portfolio performance from Performance_FIBAM_1kHood sheet (286 entries, Feb 2025–Feb 2026)
+  {date:'2025-02-05',val:-0.0021},{date:'2025-02-06',val:0.0001},{date:'2025-02-07',val:-0.0172},{date:'2025-02-10',val:-0.0181},{date:'2025-02-11',val:-0.0104},{date:'2025-02-12',val:-0.0362},{date:'2025-02-13',val:-0.0215},{date:'2025-02-14',val:-0.0055},{date:'2025-02-18',val:0.0016},{date:'2025-02-19',val:0.0031},{date:'2025-02-20',val:-0.0181},{date:'2025-02-21',val:-0.066},{date:'2025-02-24',val:-0.073},{date:'2025-02-25',val:-0.0764},{date:'2025-02-26',val:-0.0847},{date:'2025-02-27',val:-0.104},{date:'2025-02-28',val:-0.0895},{date:'2025-03-03',val:-0.160555},{date:'2025-03-04',val:-0.145202},{date:'2025-03-05',val:-0.136814},{date:'2025-03-06',val:-0.160433},{date:'2025-03-07',val:-0.164225},{date:'2025-03-08',val:-0.164225},{date:'2025-03-09',val:-0.164225},{date:'2025-03-10',val:-0.195575},{date:'2025-03-11',val:-0.190787},{date:'2025-03-12',val:-0.2098},{date:'2025-03-13',val:-0.231951},{date:'2025-03-14',val:-0.219775},{date:'2025-03-15',val:-0.219775},{date:'2025-03-16',val:-0.219775},{date:'2025-03-17',val:-0.21281},{date:'2025-03-18',val:-0.22368},{date:'2025-03-19',val:-0.21447},{date:'2025-03-20',val:-0.219985},{date:'2025-03-21',val:-0.220752},{date:'2025-03-22',val:-0.220752},{date:'2025-03-23',val:-0.220752},{date:'2025-03-24',val:-0.189633},{date:'2025-03-25',val:-0.198609},{date:'2025-03-26',val:-0.20656},{date:'2025-03-27',val:-0.206336},{date:'2025-03-28',val:-0.234904},{date:'2025-03-29',val:-0.234904},{date:'2025-03-30',val:-0.234904},{date:'2025-03-31',val:-0.237162},{date:'2025-04-01',val:-0.233013},{date:'2025-04-02',val:-0.218998},{date:'2025-04-03',val:-0.293934},{date:'2025-04-04',val:-0.307176},{date:'2025-04-05',val:-0.307176},{date:'2025-04-06',val:-0.307176},{date:'2025-04-07',val:-0.309927},{date:'2025-04-08',val:-0.342794},{date:'2025-04-09',val:-0.268252},{date:'2025-04-10',val:-0.302171},{date:'2025-04-11',val:-0.293247},{date:'2025-04-14',val:-0.286292},{date:'2025-04-15',val:-0.297904},{date:'2025-04-16',val:-0.313861},{date:'2025-04-17',val:-0.304539},{date:'2025-04-18',val:-0.304517},{date:'2025-04-21',val:-0.309255},{date:'2025-04-22',val:-0.294411},{date:'2025-04-23',val:-0.29114},{date:'2025-04-24',val:-0.267901},{date:'2025-04-25',val:-0.257651},{date:'2025-04-28',val:-0.260984},{date:'2025-04-29',val:-0.259174},{date:'2025-04-30',val:-0.264884},{date:'2025-05-01',val:-0.261918},{date:'2025-05-02',val:-0.251797},{date:'2025-05-05',val:-0.271766},{date:'2025-05-06',val:-0.276097},{date:'2025-05-07',val:-0.265345},{date:'2025-05-08',val:-0.249815},{date:'2025-05-09',val:-0.254253},{date:'2025-05-12',val:-0.211329},{date:'2025-05-13',val:-0.18968},{date:'2025-05-14',val:-0.204212},{date:'2025-05-15',val:-0.214114},{date:'2025-05-16',val:-0.198103},{date:'2025-05-19',val:-0.200988},{date:'2025-05-20',val:-0.202827},{date:'2025-05-21',val:-0.227084},{date:'2025-05-22',val:-0.211045},{date:'2025-05-23',val:-0.221308},{date:'2025-05-26',val:-0.221308},{date:'2025-05-27',val:-0.203442},{date:'2025-05-28',val:-0.216347},{date:'2025-05-29',val:-0.220598},{date:'2025-05-30',val:-0.226751},{date:'2025-06-02',val:-0.226504},{date:'2025-06-03',val:-0.211521},{date:'2025-06-04',val:-0.216543},{date:'2025-06-05',val:-0.223366},{date:'2025-06-06',val:-0.19852},{date:'2025-06-09',val:-0.191078},{date:'2025-06-10',val:-0.178759},{date:'2025-06-11',val:-0.195253},{date:'2025-06-12',val:-0.195921},{date:'2025-06-13',val:-0.213413},{date:'2025-06-16',val:-0.189705},{date:'2025-06-17',val:-0.20502},{date:'2025-06-18',val:-0.188094},{date:'2025-06-19',val:-0.188094},{date:'2025-06-20',val:-0.184108},{date:'2025-06-23',val:-0.18372},{date:'2025-06-24',val:-0.168145},{date:'2025-06-25',val:-0.16612},{date:'2025-06-26',val:-0.148769},{date:'2025-06-27',val:-0.134577},{date:'2025-06-30',val:-0.114799},{date:'2025-07-01',val:-0.129894},{date:'2025-07-02',val:-0.119694},{date:'2025-07-03',val:-0.104392},{date:'2025-07-04',val:-0.095532},{date:'2025-07-07',val:-0.082948},{date:'2025-07-08',val:-0.078571},{date:'2025-07-09',val:-0.070419},{date:'2025-07-10',val:-0.069002},{date:'2025-07-11',val:-0.080705},{date:'2025-07-14',val:-0.049831},{date:'2025-07-15',val:-0.043012},{date:'2025-07-16',val:-0.029814},{date:'2025-07-17',val:-0.027179},{date:'2025-07-18',val:-0.018537},{date:'2025-07-21',val:-0.014719},{date:'2025-07-22',val:-0.018847},{date:'2025-07-23',val:-0.009248},{date:'2025-07-24',val:-0.005246},{date:'2025-07-25',val:-0.014193},{date:'2025-07-28',val:-0.01408},{date:'2025-07-29',val:-0.0277},{date:'2025-07-30',val:-0.031852},{date:'2025-07-31',val:-0.02159},{date:'2025-08-01',val:-0.073511},{date:'2025-08-04',val:-0.064772},{date:'2025-08-05',val:-0.07424},{date:'2025-08-06',val:-0.066136},{date:'2025-08-07',val:-0.061459},{date:'2025-08-08',val:-0.060901},{date:'2025-08-11',val:-0.067478},{date:'2025-08-12',val:-0.05646},{date:'2025-08-13',val:-0.055776},{date:'2025-08-14',val:-0.061531},{date:'2025-08-15',val:-0.057124},{date:'2025-08-18',val:-0.050449},{date:'2025-08-19',val:-0.06947},{date:'2025-08-20',val:-0.058599},{date:'2025-08-21',val:-0.061196},{date:'2025-08-22',val:-0.051849},{date:'2025-08-25',val:-0.049184},{date:'2025-08-26',val:-0.047159},{date:'2025-08-27',val:-0.04732},{date:'2025-08-28',val:-0.038721},{date:'2025-08-29',val:-0.0536},{date:'2025-09-01',val:-0.0536},{date:'2025-09-02',val:-0.066037},{date:'2025-09-03',val:-0.072595},{date:'2025-09-04',val:-0.055329},{date:'2025-09-05',val:-0.058426},{date:'2025-09-08',val:-0.046008},{date:'2025-09-09',val:-0.033184},{date:'2025-09-10',val:-0.004279},{date:'2025-09-11',val:0.005328},{date:'2025-09-12',val:0.006146},{date:'2025-09-15',val:0.029486},{date:'2025-09-16',val:0.042512},{date:'2025-09-17',val:0.046303},{date:'2025-09-18',val:0.082823},{date:'2025-09-19',val:0.086207},{date:'2025-09-22',val:0.080869},{date:'2025-09-23',val:0.061323},{date:'2025-09-24',val:0.056324},{date:'2025-09-25',val:0.065218},{date:'2025-09-26',val:0.059181},{date:'2025-09-29',val:0.061243},{date:'2025-09-30',val:0.047534},{date:'2025-10-01',val:0.055538},{date:'2025-10-02',val:0.062055},{date:'2025-10-03',val:0.065293},{date:'2025-10-06',val:0.104419},{date:'2025-10-07',val:0.112013},{date:'2025-10-08',val:0.113552},{date:'2025-10-09',val:0.110413},{date:'2025-10-10',val:0.058408},{date:'2025-10-13',val:0.078386},{date:'2025-10-14',val:0.084963},{date:'2025-10-15',val:0.102712},{date:'2025-10-16',val:0.087029},{date:'2025-10-17',val:0.087385},{date:'2025-10-20',val:0.153378},{date:'2025-10-21',val:0.169401},{date:'2025-10-22',val:0.098223},{date:'2025-10-23',val:0.200668},{date:'2025-10-24',val:0.214146},{date:'2025-10-27',val:0.223438},{date:'2025-10-28',val:0.174736},{date:'2025-10-29',val:0.168143},{date:'2025-10-30',val:0.112172},{date:'2025-10-31',val:0.138081},{date:'2025-11-03',val:0.151328},{date:'2025-11-04',val:0.055513},{date:'2025-11-05',val:0.057843},{date:'2025-11-06',val:0.01996},{date:'2025-11-07',val:0.017539},{date:'2025-11-10',val:0.095006},{date:'2025-11-11',val:0.084369},{date:'2025-11-12',val:0.097477},{date:'2025-11-13',val:0.020166},{date:'2025-11-14',val:-0.006669},{date:'2025-11-17',val:-0.045303},{date:'2025-11-18',val:-0.041527},{date:'2025-11-19',val:-0.084932},{date:'2025-11-20',val:-0.138766},{date:'2025-11-21',val:-0.117597},{date:'2025-11-24',val:-0.070365},{date:'2025-11-25',val:-0.061938},{date:'2025-11-26',val:-0.041587},{date:'2025-11-27',val:-0.041587},{date:'2025-11-28',val:-0.028936},{date:'2025-12-01',val:-0.069832},{date:'2025-12-02',val:-0.061647},{date:'2025-12-03',val:-0.028932},{date:'2025-12-04',val:-0.024599},{date:'2025-12-05',val:-0.033385},{date:'2025-12-08',val:-0.025273},{date:'2025-12-09',val:-0.006616},{date:'2025-12-10',val:0.028867},{date:'2025-12-11',val:0.061964},{date:'2025-12-12',val:0.027292},{date:'2025-12-15',val:-0.022838},{date:'2025-12-16',val:-0.013809},{date:'2025-12-17',val:-0.036905},{date:'2025-12-18',val:0.005205},{date:'2025-12-19',val:0.081446},{date:'2025-12-22',val:0.125335},{date:'2025-12-23',val:0.11919},{date:'2025-12-24',val:0.118213},{date:'2025-12-25',val:0.118213},{date:'2025-12-26',val:0.07466},{date:'2025-12-29',val:0.077329},{date:'2025-12-30',val:0.073149},{date:'2025-12-31',val:0.066115},{date:'2026-01-01',val:0.066115},{date:'2026-01-02',val:0.090735},{date:'2026-01-05',val:0.119048},{date:'2026-01-06',val:0.134749},{date:'2026-01-07',val:0.111171},{date:'2026-01-08',val:0.112494},{date:'2026-01-09',val:0.14057},{date:'2026-01-12',val:0.188511},{date:'2026-01-13',val:0.203194},{date:'2026-01-14',val:0.196951},{date:'2026-01-15',val:0.19141},{date:'2026-01-16',val:0.233528},{date:'2026-01-19',val:0.233528},{date:'2026-01-20',val:0.189014},{date:'2026-01-21',val:0.196634},{date:'2026-01-22',val:0.203027},{date:'2026-01-23',val:0.188431},{date:'2026-01-26',val:0.144189},{date:'2026-01-27',val:0.171319},{date:'2026-01-28',val:0.221131},{date:'2026-01-29',val:0.170253},{date:'2026-01-30',val:0.079188},{date:'2026-02-02',val:0.051623},{date:'2026-02-03',val:0.066123},{date:'2026-02-04',val:-0.072614},{date:'2026-02-05',val:-0.16303},{date:'2026-02-06',val:-0.093744},{date:'2026-02-09',val:-0.053881},{date:'2026-02-10',val:-0.041325},{date:'2026-02-11',val:-0.046136},{date:'2026-02-12',val:-0.105807},{date:'2026-02-13',val:-0.037078},{date:'2026-02-16',val:-0.037078},{date:'2026-02-17',val:-0.043371},{date:'2026-02-18',val:-0.044381},{date:'2026-02-19',val:-0.041395},{date:'2026-02-20',val:-0.057602},{date:'2026-02-23',val:-0.099386},{date:'2026-02-24',val:-0.098274},{date:'2026-02-25',val:-0.071248},
 ];
 const NGX_PERF = [
   {date:'2025-02-27',val:-0.00912},{date:'2025-02-28',val:-0.00299},{date:'2025-03-03',val:-0.00753},
@@ -246,47 +243,54 @@ const MARKET_PNL = [
 ──────────────────────────────────────────── */
 const FUNDING_DATA = [
   {
-    group: 'Personal Accounts (Alpari)',
-    totalUSD: 340.31,
+    group: 'Alpari Personal Account 2020',
+    totalUSD: 294.71,
     sources: [
-      { tag:'IF', name:'Internal Funding',  usd:75.35,  pct:22, ngn:null },
-      { tag:'MO', name:'MO (Investor)',      usd:108.69, pct:32, ngn:100000 },
-      { tag:'TA', name:'TA (Investor)',      usd:156.27, pct:46, ngn:null   },
+      { tag:'PO', name:'PO', usd:294.71, pct:100, ngn:null },
+    ]
+  },
+  {
+    group: 'Alpari Personal Account 2023',
+    totalUSD: 427.26,
+    sources: [
+      { tag:'IF', name:'IF', usd:75.35,  pct:18, ngn:null },
+      { tag:'MO', name:'MO', usd:108.69, pct:25, ngn:100000 },
+      { tag:'TA', name:'TA', usd:243.22, pct:57, ngn:null   },
     ]
   },
   {
     group: 'MyFundedFutures X1–X5 (Eval Fees)',
     totalUSD: 552.50,
     sources: [
-      { tag:'IF', name:'Internal Funding', usd:552.50, pct:100, ngn:null },
+      { tag:'IF', name:'IF', usd:552.50, pct:100, ngn:null },
     ]
   },
   {
     group: 'MyFundedFX Spot X1–X4 (Eval Fees)',
     totalUSD: 148.22,
     sources: [
-      { tag:'IF', name:'Internal Funding', usd:148.22, pct:100, ngn:null },
+      { tag:'IF', name:'IF', usd:148.22, pct:100, ngn:null },
     ]
   },
   {
     group: 'Active Evaluations (FDNT + T5RS)',
     totalUSD: 94.71,
     sources: [
-      { tag:'IF', name:'Internal Funding', usd:94.71, pct:100, ngn:null },
+      { tag:'IF', name:'IF', usd:94.71, pct:100, ngn:null },
     ]
   },
   {
     group: '1kHooD Fund',
     totalUSD: 1000,
     sources: [
-      { tag:'TA', name:'TA (Investor)', usd:1000, pct:100, ngn:null },
+      { tag:'TA', name:'TA', usd:1000, pct:100, ngn:null },
     ]
   },
   {
     group: 'FIBAM NGX Fund',
     totalUSD: 107.64,
     sources: [
-      { tag:'IF', name:'Internal Funding', usd:107.64, pct:100, ngn:161452.90 },
+      { tag:'IF', name:'IF', usd:107.64, pct:100, ngn:161452.90 },
     ]
   },
 ];
@@ -340,10 +344,10 @@ function initNav() {
     let cur='hero'; secs.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-120)cur=id;});
     document.querySelectorAll('.nav-link').forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
   },{passive:true});
-  btn.addEventListener('click',()=>{mob.classList.toggle('open');btn.setAttribute('aria-expanded',mob.classList.contains('open'));});
-  document.querySelectorAll('.nav-mobile-link').forEach(l=>l.addEventListener('click',()=>{mob.classList.remove('open');btn.setAttribute('aria-expanded','false');}));
+  btn.addEventListener('click',()=>{const isOpen=mob.classList.toggle('open');btn.setAttribute('aria-expanded',isOpen);document.body.style.overflow=isOpen?'hidden':'';});
+  document.querySelectorAll('.nav-mobile-link').forEach(l=>l.addEventListener('click',()=>{mob.classList.remove('open');btn.setAttribute('aria-expanded','false');document.body.style.overflow='';}));
   // Close mobile nav on outside tap
-  document.addEventListener('click',e=>{if(mob.classList.contains('open')&&!mob.contains(e.target)&&!btn.contains(e.target)){mob.classList.remove('open');btn.setAttribute('aria-expanded','false');}});
+  document.addEventListener('click',e=>{if(mob.classList.contains('open')&&!mob.contains(e.target)&&!btn.contains(e.target)){mob.classList.remove('open');btn.setAttribute('aria-expanded','false');document.body.style.overflow='';}});
 }
 
 /* ────────────────────────────────────────────
@@ -918,7 +922,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 function buildFundingSection() {
   const grid = document.getElementById('fundingGrid');
   if (!grid) return;
-  const TAG_CLASS = { IF:'if', TA:'ta', MO:'mo' };
+  const TAG_CLASS = { IF:'if', TA:'ta', MO:'mo', PO:'po' };
   grid.innerHTML = FUNDING_DATA.map(group => {
     const rows = group.sources.map(s => {
       const tc = TAG_CLASS[s.tag] || 'if';
@@ -1160,4 +1164,4 @@ function buildAnalytics() {
       y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},stepSize:1}}
     }}});
   }
-}s
+}
