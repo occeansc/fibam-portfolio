@@ -7,12 +7,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {
   --bg:#0b0c10; --surface:#13151c; --border:#1e2130; --border2:#2a2d3e;
   --accent:#4ade80; --accent2:#3b82f6; --warn:#f59e0b; --danger:#ef4444;
   --text:#e8eaf0; --text2:#8b90a8; --text3:#555a72;
-  --mono:'JetBrains Mono',monospace; --sans:'Public Sans',sans-serif; --radius:8px;
+  --mono:'JetBrains Mono',monospace; --sans:'Public Sans',sans-serif; --font:'Public Sans',sans-serif; --radius:8px;
+  --font: 'Public Sans', sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
@@ -88,6 +90,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 @media(max-width:640px){.meta-form{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr 1fr}}
 </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
 
@@ -916,8 +919,23 @@ function clearMeta() {
 
 /* ════════════════════════════════════════
    EQUITY CURVE MANAGER
+   EC_LAST is derived dynamically from the embedded EQUITY_CURVE data below
    ════════════════════════════════════════ */
-const EC_LAST = { date: '2026-02-27', pnl: 32.93, eq: -13620.01 };
+const EQUITY_CURVE_DATA = [{"d":"2023-09-20","pnl":38.53,"eq":38.53},{"d":"2023-09-22","pnl":90.17,"eq":128.7},{"d":"2023-09-25","pnl":25.0,"eq":153.7},{"d":"2023-11-15","pnl":70.4,"eq":1085.31},{"d":"2024-02-12","pnl":-178.29,"eq":907.02},{"d":"2026-02-25","pnl":127.93,"eq":-13675.49},{"d":"2026-02-26","pnl":22.55,"eq":-13652.94},{"d":"2026-02-27","pnl":32.93,"eq":-13620.01}];
+const EC_LAST = (() => {
+  const last = EQUITY_CURVE_DATA[EQUITY_CURVE_DATA.length - 1];
+  return { date: last.d, pnl: last.pnl, eq: last.eq };
+})();
+
+// Update the displayed "Last Recorded Entry" from the actual array
+(function initECDisplay() {
+  const el_d = document.getElementById('ecLastDate');
+  const el_p = document.getElementById('ecLastPnl');
+  const el_e = document.getElementById('ecLastEq');
+  if (el_d) el_d.textContent = EC_LAST.date;
+  if (el_p) { el_p.textContent = (EC_LAST.pnl >= 0 ? '+' : '') + EC_LAST.pnl.toFixed(2); el_p.style.color = EC_LAST.pnl >= 0 ? '#4ade80' : '#ef4444'; }
+  if (el_e) { el_e.textContent = (EC_LAST.eq >= 0 ? '' : '−') + '$' + Math.abs(EC_LAST.eq).toLocaleString('en-US', {minimumFractionDigits:2}); el_e.style.color = EC_LAST.eq >= 0 ? '#4ade80' : '#ef4444'; }
+})();
 
 function ecPreview() {
   const d = document.getElementById('ecDate').value;
@@ -1087,5 +1105,6 @@ function smCopy() {
 renderAccCards();
 updateManualForm();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </body>
 </html>
