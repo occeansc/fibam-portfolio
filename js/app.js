@@ -246,30 +246,31 @@ const FUNDING_DATA = [
     group: 'Alpari Personal Account 2020',
     totalUSD: 294.71,
     sources: [
-      { tag:'PO', name:'PO', usd:294.71, pct:100, ngn:null },
+      { tag:'PO', name:'PO', usd:163.14, pct:55, ngn:null },
+      { tag:'IF', name:'IF', usd:131.57, pct:45, ngn:null },
     ]
   },
   {
     group: 'Alpari Personal Account 2023',
     totalUSD: 427.26,
     sources: [
-      { tag:'IF', name:'IF', usd:75.35,  pct:18, ngn:null },
-      { tag:'MO', name:'MO', usd:108.69, pct:25, ngn:100000 },
-      { tag:'TA', name:'TA', usd:243.22, pct:57, ngn:null   },
+      { tag:'IF', name:'IF', usd:75.32,  pct:18, ngn:null },
+      { tag:'MO', name:'MO', usd:195.59, pct:46, ngn:100000 },
+      { tag:'TA', name:'TA', usd:156.35, pct:37, ngn:null   },
     ]
   },
   {
     group: 'MyFundedFutures X1–X5 (Eval Fees)',
     totalUSD: 552.50,
     sources: [
-      { tag:'IF', name:'IF', usd:552.50, pct:100, ngn:null },
+      { tag:'MO', name:'MO', usd:552.50, pct:100, ngn:null },
     ]
   },
   {
     group: 'MyFundedFX Spot X1–X4 (Eval Fees)',
     totalUSD: 148.22,
     sources: [
-      { tag:'IF', name:'IF', usd:148.22, pct:100, ngn:null },
+      { tag:'TA', name:'TA', usd:148.22, pct:100, ngn:null },
     ]
   },
   {
@@ -902,8 +903,10 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildPerformance();
   fetchLivePrices();
 
-  document.getElementById('drawerClose').addEventListener('click',closeDrawer);
-  document.getElementById('drawerOverlay').addEventListener('click',closeDrawer);
+  const drawerCloseBtn = document.getElementById('drawerClose');
+  const drawerOverlayEl = document.getElementById('drawerOverlay');
+  if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
+  if (drawerOverlayEl) drawerOverlayEl.addEventListener('click', closeDrawer);
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
   initDrawerSwipe();
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -929,7 +932,6 @@ function buildFundingSection() {
       const ngnNote = s.ngn ? `<span style="font-size:11px;color:var(--text-3);margin-left:4px">(₦${(s.ngn/1000).toFixed(0)}k)</span>` : '';
       return `<div class="funder-row">
         <span class="funder-tag funder-tag--${tc}">${s.tag}</span>
-        <span class="funder-name">${s.name}</span>
         <span class="funder-amount">$${s.usd.toFixed(2)}${ngnNote}</span>
         <span class="funder-pct">${s.pct}%</span>
       </div>`;
@@ -958,8 +960,16 @@ async function fetchLivePrices() {
     const eurData = await eurRes.json();
     const ujEl = document.getElementById('tickerUSDJPY');
     const euEl = document.getElementById('tickerEURUSD');
-    if (ujEl && usdData.rates?.JPY) ujEl.textContent = usdData.rates.JPY.toFixed(3);
-    if (euEl && eurData.rates?.USD) euEl.textContent = eurData.rates.USD.toFixed(5);
+    if (ujEl && usdData.rates?.JPY) {
+      const v = usdData.rates.JPY.toFixed(3);
+      ujEl.textContent = v;
+      document.querySelectorAll('.ticker-clone--usdjpy').forEach(el=>el.textContent=v);
+    }
+    if (euEl && eurData.rates?.USD) {
+      const v = eurData.rates.USD.toFixed(5);
+      euEl.textContent = v;
+      document.querySelectorAll('.ticker-clone--eurusd').forEach(el=>el.textContent=v);
+    }
   } catch(e) { console.log('FX fetch failed:', e.message); }
 
   // ── 1kHooD open positions: live prices via CORS proxy ──
@@ -994,6 +1004,15 @@ async function fetchLivePrices() {
         const pos = chg >= 0;
         chgEl.textContent = `${pos?'+':''}${(chg*100).toFixed(1)}%`;
         chgEl.className = `ticker-change ${pos?'pos':'neg'}`;
+      }
+      // Sync clone segment
+      const clonePrice = document.querySelector(`.ticker-clone--${ticker.toLowerCase()}`);
+      const cloneChg   = document.querySelector(`.ticker-clone--${ticker.toLowerCase()}chg`);
+      if (clonePrice) clonePrice.textContent = `$${price.toFixed(2)}`;
+      if (cloneChg) {
+        const pos2 = chg >= 0;
+        cloneChg.textContent = `${pos2?'+':''}${(chg*100).toFixed(1)}%`;
+        cloneChg.className = `ticker-change ${pos2?'pos':'neg'}`;
       }
       // Also update KHOOD_HOLDINGS in memory so fund card refreshes
       const h = KHOOD_HOLDINGS.find(h => h.ticker === ticker);
@@ -1035,7 +1054,7 @@ function buildAnalytics() {
       fill:true,backgroundColor:grad,
       pointRadius:0,pointHoverRadius:4,pointHoverBackgroundColor:'#40B5AD',
       tension:0.35
-    }]},options:{responsive:true,animation:{duration:1000},plugins:{
+    }]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:1000},plugins:{
       legend:{display:false},
       tooltip:{...TIP2,callbacks:{
         title:ctx=>[ctx[0].label],
