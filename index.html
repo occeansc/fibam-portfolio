@@ -61,53 +61,99 @@
 
   <!-- Live Price Ticker Bar -->
   <div class="live-ticker-bar" id="tickerBar">
-    <div class="live-ticker-inner">
-      <div class="ticker-item">
-        <span class="ticker-dot"></span>
-        <span class="ticker-label">Live</span>
+    <div class="live-ticker-inner" id="tickerInner">
+      <!-- Segment 1 -->
+      <div class="ticker-segment">
+        <div class="ticker-item">
+          <span class="ticker-dot"></span>
+          <span class="ticker-label">Live</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">USD/JPY</span>
+          <span class="ticker-price" id="tickerUSDJPY">—</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">EUR/USD</span>
+          <span class="ticker-price" id="tickerEURUSD">—</span>
+        </div>
+        <div class="ticker-item ticker-item--sep">
+          <span class="ticker-pair">PANW</span>
+          <span class="ticker-price" id="tickerPANW">—</span>
+          <span class="ticker-change" id="tickerPANWchg"></span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">HOOD</span>
+          <span class="ticker-price" id="tickerHOOD">—</span>
+          <span class="ticker-change" id="tickerHOODchg"></span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">RKLB</span>
+          <span class="ticker-price" id="tickerRKLB">—</span>
+          <span class="ticker-change" id="tickerRKLBchg"></span>
+        </div>
+        <div class="ticker-item ticker-item--sep">
+          <span class="ticker-pair">GEREGU</span>
+          <span class="ticker-price">₦1,141.50</span>
+          <span class="ticker-change pos">+26.8%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">ACCESSCORP</span>
+          <span class="ticker-price">₦22.90</span>
+          <span class="ticker-change neg">−1.2%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">ZENITHBANK</span>
+          <span class="ticker-price">₦64.50</span>
+          <span class="ticker-change neg">−3.7%</span>
+        </div>
+        <span class="ticker-ngx-note" style="padding:0 40px">NGX: manual · US: Yahoo Finance · FX: Frankfurter</span>
       </div>
-      <!-- FX: active eval pairs -->
-      <div class="ticker-item">
-        <span class="ticker-pair">USD/JPY</span>
-        <span class="ticker-price" id="tickerUSDJPY">—</span>
+      <!-- Segment 2 — duplicate for seamless loop -->
+      <div class="ticker-segment" aria-hidden="true">
+        <div class="ticker-item">
+          <span class="ticker-dot"></span>
+          <span class="ticker-label">Live</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">USD/JPY</span>
+          <span class="ticker-price ticker-clone--usdjpy">—</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">EUR/USD</span>
+          <span class="ticker-price ticker-clone--eurusd">—</span>
+        </div>
+        <div class="ticker-item ticker-item--sep">
+          <span class="ticker-pair">PANW</span>
+          <span class="ticker-price ticker-clone--panw">—</span>
+          <span class="ticker-change ticker-clone--panwchg"></span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">HOOD</span>
+          <span class="ticker-price ticker-clone--hood">—</span>
+          <span class="ticker-change ticker-clone--hoodchg"></span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">RKLB</span>
+          <span class="ticker-price ticker-clone--rklb">—</span>
+          <span class="ticker-change ticker-clone--rklbchg"></span>
+        </div>
+        <div class="ticker-item ticker-item--sep">
+          <span class="ticker-pair">GEREGU</span>
+          <span class="ticker-price">₦1,141.50</span>
+          <span class="ticker-change pos">+26.8%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">ACCESSCORP</span>
+          <span class="ticker-price">₦22.90</span>
+          <span class="ticker-change neg">−1.2%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">ZENITHBANK</span>
+          <span class="ticker-price">₦64.50</span>
+          <span class="ticker-change neg">−3.7%</span>
+        </div>
+        <span class="ticker-ngx-note" style="padding:0 40px">NGX: manual · US: Yahoo Finance · FX: Frankfurter</span>
       </div>
-      <div class="ticker-item">
-        <span class="ticker-pair">EUR/USD</span>
-        <span class="ticker-price" id="tickerEURUSD">—</span>
-      </div>
-      <!-- 1kHooD open positions -->
-      <div class="ticker-item" style="border-left:1px solid rgba(255,255,255,0.15);padding-left:32px">
-        <span class="ticker-pair">PANW</span>
-        <span class="ticker-price" id="tickerPANW">—</span>
-        <span class="ticker-change" id="tickerPANWchg"></span>
-      </div>
-      <div class="ticker-item">
-        <span class="ticker-pair">HOOD</span>
-        <span class="ticker-price" id="tickerHOOD">—</span>
-        <span class="ticker-change" id="tickerHOODchg"></span>
-      </div>
-      <div class="ticker-item">
-        <span class="ticker-pair">RKLB</span>
-        <span class="ticker-price" id="tickerRKLB">—</span>
-        <span class="ticker-change" id="tickerRKLBchg"></span>
-      </div>
-      <!-- NGX positions -->
-      <div class="ticker-item" style="border-left:1px solid rgba(255,255,255,0.15);padding-left:48px">
-        <span class="ticker-pair">GEREGU</span>
-        <span class="ticker-price" id="tickerGEREGU">₦1,141.50</span>
-        <span class="ticker-change pos">+26.8%</span>
-      </div>
-      <div class="ticker-item">
-        <span class="ticker-pair">ACCESSCORP</span>
-        <span class="ticker-price" id="tickerACCESS">₦22.90</span>
-        <span class="ticker-change neg">−1.2%</span>
-      </div>
-      <div class="ticker-item">
-        <span class="ticker-pair">ZENITHBANK</span>
-        <span class="ticker-price" id="tickerZENITH">₦64.50</span>
-        <span class="ticker-change neg">−3.7%</span>
-      </div>
-      <span class="ticker-ngx-note">NGX: manual · US stocks: Yahoo Finance · FX: Frankfurter</span>
     </div>
   </div>
 
@@ -418,405 +464,53 @@
   </section>
 
   <!-- ══════════════════════════════════════════
-       PNL CALENDARS
+       SECTION LINKS — Navigate to dedicated pages
   ══════════════════════════════════════════ -->
-  <section class="section" id="calendars">
+  <section class="section section--alt" id="portfolio-links">
     <div class="container">
       <div class="section-header">
-        <div class="section-tag">PNL Calendars</div>
-        <h2 class="section-title">Day by Day</h2>
-        <p class="section-desc">Every trading day mapped. Green days, red days — the honest picture of execution quality over time.</p>
+        <div class="section-tag">Portfolio Pages</div>
+        <h2 class="section-title">Explore in Depth</h2>
+        <p class="section-desc">Each section has a dedicated page with full detail, charts, and breakdowns.</p>
       </div>
-
-      <div class="cal-tabs" id="calTabs">
-        <button class="cal-tab active" data-account="FDNT-6KX1">FundedNext (FDNT)</button>
-        <button class="cal-tab" data-account="T5RS-5KX1">The5ers (T5RS)</button>
+      <div class="portfolio-nav-grid">
+        <a href="funds.html#calendars" class="pnav-card">
+          <div class="pnav-icon">📅</div>
+          <div class="pnav-title">PnL Calendars</div>
+          <div class="pnav-desc">Daily P&amp;L heat maps for active evaluations. Green days, red days — the honest record.</div>
+          <div class="pnav-link">View Calendars →</div>
+        </a>
+        <a href="funds.html#trading" class="pnav-card">
+          <div class="pnav-icon">⚡</div>
+          <div class="pnav-title">Trading Portfolio</div>
+          <div class="pnav-desc">All 13 prop firm accounts across Spot FX &amp; Futures. Full account register with P&amp;L.</div>
+          <div class="pnav-link">View Trading →</div>
+        </a>
+        <a href="funds.html#funds" class="pnav-card">
+          <div class="pnav-icon">💼</div>
+          <div class="pnav-title">Funds &amp; Holdings</div>
+          <div class="pnav-desc">1kHooD US Equities Fund and FIBAM NGX — live positions, holdings, and performance charts.</div>
+          <div class="pnav-link">View Funds →</div>
+        </a>
+        <a href="funds.html#funding" class="pnav-card">
+          <div class="pnav-icon">🤝</div>
+          <div class="pnav-title">Investors &amp; Funding</div>
+          <div class="pnav-desc">Capital allocation by contributor across all campaigns — PO, IF, TA, MO.</div>
+          <div class="pnav-link">View Funding →</div>
+        </a>
+        <a href="analytics.html" class="pnav-card pnav-card--highlight">
+          <div class="pnav-icon">📊</div>
+          <div class="pnav-title">Deep Analytics</div>
+          <div class="pnav-desc">1,673 trades. Equity curve, instrument breakdown, commission drag, win rates.</div>
+          <div class="pnav-link">View Analytics →</div>
+        </a>
       </div>
-
-      <div class="cal-container" id="calContainer">
-        <!-- populated by JS -->
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════
-       TRADING PORTFOLIO
-  ══════════════════════════════════════════ -->
-  <section class="section" id="trading">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">fTP — Trading Portfolio</div>
-        <h2 class="section-title">Spot &amp; Futures</h2>
-        <p class="section-desc">13 accounts across Spot FX and US Futures. Each account traded with a defined mandate — evaluated against the prop firm's targets or personal capital goals.</p>
-      </div>
-
-      <div class="trading-layout">
-
-        <!-- Left: stats column -->
-        <div class="trading-stats">
-          <div class="tstat-block">
-            <div class="tstat-label">Prop Firm Accounts</div>
-            <div class="tstat-value">13</div>
-          </div>
-          <div class="tstat-divider"></div>
-          <div class="tstat-block">
-            <div class="tstat-label">Spot FX Accounts</div>
-            <div class="tstat-value">6</div>
-          </div>
-          <div class="tstat-divider"></div>
-          <div class="tstat-block">
-            <div class="tstat-label">Futures Accounts</div>
-            <div class="tstat-value">5</div>
-          </div>
-          <div class="tstat-divider"></div>
-          <div class="tstat-block">
-            <div class="tstat-label">Total Eval Fees</div>
-            <div class="tstat-value tstat-value--red">$1,699</div>
-          </div>
-          <div class="tstat-divider"></div>
-          <div class="tstat-block">
-            <div class="tstat-label">Total Closed P&L</div>
-            <div class="tstat-value tstat-value--red">−$15,264</div>
-          </div>
-          <div class="tstat-divider"></div>
-          <div class="tstat-block">
-            <div class="tstat-label">Longest Account</div>
-            <div class="tstat-value">91 days</div>
-            <div class="tstat-sub">MFFX X2 · Spot</div>
-          </div>
-          <div class="tstat-divider"></div>
-          <div class="tstat-block">
-            <div class="tstat-label">Most Trades</div>
-            <div class="tstat-value">584</div>
-            <div class="tstat-sub">MFFU X4 · Futures</div>
-          </div>
-        </div>
-
-        <!-- Right: instruments + accounts timeline -->
-        <div class="trading-main">
-
-          <div class="instruments-row" id="instrumentsRow">
-            <!-- populated by JS -->
-          </div>
-
-          <div class="trading-accounts-table">
-            <div class="tat-header">
-              <span>Account</span>
-              <span>Platform</span>
-              <span>Market</span>
-              <span>Period</span>
-              <span>Size</span>
-              <span>P&L</span>
-              <span>Status</span>
-            </div>
-            <div id="tradingAccountsRows">
-              <!-- populated by JS -->
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════
-       FUND PORTFOLIO
-  ══════════════════════════════════════════ -->
-  <section class="section section--alt" id="funds">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">fIP — Investment Portfolio</div>
-        <h2 class="section-title">Funds &amp; Holdings</h2>
-        <p class="section-desc">Two live funds — 1kHooD managing US equities on Robinhood, and FIBAM NGX holding Nigerian stocks on the NGX Exchange.</p>
-      </div>
-
-      <div class="funds-grid">
-
-        <!-- 1kHooD Card -->
-        <div class="fund-card">
-          <div class="fund-card-header">
-            <div class="fund-card-badge fund-card-badge--green">🟢 Live</div>
-            <h3 class="fund-card-name">1kHooD Fund</h3>
-            <p class="fund-card-platform">Robinhood · US Equities · USD</p>
-          </div>
-          <div class="fund-card-stats">
-            <div class="fund-stat">
-              <span class="fund-stat-label">Initial Capital</span>
-              <span class="fund-stat-val">$1,000</span>
-            </div>
-            <div class="fund-stat">
-              <span class="fund-stat-label">Launched</span>
-              <span class="fund-stat-val">Feb 2025</span>
-            </div>
-            <div class="fund-stat">
-              <span class="fund-stat-label">Holdings</span>
-              <span class="fund-stat-val" id="khoodHoldings">—</span>
-            </div>
-            <div class="fund-stat">
-              <span class="fund-stat-label">Withdrawals</span>
-              <span class="fund-stat-val">$169.15</span>
-            </div>
-          </div>
-          <div class="fund-chart-wrap">
-            <canvas id="khoodChart" height="100"></canvas>
-          </div>
-          <div class="fund-holdings-list" id="khoodHoldingsList">
-            <!-- populated by JS -->
-          </div>
-        </div>
-
-        <!-- NGX Card -->
-        <div class="fund-card">
-          <div class="fund-card-header">
-            <div class="fund-card-badge fund-card-badge--green">🟢 Live</div>
-            <h3 class="fund-card-name">FIBAM NGX</h3>
-            <p class="fund-card-platform">NGX Exchange · Nigerian Stocks · NGN</p>
-          </div>
-          <div class="fund-card-stats">
-            <div class="fund-stat">
-              <span class="fund-stat-label">Holdings</span>
-              <span class="fund-stat-val" id="ngxHoldings">—</span>
-            </div>
-            <div class="fund-stat">
-              <span class="fund-stat-label">Since</span>
-              <span class="fund-stat-val">May 2024</span>
-            </div>
-            <div class="fund-stat">
-              <span class="fund-stat-label">Exchange</span>
-              <span class="fund-stat-val">NGX</span>
-            </div>
-            <div class="fund-stat">
-              <span class="fund-stat-label">Currency</span>
-              <span class="fund-stat-val">NGN ₦</span>
-            </div>
-          </div>
-          <div class="fund-chart-wrap">
-            <canvas id="ngxChart" height="100"></canvas>
-          </div>
-          <div class="fund-holdings-list" id="ngxHoldingsList">
-            <!-- populated by JS -->
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════
-       INVESTORS / FUNDING
-  ══════════════════════════════════════════ -->
-  <section class="section" id="funding">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Capital Sources</div>
-        <h2 class="section-title">Investors &amp; Funding</h2>
-        <p class="section-desc">All capital deployed across trading campaigns — personal funds, investor contributions, and their allocation across accounts.</p>
-      </div>
-
-      <!-- Summary strip -->
-      <div class="funding-summary" style="margin-bottom:32px">
-        <div class="funding-summary-item">
-          <div class="funding-summary-val">$2,280</div>
-          <div class="funding-summary-label">Total Deployed</div>
-          <div class="funding-summary-sub">All capital incl. eval fees</div>
-        </div>
-        <div class="funding-summary-item">
-          <div class="funding-summary-val">3</div>
-          <div class="funding-summary-label">Contributors</div>
-          <div class="funding-summary-sub">IF · TA · MO</div>
-        </div>
-        <div class="funding-summary-item">
-          <div class="funding-summary-val">$264</div>
-          <div class="funding-summary-label">External Capital</div>
-          <div class="funding-summary-sub">TA $265 · MO $109</div>
-        </div>
-        <div class="funding-summary-item">
-          <div class="funding-summary-val">88%</div>
-          <div class="funding-summary-label">Self-Funded</div>
-          <div class="funding-summary-sub">Internal / personal capital</div>
-        </div>
-      </div>
-
-      <div class="funding-grid" id="fundingGrid">
-        <!-- populated by JS -->
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════
-       PERFORMANCE
-  ══════════════════════════════════════════ -->
-  <section class="section" id="performance">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Performance Analysis</div>
-        <h2 class="section-title">The Numbers</h2>
-        <p class="section-desc">Aggregated performance across all closed trading accounts. Monthly P&L, cost analysis, and instrument breakdown.</p>
-      </div>
-
-      <div class="perf-grid">
-
-        <div class="perf-card perf-card--wide">
-          <div class="perf-card-header">
-            <h3 class="perf-card-title">Monthly P&L — All Accounts</h3>
-            <span class="perf-card-note">Closed accounts · USD</span>
-          </div>
-          <canvas id="monthlyPnlChart" height="120"></canvas>
-        </div>
-
-        <div class="perf-card">
-          <div class="perf-card-header">
-            <h3 class="perf-card-title">Cost Breakdown</h3>
-            <span class="perf-card-note">All prop accounts</span>
-          </div>
-          <canvas id="costChart" width="220" height="220"></canvas>
-          <div class="cost-breakdown" id="costBreakdown"></div>
-        </div>
-
-        <div class="perf-card">
-          <div class="perf-card-header">
-            <h3 class="perf-card-title">By Market</h3>
-            <span class="perf-card-note">P&L split</span>
-          </div>
-          <div class="market-perf-list" id="marketPerfList"></div>
-        </div>
-
-        <div class="perf-card">
-          <div class="perf-card-header">
-            <h3 class="perf-card-title">Account Duration</h3>
-            <span class="perf-card-note">Days active per account</span>
-          </div>
-          <canvas id="durationChart" height="180"></canvas>
-        </div>
-
-      </div>
-
     </div>
   </section>
 
   <!-- ══════════════════════════════════════════
        FOOTER
   ══════════════════════════════════════════ -->
-
-  <!-- ══════════════════════════════════════════
-       ANALYTICS — Phase 5
-  ══════════════════════════════════════════ -->
-  <section class="section" id="analytics">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Phase 5</span>
-        <h2 class="section-head">Deep Analytics</h2>
-        <p class="section-desc">1,344 real trades across 10 accounts, 166 trading days. Every number computed from raw trade data.</p>
-      </div>
-
-      <!-- Key stat strip -->
-      <div class="an-stat-strip">
-        <div class="an-stat">
-          <div class="an-stat-val" id="anTotalTrades">—</div>
-          <div class="an-stat-label">Total Trades</div>
-        </div>
-        <div class="an-stat-divider"></div>
-        <div class="an-stat">
-          <div class="an-stat-val" id="anWinRate">—</div>
-          <div class="an-stat-label">Win Rate</div>
-        </div>
-        <div class="an-stat-divider"></div>
-        <div class="an-stat">
-          <div class="an-stat-val" id="anAvgWin">—</div>
-          <div class="an-stat-label">Avg Winner</div>
-        </div>
-        <div class="an-stat-divider"></div>
-        <div class="an-stat">
-          <div class="an-stat-val" id="anAvgLoss">—</div>
-          <div class="an-stat-label">Avg Loser</div>
-        </div>
-        <div class="an-stat-divider"></div>
-        <div class="an-stat">
-          <div class="an-stat-val" id="anCommDrag">—</div>
-          <div class="an-stat-label">Commission Drag</div>
-        </div>
-        <div class="an-stat-divider"></div>
-        <div class="an-stat">
-          <div class="an-stat-val" id="anPF">—</div>
-          <div class="an-stat-label">Profit Factor</div>
-        </div>
-      </div>
-
-      <!-- Row 1: Equity curve + Direction split -->
-      <div class="an-grid an-grid--2-1">
-
-        <div class="an-card an-card--equity">
-          <div class="an-card-head">
-            <div>
-              <div class="an-card-title">Portfolio Equity Curve</div>
-              <div class="an-card-sub">All accounts combined · daily net P&amp;L · Sep 2023 – Feb 2026</div>
-            </div>
-            <div class="an-peak-badge">
-              <span class="an-peak-label">Peak</span>
-              <span class="an-peak-val">+$1,085</span>
-            </div>
-          </div>
-          <canvas id="equityChart" height="180"></canvas>
-        </div>
-
-        <div class="an-card">
-          <div class="an-card-head">
-            <div class="an-card-title">Long vs Short</div>
-            <div class="an-card-sub">Excluding journal entries</div>
-          </div>
-          <div class="an-dir-wrap" id="dirStats"></div>
-        </div>
-
-      </div>
-
-      <!-- Row 2: Instrument breakdown + Commission drag -->
-      <div class="an-grid an-grid--1-1">
-
-        <div class="an-card">
-          <div class="an-card-head">
-            <div class="an-card-title">Instrument Breakdown</div>
-            <div class="an-card-sub">Net P&amp;L by symbol · ≥5 trades</div>
-          </div>
-          <canvas id="instrChart" height="260"></canvas>
-        </div>
-
-        <div class="an-card">
-          <div class="an-card-head">
-            <div class="an-card-title">Commission Drag per Account</div>
-            <div class="an-card-sub">Gross P&amp;L vs commission cost</div>
-          </div>
-          <canvas id="commChart" height="260"></canvas>
-        </div>
-
-      </div>
-
-      <!-- Row 3: Win/loss distribution + Account win rates -->
-      <div class="an-grid an-grid--1-1">
-
-        <div class="an-card">
-          <div class="an-card-head">
-            <div class="an-card-title">Win Rate by Account</div>
-            <div class="an-card-sub">% of profitable trades per account</div>
-          </div>
-          <canvas id="wrChart" height="240"></canvas>
-        </div>
-
-        <div class="an-card">
-          <div class="an-card-head">
-            <div class="an-card-title">Trade Size Distribution</div>
-            <div class="an-card-sub">Count of trades per P&amp;L bucket</div>
-          </div>
-          <canvas id="distChart" height="240"></canvas>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
 
   <footer class="footer">
     <div class="container">
