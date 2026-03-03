@@ -10,11 +10,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/print.css" media="print">
 </head>
 <body>
 
+
   <!-- NAV -->
-  <nav class="nav" id="nav">
+  <a href="#performance" class="skip-nav">Skip to main content</a>
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -30,6 +34,9 @@
         <a href="performance.html" class="nav-link nav-link--active">Performance</a>
         <a href="analytics.html" class="nav-link">Analytics</a>
       </div>
+      <button class="nav-dark-btn" id="darkBtn" aria-label="Toggle dark mode" aria-pressed="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
       <button class="nav-menu-btn" id="menuBtn" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -43,6 +50,7 @@
     </div>
   </nav>
 
+
   <!-- PAGE BANNER -->
   <div style="margin-top:var(--nav-h);background:linear-gradient(135deg,#fafffe 0%,#f0fdf4 100%);border-bottom:1px solid var(--border);padding:48px 0 40px">
     <div class="container">
@@ -52,8 +60,9 @@
     </div>
   </div>
 
+
   <!-- PERFORMANCE CHARTS SECTION -->
-  <section class="section" id="performance" style="padding-top:48px">
+  <section id="performance" class="section" style="padding-top:48px">
     <div class="container">
       <div class="section-header">
         <div class="section-tag">Charts</div>
@@ -61,7 +70,9 @@
         <p class="section-desc">Closed accounts · USD · All prop firm and personal account data combined.</p>
       </div>
 
+
       <div class="perf-grid">
+
 
         <div class="perf-card perf-card--wide">
           <div class="perf-card-header">
@@ -70,6 +81,7 @@
           </div>
           <canvas id="monthlyPnlChart" height="120"></canvas>
         </div>
+
 
         <div class="perf-card">
           <div class="perf-card-header">
@@ -80,6 +92,7 @@
           <div class="cost-breakdown" id="costBreakdown"></div>
         </div>
 
+
         <div class="perf-card">
           <div class="perf-card-header">
             <h3 class="perf-card-title">By Market</h3>
@@ -87,6 +100,7 @@
           </div>
           <div class="market-perf-list" id="marketPerfList"></div>
         </div>
+
 
         <div class="perf-card">
           <div class="perf-card-header">
@@ -96,9 +110,11 @@
           <canvas id="durationChart" height="180"></canvas>
         </div>
 
+
       </div>
     </div>
   </section>
+
 
   <!-- ACTIVE ACCOUNT DASHBOARDS -->
   <section class="section section--alt" id="live">
@@ -108,6 +124,7 @@
         <h2 class="section-title">Active Accounts</h2>
         <p class="section-desc">Real-time snapshots for currently active prop firm evaluations.</p>
       </div>
+
 
       <div class="live-grid">
         <!-- FDNT Dashboard -->
@@ -148,6 +165,7 @@
           </div>
           <canvas id="fdntChart" height="80" style="margin-top:16px"></canvas>
         </div>
+
 
         <!-- T5RS Dashboard -->
         <div class="live-card">
@@ -191,6 +209,7 @@
     </div>
   </section>
 
+
   <!-- CALENDARS SECTION -->
   <section class="section" id="calendars">
     <div class="container">
@@ -200,17 +219,21 @@
         <p class="section-desc">Every trading day mapped. Green days, red days — the honest picture of execution quality over time.</p>
       </div>
 
+
       <div class="cal-tabs" id="calTabs">
         <button class="cal-tab active" data-account="FDNT-6KX1">FundedNext (FDNT)</button>
         <button class="cal-tab" data-account="T5RS-5KX1">The5ers (T5RS)</button>
       </div>
 
+
       <div class="cal-container" id="calContainer">
         <!-- populated by JS -->
       </div>
 
+
     </div>
   </section>
+
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -238,7 +261,9 @@
     </div>
   </footer>
 
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="js/data.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
