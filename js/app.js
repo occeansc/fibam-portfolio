@@ -242,56 +242,76 @@ const MARKET_PNL = [
    INVESTORS / FUNDING DATA
 ──────────────────────────────────────────── */
 const FUNDING_DATA = [
+  // ── EXPLICITLY DOCUMENTED (Business Snapshot) ─────────────────────────
+  // Alpari Spot 2020: PO = Investment Capital, IF = Personal Capital
   {
-    group: 'Alpari Personal Account 2020',
+    group: 'Alpari Spot 2020 (Acct 80045237)',
     totalUSD: 294.71,
     sources: [
-      { tag:'PO', name:'PO', usd:163.14, pct:55, ngn:null },
-      { tag:'IF', name:'IF', usd:131.57, pct:45, ngn:null },
+      { tag:'PO', usd:163.13, pct:55.35 },
+      { tag:'IF', usd:131.58, pct:44.65 },
     ]
   },
+  // Alpari Spot 2023: IF = Personal Capital, MO + TA = Loan Capital
   {
-    group: 'Alpari Personal Account 2023',
+    group: 'Alpari Spot 2023 (Acct 80045237 → 101015760)',
     totalUSD: 427.26,
     sources: [
-      { tag:'IF', name:'IF', usd:75.32,  pct:18, ngn:null },
-      { tag:'MO', name:'MO', usd:195.59, pct:46, ngn:100000 },
-      { tag:'TA', name:'TA', usd:156.35, pct:37, ngn:null   },
+      { tag:'IF', usd:75.35,  pct:17.63 },
+      { tag:'MO', usd:195.64, pct:45.79 },
+      { tag:'TA', usd:156.27, pct:36.58 },
     ]
   },
+  // MyFundedFX Spot 2024: TA = Loan Capital (eval fees, 2× $5k accounts)
   {
-    group: 'MyFundedFutures X1–X5 (Eval Fees)',
+    group: 'MyFundedFX Spot 2024 (Accts 3138503 / 19948507)',
+    totalUSD: 84,
+    sources: [
+      { tag:'TA', usd:84, pct:100 },
+    ]
+  },
+  // MyFundedFutures Eval Apr 2024: MO = Loan Capital (MFFUEVEX15306001)
+  {
+    group: 'MyFundedFutures Eval Apr 2024 (MFFUEVEX15306001)',
+    totalUSD: 165,
+    sources: [
+      { tag:'MO', usd:165, pct:100 },
+    ]
+  },
+  // ── NOT EXPLICITLY DOCUMENTED → allocated to IF ────────────────────────
+  {
+    group: 'MyFundedFutures X1–X5 Eval Fees',
     totalUSD: 552.50,
     sources: [
-      { tag:'MO', name:'MO', usd:552.50, pct:100, ngn:null },
+      { tag:'IF', usd:552.50, pct:100 },
     ]
   },
   {
-    group: 'MyFundedFX Spot X1–X4 (Eval Fees)',
+    group: 'MyFundedFX Spot X1–X4 Eval Fees',
     totalUSD: 148.22,
     sources: [
-      { tag:'TA', name:'TA', usd:148.22, pct:100, ngn:null },
+      { tag:'IF', usd:148.22, pct:100 },
     ]
   },
   {
-    group: 'Active Evaluations (FDNT + T5RS)',
+    group: 'Active Evaluations — FDNT & T5RS',
     totalUSD: 94.71,
     sources: [
-      { tag:'IF', name:'IF', usd:94.71, pct:100, ngn:null },
+      { tag:'IF', usd:94.71, pct:100 },
     ]
   },
   {
-    group: '1kHooD Fund',
+    group: '1kHooD US Equities Fund',
     totalUSD: 1000,
     sources: [
-      { tag:'TA', name:'TA', usd:1000, pct:100, ngn:null },
+      { tag:'IF', usd:1000, pct:100 },
     ]
   },
   {
-    group: 'FIBAM NGX Fund',
+    group: 'FIBAM NGX Nigerian Equities Fund',
     totalUSD: 107.64,
     sources: [
-      { tag:'IF', name:'IF', usd:107.64, pct:100, ngn:161452.90 },
+      { tag:'IF', usd:107.64, pct:100 },
     ]
   },
 ];
@@ -929,11 +949,10 @@ function buildFundingSection() {
   grid.innerHTML = FUNDING_DATA.map(group => {
     const rows = group.sources.map(s => {
       const tc = TAG_CLASS[s.tag] || 'if';
-      const ngnNote = '';
       return `<div class="funder-row">
         <span class="funder-tag funder-tag--${tc}">${s.tag}</span>
         <span class="funder-amount">$${s.usd.toFixed(2)}</span>
-        <span class="funder-pct">${s.pct}%</span>
+        <span class="funder-pct">${Number.isInteger(s.pct) ? s.pct : s.pct.toFixed(2)}%</span>
       </div>`;
     }).join('');
     return `<div class="funding-card">
