@@ -1,0 +1,159 @@
+/* ════════════════════════════════════════════════
+   FIBAM Portfolio — Print Stylesheet
+   Clean, ink-efficient layout for printed reports
+════════════════════════════════════════════════ */
+
+@media print {
+  /* Reset to white on black for ink efficiency */
+  *, *::before, *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  body {
+    font-size: 11pt;
+    line-height: 1.5;
+    font-family: 'Public Sans', Georgia, serif;
+  }
+
+  /* Hide navigation, interactive elements, and decorative items */
+  .nav,
+  .nav-mobile,
+  .skip-nav,
+  .drawer,
+  .drawer-overlay,
+  .hero-bg,
+  .hero-glow,
+  .hero-grid,
+  .nav-dark-btn,
+  .nav-menu-btn,
+  .acc-filter,
+  .filter-bar,
+  [class*="-btn"],
+  [class*="scroll-reveal"],
+  footer,
+  .cal-tooltip,
+  .live-badge {
+    display: none !important;
+  }
+
+  /* Page breaks */
+  h2, h3 {
+    page-break-after: avoid;
+  }
+  table, figure, .an-card, .acc-card, .fund-card {
+    page-break-inside: avoid;
+  }
+  .section {
+    page-break-before: auto;
+  }
+
+  /* Links: show URL after link text */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #555 !important;
+  }
+  a[href^="#"]::after {
+    content: "";
+  }
+
+  /* Tables */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 9pt;
+  }
+  th, td {
+    border: 1px solid #ccc !important;
+    padding: 4pt 6pt;
+  }
+  thead {
+    background: #eee !important;
+    display: table-header-group;
+  }
+
+  /* Stat strips */
+  .an-stat-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8pt;
+    border: 1px solid #ccc;
+    padding: 8pt;
+    border-radius: 4pt;
+    margin-bottom: 12pt;
+  }
+  .an-stat {
+    flex: 1 0 100pt;
+    border-right: 1px solid #ccc;
+    padding-right: 8pt;
+  }
+  .an-stat:last-child {
+    border-right: none;
+  }
+
+  /* Cards */
+  .acc-cards-grid,
+  .an-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8pt;
+  }
+  .acc-card,
+  .an-card {
+    border: 1px solid #ccc;
+    border-radius: 4pt;
+    padding: 8pt;
+  }
+
+  /* Hero section: compact print header */
+  .hero {
+    padding: 12pt 0 !important;
+    min-height: unset !important;
+  }
+  .hero-title {
+    font-size: 20pt;
+  }
+  .hero-subtitle {
+    font-size: 11pt;
+  }
+
+  /* Charts: show placeholder message */
+  canvas::after {
+    content: '[Chart — view online at fibam.io]';
+    display: block;
+    font-style: italic;
+    font-size: 9pt;
+    color: #666 !important;
+  }
+
+  /* Section headers */
+  .section-header {
+    margin-bottom: 12pt;
+    border-bottom: 2pt solid #40B5AD;
+    padding-bottom: 4pt;
+  }
+
+  /* P&L calendar grid */
+  .cal-grid {
+    font-size: 7pt;
+    gap: 1pt !important;
+  }
+  .cal-day {
+    min-height: 20pt !important;
+    border-radius: 2pt;
+  }
+
+  /* Page margins */
+  @page {
+    margin: 1.5cm 2cm;
+    size: A4;
+  }
+  @page :first {
+    margin-top: 2cm;
+  }
+}
