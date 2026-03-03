@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
 
@@ -25,7 +26,7 @@
           <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
           <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
         </svg>
-        <span>FI<span>BAM</span></span>
+        <div class="nav-brand"><span class="nav-name">FIBAM</span><span class="nav-tagline">purpose not money</span></div>
       </a>
       <div class="nav-links">
         <a href="index.html" class="nav-link">Overview</a>
@@ -54,42 +55,96 @@
   <!-- Live Price Ticker Bar -->
   <div class="live-ticker-bar" id="tickerBar">
     <div class="live-ticker-inner">
-      <div class="ticker-item">
-        <span class="ticker-dot"></span>
-        <span class="ticker-label">Live</span>
+      <div class="ticker-segment">
+        <div class="ticker-item">
+          <span class="ticker-dot"></span>
+          <span class="ticker-label">Live</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">USD/JPY</span>
+          <span class="ticker-price" id="tickerUSDJPY">—</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">EUR/USD</span>
+          <span class="ticker-price" id="tickerEURUSD">—</span>
+        </div>
+        <div class="ticker-item ticker-item--sep">
+          <span class="ticker-pair">PANW</span>
+          <span class="ticker-price" id="tickerPANW">—</span>
+          <span class="ticker-change" id="tickerPANWchg"></span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">HOOD</span>
+          <span class="ticker-price" id="tickerHOOD">—</span>
+          <span class="ticker-change" id="tickerHOODchg"></span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">RKLB</span>
+          <span class="ticker-price" id="tickerRKLB">—</span>
+          <span class="ticker-change" id="tickerRKLBchg"></span>
+        </div>
+        <div class="ticker-item ticker-item--sep">
+          <span class="ticker-pair">GEREGU</span>
+          <span class="ticker-price">₦1,141.50</span>
+          <span class="ticker-change pos">+26.8%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">ACCESSCORP</span>
+          <span class="ticker-price">₦22.90</span>
+          <span class="ticker-change neg">−1.2%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">ZENITHBANK</span>
+          <span class="ticker-price">₦64.50</span>
+          <span class="ticker-change neg">−3.7%</span>
+        </div>
+        <span class="ticker-ngx-note" style="padding:0 40px">NGX: manual · US: Yahoo Finance · FX: Frankfurter</span>
       </div>
-      <div class="ticker-item">
-        <span class="ticker-pair">USD/JPY</span>
-        <span class="ticker-price" id="tickerUSDJPY">—</span>
-      </div>
-      <div class="ticker-item">
-        <span class="ticker-pair">EUR/USD</span>
-        <span class="ticker-price" id="tickerEURUSD">—</span>
-      </div>
-      <div class="ticker-item">
-        <span class="ticker-pair">GBP/USD</span>
-        <span class="ticker-price" id="tickerGBPUSD">—</span>
-      </div>
-      <div class="ticker-item" style="border-left:1px solid rgba(255,255,255,0.15);padding-left:16px;margin-left:4px">
-        <span class="ticker-label" style="color:#a5f3fc">1kHooD</span>
-      </div>
-      <div class="ticker-item">
-        <span class="ticker-pair">PANW</span>
-        <span class="ticker-price" id="tickerPANW">—</span>
-        <span class="ticker-change" id="tickerPANWchg"></span>
-      </div>
-      <div class="ticker-item">
-        <span class="ticker-pair">HOOD</span>
-        <span class="ticker-price" id="tickerHOOD">—</span>
-        <span class="ticker-change" id="tickerHOODchg"></span>
-      </div>
-      <div class="ticker-item">
-        <span class="ticker-pair">RKLB</span>
-        <span class="ticker-price" id="tickerRKLB">—</span>
-        <span class="ticker-change" id="tickerRKLBchg"></span>
-      </div>
-      <div class="ticker-item" style="border-left:1px solid rgba(255,255,255,0.15);padding-left:16px;margin-left:4px">
-        <span class="ticker-ngx-note">NGX live prices unavailable (no public API)</span>
+      <!-- Duplicate segment for seamless loop -->
+      <div class="ticker-segment" aria-hidden="true">
+        <div class="ticker-item">
+          <span class="ticker-dot"></span>
+          <span class="ticker-label">Live</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">USD/JPY</span>
+          <span class="ticker-price ticker-clone--usdjpy">—</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">EUR/USD</span>
+          <span class="ticker-price ticker-clone--eurusd">—</span>
+        </div>
+        <div class="ticker-item ticker-item--sep">
+          <span class="ticker-pair">PANW</span>
+          <span class="ticker-price ticker-clone--panw">—</span>
+          <span class="ticker-change ticker-clone--panwchg"></span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">HOOD</span>
+          <span class="ticker-price ticker-clone--hood">—</span>
+          <span class="ticker-change ticker-clone--hoodchg"></span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">RKLB</span>
+          <span class="ticker-price ticker-clone--rklb">—</span>
+          <span class="ticker-change ticker-clone--rklbchg"></span>
+        </div>
+        <div class="ticker-item ticker-item--sep">
+          <span class="ticker-pair">GEREGU</span>
+          <span class="ticker-price">₦1,141.50</span>
+          <span class="ticker-change pos">+26.8%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">ACCESSCORP</span>
+          <span class="ticker-price">₦22.90</span>
+          <span class="ticker-change neg">−1.2%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">ZENITHBANK</span>
+          <span class="ticker-price">₦64.50</span>
+          <span class="ticker-change neg">−3.7%</span>
+        </div>
+        <span class="ticker-ngx-note" style="padding:0 40px">NGX: manual · US: Yahoo Finance · FX: Frankfurter</span>
       </div>
     </div>
   </div>
@@ -284,7 +339,7 @@
       <!-- Summary strip -->
       <div class="funding-summary" style="margin-bottom:32px">
         <div class="funding-summary-item">
-          <div class="funding-summary-val">$2,280</div>
+          <div class="funding-summary-val">$2,625</div>
           <div class="funding-summary-label">Total Deployed</div>
           <div class="funding-summary-sub">All capital incl. eval fees</div>
         </div>
@@ -294,42 +349,19 @@
           <div class="funding-summary-sub">PO · IF · TA · MO</div>
         </div>
         <div class="funding-summary-item">
-          <div class="funding-summary-val">$1,352</div>
+          <div class="funding-summary-val">$2,216</div>
           <div class="funding-summary-label">External Capital</div>
-          <div class="funding-summary-sub">TA $1,243 · MO $109</div>
+          <div class="funding-summary-sub">PO · TA · MO</div>
         </div>
         <div class="funding-summary-item">
-          <div class="funding-summary-val">41%</div>
-          <div class="funding-summary-label">PO + IF Capital</div>
-          <div class="funding-summary-sub">Personal / Internal</div>
+          <div class="funding-summary-val">16%</div>
+          <div class="funding-summary-label">IF Capital</div>
+          <div class="funding-summary-sub">Internal</div>
         </div>
       </div>
 
       <div class="funding-grid" id="fundingGrid">
         <!-- populated by JS -->
-      </div>
-
-      <!-- Funding key -->
-      <div style="margin-top:32px;padding:20px 24px;background:var(--white);border-radius:var(--radius-xl);border:1px solid var(--border);box-shadow:var(--shadow-sm)">
-        <div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px">Contributor Key</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 24px">
-          <div style="display:flex;align-items:center;gap:10px">
-            <span class="funder-tag funder-tag--po">PO</span>
-            <span style="font-size:13px;color:var(--text-2)">Personal Own — trader's own capital</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px">
-            <span class="funder-tag funder-tag--if">IF</span>
-            <span style="font-size:13px;color:var(--text-2)">IF — internal/pooled operational capital</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px">
-            <span class="funder-tag funder-tag--ta">TA</span>
-            <span style="font-size:13px;color:var(--text-2)">TA — external investor (loan/profit-share)</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px">
-            <span class="funder-tag funder-tag--mo">MO</span>
-            <span style="font-size:13px;color:var(--text-2)">MO — external investor (₦100k loan capital)</span>
-          </div>
-        </div>
       </div>
 
     </div>
@@ -340,23 +372,36 @@
     <div class="container">
       <div class="footer-inner">
         <div class="footer-brand">
-          <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
             <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
             <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
           </svg>
-          <div>
+          <div class="footer-brand-text">
             <div class="footer-name">FIBAM</div>
             <div class="footer-tagline"><em>...purpose not money, is your real asset</em></div>
           </div>
         </div>
+        <div class="footer-divider"></div>
         <div class="footer-meta">
           <p>Trading Portfolio · 2020 – Present</p>
-          <p>Spot FX · US Futures · US Equities · Nigerian Stocks</p>
+          <p>Spot FX · US Futures · US Equities · NGX</p>
+          <p>15 Accounts · 1,673 Trades · 4 Markets</p>
         </div>
-        <div class="footer-update">
-          <span class="update-dot"></span>
-          <span id="lastUpdated">Data current as of Feb 2026</span>
+        <div class="footer-divider"></div>
+        <div class="footer-right">
+          <div class="footer-update">
+            <span class="update-dot"></span>
+            <span id="lastUpdated">Updated Mar 2026</span>
+          </div>
+          <div class="footer-markets">
+            Prices: Yahoo Finance · Frankfurter<br>
+            NGX: manual data
+          </div>
         </div>
+      </div>
+      <div class="footer-bottom">
+        <span>FIBAM Portfolio — All figures in USD unless noted</span>
+        <span>Past performance does not guarantee future results</span>
       </div>
     </div>
   </footer>
