@@ -1289,9 +1289,12 @@ canvas { display: block; }
 .footer-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 32px;
+  justify-content: center;
+  gap: 48px;
   flex-wrap: wrap;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .footer-brand {
   display: flex;
@@ -1398,8 +1401,7 @@ canvas { display: block; }
   .tat-header span:nth-child(n+4),
   .tat-row > *:nth-child(n+4) { display: none; }
   .funds-grid { grid-template-columns: 1fr; }
-  .footer-inner { flex-direction: column; text-align: center; }
-  .footer-meta { order: 1; }
+  .footer-meta { order: unset; }
 }
 
 @media (max-width: 480px) {
@@ -2072,17 +2074,7 @@ canvas { display: block; }
   .drawer-stat:last-child { display: none; } /* hide least important stat */
 }
 
-/* ── Footer ──────────────────────────────────── */
-@media (max-width: 768px) {
-  .footer-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    text-align: left;
-  }
-  .footer-meta { order: 1; }
-  .footer-links { flex-wrap: wrap; gap: 12px; }
-}
+/* footer mobile handled in primary responsive block */
 
 /* ── Global touch targets ────────────────────── */
 @media (max-width: 768px) {
@@ -2189,6 +2181,17 @@ canvas { display: block; }
   display: flex;
   flex-direction: column;
 }
+/* Chart wrapper: Chart.js reads this height when maintainAspectRatio:false */
+.an-chart-wrap {
+  position: relative;
+  width: 100%;
+}
+.an-chart-wrap canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
 .an-card-head {
   display: flex;
   justify-content: space-between;
@@ -2294,8 +2297,6 @@ canvas { display: block; }
   .an-stat:not(:nth-child(2n))  { border-right: 1px solid var(--border); }
   .an-stat:nth-child(-n+4)      { border-bottom: 1px solid var(--border); }
   .an-card { padding: 18px 16px; }
-  /* Center chart canvases on mobile */
-  .an-card canvas { max-width: 100%; margin: 0 auto; display: block; }
   /* Center direction stat bars on mobile */
   .an-dir-wrap { max-width: 320px; margin: 0 auto; }
 }
@@ -2476,11 +2477,7 @@ canvas { display: block; }
   display: flex;
   flex-direction: column;
 }
-.an-card canvas {
-  flex: 1;
-  width: 100% !important;
-  max-width: 100%;
-}
+
 
 /* -- Analytics direction block: centre within card -- */
 .an-dir-wrap {
@@ -2501,11 +2498,6 @@ canvas { display: block; }
 }
 
 /* -- Performance section: ensure monthly bar chart is full-width -- */
-#monthlyChart, #equityChart, #instrChart, #commChart, #wrChart, #distChart {
-  width: 100% !important;
-  display: block;
-}
-
 /* ════════════════════════════════════════════════
    MOBILE CENTERING OVERHAUL
 ════════════════════════════════════════════════ */
@@ -2599,14 +2591,6 @@ canvas { display: block; }
     padding: 7px 0;
   }
 
-  /* Footer: stack & centre */
-  .footer-inner {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
-  }
-
   /* Drawer: full width on mobile */
   .drawer {
     width: 100%;
@@ -2668,11 +2652,6 @@ canvas { display: block; }
   margin-bottom: 0;
 }
 
-/* Equity curve container — fixed height prevents stretching */
-.an-card--equity canvas {
-  height: 220px !important;
-}
-
 /* ════════════════════════════════════════════════
    GLOBAL MOBILE & CENTERING FIXES
 ════════════════════════════════════════════════ */
@@ -2720,10 +2699,7 @@ canvas { display: block; }
 }
 
 /* Doughnut/pie charts: constrain and center */
-.an-card canvas {
-  display: block;
-  max-width: 100%;
-}
+
 
 /* Calendar cards: better spacing between months */
 .cal-months-grid {
@@ -2807,7 +2783,7 @@ canvas { display: block; }
 /* Analytics grid: single col on mobile */
 @media (max-width: 768px) {
   .an-grid { grid-template-columns: 1fr !important; }
-  .an-card--equity canvas { height: 180px !important; }
+
 }
 
 /* Analytics stat strip: wrap on mobile */
@@ -2974,14 +2950,7 @@ canvas { display: block; }
 /* ════════════════════════════════════════════════
    ANALYTICS: ensure canvas fills cards vertically
 ════════════════════════════════════════════════ */
-.an-card--equity canvas {
-  height: 220px !important;
-}
-.an-card canvas {
-  min-height: 200px;
-}
-#instrChart, #commChart { min-height: 260px !important; }
-#wrChart, #distChart { min-height: 240px !important; }
+
 
 /* ════════════════════════════════════════════════
    MOBILE IMPROVEMENTS — comprehensive
