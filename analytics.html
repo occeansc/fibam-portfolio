@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
 
@@ -24,7 +25,7 @@
           <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
           <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
         </svg>
-        <span>FI<span>BAM</span></span>
+        <div class="nav-brand"><span class="nav-name">FIBAM</span><span class="nav-tagline">purpose not money</span></div>
       </a>
       <div class="nav-links">
         <a href="index.html" class="nav-link">Overview</a>
@@ -50,8 +51,32 @@
     </div>
   </nav>
 
-  <!-- Page hero — uses padding-top to clear fixed nav -->
-  <div style="background:var(--bg-alt);border-bottom:1px solid var(--border);padding:calc(var(--nav-h) + 40px) 0 32px">
+  <!-- Live Price Ticker Bar -->
+  <div class="live-ticker-bar" id="tickerBar">
+    <div class="live-ticker-inner">
+      <div class="ticker-segment">
+        <div class="ticker-item"><span class="ticker-dot"></span><span class="ticker-label">Live</span></div>
+        <div class="ticker-item"><span class="ticker-pair">USD/JPY</span><span class="ticker-price" id="tickerUSDJPY">—</span></div>
+        <div class="ticker-item"><span class="ticker-pair">EUR/USD</span><span class="ticker-price" id="tickerEURUSD">—</span></div>
+        <div class="ticker-item ticker-item--sep"><span class="ticker-pair">PANW</span><span class="ticker-price" id="tickerPANW">—</span><span class="ticker-change" id="tickerPANWchg"></span></div>
+        <div class="ticker-item"><span class="ticker-pair">HOOD</span><span class="ticker-price" id="tickerHOOD">—</span><span class="ticker-change" id="tickerHOODchg"></span></div>
+        <div class="ticker-item"><span class="ticker-pair">RKLB</span><span class="ticker-price" id="tickerRKLB">—</span><span class="ticker-change" id="tickerRKLBchg"></span></div>
+        <span class="ticker-ngx-note" style="padding:0 40px">US: Yahoo Finance · FX: Frankfurter</span>
+      </div>
+      <div class="ticker-segment" aria-hidden="true">
+        <div class="ticker-item"><span class="ticker-dot"></span><span class="ticker-label">Live</span></div>
+        <div class="ticker-item"><span class="ticker-pair">USD/JPY</span><span class="ticker-price ticker-clone--usdjpy">—</span></div>
+        <div class="ticker-item"><span class="ticker-pair">EUR/USD</span><span class="ticker-price ticker-clone--eurusd">—</span></div>
+        <div class="ticker-item ticker-item--sep"><span class="ticker-pair">PANW</span><span class="ticker-price ticker-clone--panw">—</span><span class="ticker-change ticker-clone--panwchg"></span></div>
+        <div class="ticker-item"><span class="ticker-pair">HOOD</span><span class="ticker-price ticker-clone--hood">—</span><span class="ticker-change ticker-clone--hoodchg"></span></div>
+        <div class="ticker-item"><span class="ticker-pair">RKLB</span><span class="ticker-price ticker-clone--rklb">—</span><span class="ticker-change ticker-clone--rklbchg"></span></div>
+        <span class="ticker-ngx-note" style="padding:0 40px">US: Yahoo Finance · FX: Frankfurter</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page hero -->
+  <div style="background:var(--bg-alt);border-bottom:1px solid var(--border);padding:40px 0 32px">
     <div class="container">
       <div class="section-tag" style="margin-bottom:12px;display:inline-block">Performance &amp; Analytics</div>
       <h1 style="font-size:clamp(28px,5vw,48px);font-weight:700;color:var(--text-1);line-height:1.1;margin-bottom:12px">The Full Picture</h1>
@@ -154,7 +179,7 @@
               <span class="an-peak-val">+$1,085</span>
             </div>
           </div>
-          <canvas id="equityChart" height="180"></canvas>
+          <canvas id="equityChart" style="height:220px;width:100%;display:block"></canvas>
         </div>
         <div class="an-card">
           <div class="an-card-head">
@@ -171,14 +196,14 @@
             <div class="an-card-title">Instrument Breakdown</div>
             <div class="an-card-sub">Net P&amp;L by symbol · ≥5 trades</div>
           </div>
-          <canvas id="instrChart" height="260"></canvas>
+          <canvas id="instrChart" style="height:280px;width:100%;display:block"></canvas>
         </div>
         <div class="an-card">
           <div class="an-card-head">
             <div class="an-card-title">Commission Drag per Account</div>
             <div class="an-card-sub">Gross P&amp;L vs commission cost</div>
           </div>
-          <canvas id="commChart" height="260"></canvas>
+          <canvas id="commChart" style="height:280px;width:100%;display:block"></canvas>
         </div>
       </div>
 
@@ -188,14 +213,14 @@
             <div class="an-card-title">Win Rate by Account</div>
             <div class="an-card-sub">% of profitable trades per account</div>
           </div>
-          <canvas id="wrChart" height="240"></canvas>
+          <canvas id="wrChart" style="height:260px;width:100%;display:block"></canvas>
         </div>
         <div class="an-card">
           <div class="an-card-head">
             <div class="an-card-title">Trade Size Distribution</div>
             <div class="an-card-sub">Count of trades per P&amp;L bucket</div>
           </div>
-          <canvas id="distChart" height="240"></canvas>
+          <canvas id="distChart" style="height:260px;width:100%;display:block"></canvas>
         </div>
       </div>
 
@@ -206,23 +231,36 @@
     <div class="container">
       <div class="footer-inner">
         <div class="footer-brand">
-          <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
             <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
             <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
           </svg>
-          <div>
+          <div class="footer-brand-text">
             <div class="footer-name">FIBAM</div>
             <div class="footer-tagline"><em>...purpose not money, is your real asset</em></div>
           </div>
         </div>
+        <div class="footer-divider"></div>
         <div class="footer-meta">
           <p>Trading Portfolio · 2020 – Present</p>
-          <p>Spot FX · US Futures · US Equities · Nigerian Stocks</p>
+          <p>Spot FX · US Futures · US Equities · NGX</p>
+          <p>15 Accounts · 1,673 Trades · 4 Markets</p>
         </div>
-        <div class="footer-update">
-          <span class="update-dot"></span>
-          <span id="lastUpdated">Data current as of Feb 2026</span>
+        <div class="footer-divider"></div>
+        <div class="footer-right">
+          <div class="footer-update">
+            <span class="update-dot"></span>
+            <span id="lastUpdated">Updated Mar 2026</span>
+          </div>
+          <div class="footer-markets">
+            Prices: Yahoo Finance · Frankfurter<br>
+            NGX: manual data
+          </div>
         </div>
+      </div>
+      <div class="footer-bottom">
+        <span>FIBAM Portfolio — All figures in USD unless noted</span>
+        <span>Past performance does not guarantee future results</span>
       </div>
     </div>
   </footer>
