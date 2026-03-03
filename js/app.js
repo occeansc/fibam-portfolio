@@ -898,7 +898,7 @@ function initScrollReveal() {
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(!e.isIntersecting)return;e.target.style.opacity='1';e.target.style.transform='translateY(0)';obs.unobserve(e.target);});
   },{threshold:0.08});
-  document.querySelectorAll('.stat-card,.chart-card,.account-card,.fund-card,.perf-card,.market-pill,.live-card,.cal-month-block,.an-card,.an-stat-strip').forEach(el=>{
+  document.querySelectorAll('.stat-card,.chart-card,.account-card,.fund-card,.perf-card,.market-pill,.live-card,.cal-month-block').forEach(el=>{
     el.style.opacity='0';el.style.transform='translateY(20px)';
     el.style.transition='opacity 0.55s ease,transform 0.55s cubic-bezier(0.22,1,0.36,1)';
     obs.observe(el);
@@ -932,7 +932,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});
   });
-  buildAnalytics();
+  try { buildAnalytics(); } catch(e) { console.error('buildAnalytics failed:', e); }
   requestAnimationFrame(()=>initScrollReveal());
 
   // Refresh live prices every 60 seconds
