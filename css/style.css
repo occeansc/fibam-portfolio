@@ -4,6 +4,7 @@
    Palette: Teal #40B5AD · White #fff · Slate greys · Green/Red PNL
 ════════════════════════════════════════════════ */
 
+
 /* ── Variables ─────────────────────────────── */
 :root {
   --teal:        #40B5AD;
@@ -11,17 +12,21 @@
   --teal-mid:    #c0e8e6;
   --teal-dark:   #2a8a84;
 
+
   --bg:          #f8fafa;
   --bg-alt:      #f0f5f5;
   --white:       #ffffff;
+
 
   --text-1:      #141f1e;
   --text-2:      #3d5452;
   --text-3:      #7a9896;
   --text-4:      #adc5c3;
 
+
   --border:      #ddecea;
   --border-soft: #eef5f4;
+
 
   --green:       #16a34a;
   --green-bg:    #f0fdf4;
@@ -30,24 +35,29 @@
   --amber:       #d97706;
   --amber-bg:    #fffbeb;
 
+
   --shadow-sm:   0 1px 3px rgba(20,31,30,0.06), 0 1px 2px rgba(20,31,30,0.04);
   --shadow-md:   0 4px 16px rgba(20,31,30,0.07), 0 2px 6px rgba(20,31,30,0.04);
   --shadow-lg:   0 12px 40px rgba(20,31,30,0.10), 0 4px 12px rgba(20,31,30,0.06);
+
 
   --radius-sm:   6px;
   --radius-md:   12px;
   --radius-lg:   18px;
   --radius-xl:   24px;
 
+
   --font-display: 'Public Sans', system-ui, sans-serif;
   --font-body:    'Public Sans', system-ui, sans-serif;
   --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
 
   --nav-h:       64px;
   --ticker-h:    38px;
   --header-h:    102px; /* nav + ticker combined */
   --max-w:       1200px;
 }
+
 
 /* ── Reset ─────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -74,6 +84,7 @@ a { color: inherit; text-decoration: none; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
 canvas { display: block; }
 
+
 /* ── Layout ────────────────────────────────── */
 .container {
   max-width: var(--max-w);
@@ -86,6 +97,7 @@ canvas { display: block; }
 .section--alt {
   background: var(--white);
 }
+
 
 /* ── Animations ────────────────────────────── */
 @keyframes fadeUp {
@@ -105,11 +117,13 @@ canvas { display: block; }
   100% { background-position: 200% 0; }
 }
 
+
 .animate-in {
   opacity: 0;
   animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   animation-delay: var(--delay, 0s);
 }
+
 
 /* ── Navigation ────────────────────────────── */
 .nav {
@@ -212,6 +226,7 @@ canvas { display: block; }
   background: var(--teal-light);
   color: var(--teal-dark);
 }
+
 
 /* ── Hero ──────────────────────────────────── */
 .hero {
@@ -356,6 +371,7 @@ canvas { display: block; }
   flex-wrap: wrap;
 }
 
+
 /* Buttons */
 .btn {
   display: inline-flex;
@@ -387,6 +403,7 @@ canvas { display: block; }
   color: var(--teal-dark);
   transform: translateY(-1px);
 }
+
 
 /* Hero timeline */
 .hero-timeline {
@@ -431,10 +448,11 @@ canvas { display: block; }
   transform: scaleY(1.05);
 }
 
+
 /* ── Section Header ────────────────────────── */
 .section-header {
   text-align: center;
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto 56px;
 }
 .section-tag {
@@ -463,6 +481,7 @@ canvas { display: block; }
   color: var(--text-2);
   line-height: 1.7;
 }
+
 
 /* ── Overview Grid ─────────────────────────── */
 .overview-grid {
@@ -521,6 +540,7 @@ canvas { display: block; }
   font-size: 12px;
   color: var(--text-3);
 }
+
 
 .overview-charts {
   display: grid;
@@ -599,6 +619,7 @@ canvas { display: block; }
   color: var(--text-3);
 }
 
+
 /* Market pills */
 .market-pills {
   display: grid;
@@ -650,6 +671,7 @@ canvas { display: block; }
   flex-shrink: 0;
 }
 
+
 /* ── Account Cards ─────────────────────────── */
 .filter-tabs {
   display: flex;
@@ -684,11 +706,13 @@ canvas { display: block; }
   opacity: 0.7;
 }
 
+
 .accounts-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
+
 
 .account-card {
   background: var(--white);
@@ -715,6 +739,7 @@ canvas { display: block; }
   transform: translateY(-3px);
   border-color: var(--teal-mid);
 }
+
 
 .account-card-top {
   display: flex;
@@ -745,6 +770,7 @@ canvas { display: block; }
 .badge--futures  { background: #eef2ff; color: #6366f1; }
 .badge--stocks   { background: var(--green-bg); color: var(--green); }
 .badge--ngx      { background: var(--amber-bg); color: var(--amber); }
+
 
 .account-card-platform {
   font-size: 11px;
@@ -799,6 +825,7 @@ canvas { display: block; }
 .account-card-stat-val.negative { color: var(--red); }
 .account-card-stat-val.neutral  { color: var(--teal-dark); }
 
+
 .account-card-footer {
   display: flex;
   justify-content: space-between;
@@ -819,6 +846,7 @@ canvas { display: block; }
   font-size: 12px;
   color: var(--text-3);
 }
+
 
 /* ── Trading Section ───────────────────────── */
 .trading-layout {
@@ -864,6 +892,7 @@ canvas { display: block; }
   margin-top: 2px;
 }
 
+
 .instruments-row {
   display: flex;
   flex-wrap: wrap;
@@ -887,6 +916,7 @@ canvas { display: block; }
   width: 6px; height: 6px;
   border-radius: 50%;
 }
+
 
 .trading-accounts-table {
   background: var(--white);
@@ -946,6 +976,7 @@ canvas { display: block; }
 .tat-status.active    { background: var(--teal-light); color: var(--teal-dark); }
 .tat-status.completed { background: #f1f5f9; color: #64748b; }
 .tat-status.lost      { background: var(--red-bg); color: var(--red); }
+
 
 /* ── Fund Cards ────────────────────────────── */
 .funds-grid {
@@ -1049,6 +1080,7 @@ canvas { display: block; }
 .holding-change.pos { color: var(--green); }
 .holding-change.neg { color: var(--red); }
 
+
 /* ── Performance ───────────────────────────── */
 .perf-grid {
   display: grid;
@@ -1100,6 +1132,7 @@ canvas { display: block; }
   color: var(--text-2);
 }
 
+
 .market-perf-list {
   display: flex;
   flex-direction: column;
@@ -1135,6 +1168,7 @@ canvas { display: block; }
   border-radius: 3px;
   transition: width 0.8s cubic-bezier(0.22,1,0.36,1);
 }
+
 
 /* ── Drawer ────────────────────────────────── */
 .drawer-overlay {
@@ -1281,6 +1315,7 @@ canvas { display: block; }
 .drawer-dir-long  { color: var(--teal-dark); font-weight: 500; }
 .drawer-dir-short { color: var(--amber); font-weight: 500; }
 
+
 /* ── Footer ────────────────────────────────── */
 .footer {
   background: var(--text-1);
@@ -1350,71 +1385,15 @@ canvas { display: block; }
   color: rgba(255,255,255,0.2);
   text-align: center;
 }
-@media (max-width: 768px) {
-  .footer-inner {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
-  }
-  .footer-meta { text-align: center; }
-  .footer-bottom { text-align: center; }
-}
+
 
 /* ── Responsive ────────────────────────────── */
-@media (max-width: 1024px) {
-  .overview-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .overview-charts {
-    grid-template-columns: 1fr 1fr;
-  }
-  .chart-card--wide { grid-column: span 2; }
-  .market-pills { grid-template-columns: repeat(2, 1fr); }
-  .accounts-grid { grid-template-columns: repeat(2, 1fr); }
-  .trading-layout { grid-template-columns: 1fr; }
-  .trading-stats { position: static; }
-  .funds-grid { grid-template-columns: 1fr; }
-  .perf-grid { grid-template-columns: 1fr; }
-  .perf-card--wide { grid-column: span 1; }
-}
 
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .nav-menu-btn { display: flex; }
-  .hero-stats {
-    flex-wrap: wrap;
-    gap: 0;
-  }
-  .hero-stat {
-    flex: none;
-    width: 50%;
-    padding: 16px;
-  }
-  .hero-stat-divider { display: none; }
-  .overview-charts { grid-template-columns: 1fr; }
-  .chart-card--wide { grid-column: span 1; }
-  .market-pills { grid-template-columns: 1fr; }
-  .accounts-grid { grid-template-columns: 1fr; }
-  .tat-header,
-  .tat-row { grid-template-columns: 2fr 1fr 1fr; }
-  .tat-header span:nth-child(n+4),
-  .tat-row > *:nth-child(n+4) { display: none; }
-  .funds-grid { grid-template-columns: 1fr; }
-  .footer-meta { order: unset; }
-}
-
-@media (max-width: 480px) {
-  .container { padding: 0 16px; }
-  .section { padding: 64px 0; }
-  .overview-cards { grid-template-columns: 1fr; }
-  .hero-cta { flex-direction: column; }
-  .hero-cta .btn { text-align: center; justify-content: center; }
-}
 
 /* ════════════════════════════════════════════════
    PHASE 2 — LIVE DASHBOARDS + PNL CALENDARS
 ════════════════════════════════════════════════ */
+
 
 /* ── Live section tag ───────────────────────── */
 .live-tag {
@@ -1432,12 +1411,14 @@ canvas { display: block; }
   flex-shrink: 0;
 }
 
+
 /* ── Live Grid ──────────────────────────────── */
 .live-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 28px;
 }
+
 
 /* ── Live Card ──────────────────────────────── */
 .live-card {
@@ -1456,6 +1437,7 @@ canvas { display: block; }
   height: 3px;
   background: linear-gradient(90deg, var(--teal), var(--teal-dark));
 }
+
 
 .live-card-head {
   display: flex;
@@ -1477,6 +1459,7 @@ canvas { display: block; }
   font-size: 11px;
   color: var(--text-3);
 }
+
 
 /* ── Live Metrics Grid ──────────────────────── */
 .live-metrics {
@@ -1512,6 +1495,7 @@ canvas { display: block; }
 .live-metric-val.neg  { color: var(--red); }
 .live-metric-val.neu  { color: var(--teal-dark); }
 .live-metric-val.small { font-size: 16px; }
+
 
 /* ── Progress Bars ──────────────────────────── */
 .live-progress-wrap {
@@ -1553,6 +1537,7 @@ canvas { display: block; }
   background: linear-gradient(90deg, var(--amber) 0%, var(--red) 80%);
 }
 
+
 /* ── Equity Chart ───────────────────────────── */
 .live-equity-wrap {
   padding-top: 4px;
@@ -1565,6 +1550,7 @@ canvas { display: block; }
   letter-spacing: 0.06em;
   margin-bottom: 10px;
 }
+
 
 /* ── Calendar ───────────────────────────────── */
 .cal-tabs {
@@ -1592,11 +1578,13 @@ canvas { display: block; }
   border-color: var(--teal);
 }
 
+
 .cal-container {
   display: flex;
   flex-direction: column;
   gap: 56px;
 }
+
 
 .cal-month-block {
   margin-bottom: 32px;
@@ -1623,6 +1611,7 @@ canvas { display: block; }
 }
 .cal-month-total.pos { background: var(--green-bg);  color: var(--green); }
 .cal-month-total.neg { background: var(--red-bg);    color: var(--red);   }
+
 
 .cal-grid-wrap {
   background: var(--bg-alt);
@@ -1652,6 +1641,7 @@ canvas { display: block; }
   color: var(--text-4);
 }
 
+
 .cal-weeks {
   display: flex;
   flex-direction: column;
@@ -1663,6 +1653,7 @@ canvas { display: block; }
   gap: 6px;
 }
 .cal-week:last-child { border-bottom: none; }
+
 
 .cal-day {
   min-height: 96px;
@@ -1709,6 +1700,7 @@ canvas { display: block; }
   box-shadow: 0 3px 10px rgba(220,38,38,0.10);
 }
 
+
 .cal-day-num {
   font-size: 11px;
   font-weight: 700;
@@ -1717,6 +1709,7 @@ canvas { display: block; }
 }
 .cal-day--profit .cal-day-num { color: var(--green); }
 .cal-day--loss   .cal-day-num { color: var(--red); }
+
 
 .cal-day-pnl {
   font-family: var(--font-mono);
@@ -1727,6 +1720,7 @@ canvas { display: block; }
 }
 .cal-day--profit .cal-day-pnl { color: var(--green); }
 .cal-day--loss   .cal-day-pnl { color: var(--red); }
+
 
 .cal-day-trades {
   font-size: 10px;
@@ -1739,6 +1733,7 @@ canvas { display: block; }
   height: 3px;
   border-radius: 0 0 var(--radius-md) var(--radius-md);
 }
+
 
 /* Calendar Summary Row */
 .cal-summary {
@@ -1770,6 +1765,7 @@ canvas { display: block; }
 }
 .cal-summary-val.pos { color: var(--green); }
 .cal-summary-val.neg { color: var(--red); }
+
 
 /* Day tooltip popup */
 .cal-tooltip {
@@ -1826,22 +1822,9 @@ canvas { display: block; }
 .cal-tooltip-pnl.pos { color: var(--green); }
 .cal-tooltip-pnl.neg { color: var(--red); }
 
+
 /* Responsive tweaks for Phase 2 */
-@media (max-width: 1024px) {
-  .live-grid { grid-template-columns: 1fr; }
-  .live-metrics { grid-template-columns: repeat(4, 1fr); }
-  .cal-summary { grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 640px) {
-  .live-metrics { grid-template-columns: repeat(2, 1fr); }
-  .cal-grid-wrap { padding: 6px; }
-  .cal-dow-row { gap: 3px; }
-  .cal-weeks { gap: 3px; }
-  .cal-week { gap: 3px; }
-  .cal-day { min-height: 54px; padding: 6px 5px; font-size: 10px; }
-  .cal-day-pnl { font-size: 11px; }
-  .cal-summary { grid-template-columns: repeat(2, 1fr); }
-}
+
 
 /* ════════════════════════════════════════════════
    PHASE 3 — DATA PROVENANCE BADGES
@@ -1875,235 +1858,66 @@ canvas { display: block; }
 .source-journal { background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
 .source-none    { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
 
+
 /* ════════════════════════════════════════════════
    PHASE 4 — MOBILE POLISH
    Breakpoints: 1024 · 768 · 480 · 360
 ════════════════════════════════════════════════ */
 
+
 /* ── Nav ─────────────────────────────────────── */
-@media (max-width: 768px) {
-  .nav-inner { padding: 0 16px; }
-  .nav-logo-text { font-size: 14px; }
-}
+
 
 /* ── Hero ────────────────────────────────────── */
-@media (max-width: 768px) {
-  .hero { padding: 80px 0 60px; }
-  .hero-eyebrow { font-size: 11px; }
-  .hero-title { font-size: clamp(28px, 8vw, 44px); }
-  .hero-subtitle { font-size: 15px; }
-  .hero-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-  }
-  .hero-stat {
-    width: 100%;
-    padding: 18px 14px;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-  .hero-stat:nth-child(2n) { border-right: none; }
-  .hero-stat:nth-last-child(-n+2) { border-bottom: none; }
-  .hero-stat-divider { display: none; }
-  .hero-stat-val { font-size: 20px; }
-  .hero-stat-label { font-size: 10px; }
-}
-@media (max-width: 480px) {
-  .hero { padding: 72px 0 48px; }
-  .hero-cta { flex-direction: column; align-items: stretch; }
-  .hero-cta .btn { justify-content: center; }
-}
+
 
 /* ── Timeline ────────────────────────────────── */
-@media (max-width: 768px) {
-  .timeline-wrapper { height: 60px; }
-  .timeline-bar { border-radius: 4px; }
-  .timeline-bar span { font-size: 9px; }
-}
+
 
 /* ── Section headers ─────────────────────────── */
-@media (max-width: 768px) {
-  .section-tag  { font-size: 10px; }
-  .section-head { font-size: clamp(22px, 6vw, 32px); }
-  .section-sub  { font-size: 14px; }
-}
+
 
 /* ── Overview cards ──────────────────────────── */
-@media (max-width: 480px) {
-  .overview-cards { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .overview-card { padding: 18px 16px; }
-  .card-value { font-size: 22px; }
-}
-@media (max-width: 360px) {
-  .overview-cards { grid-template-columns: 1fr; }
-}
+
 
 /* ── Overview charts ─────────────────────────── */
-@media (max-width: 768px) {
-  .overview-charts { grid-template-columns: 1fr; gap: 16px; }
-  .chart-card { padding: 20px 16px; }
-  .chart-card--wide { grid-column: span 1; }
-}
+
 
 /* ── Account filter pills ────────────────────── */
-@media (max-width: 768px) {
-  .market-pills {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-  .market-pill { padding: 10px 8px; font-size: 11px; }
-  .market-pill-count { font-size: 14px; }
-}
-@media (max-width: 480px) {
-  .market-pills { grid-template-columns: repeat(2, 1fr); }
-}
+
 
 /* ── Account cards grid ──────────────────────── */
-@media (max-width: 1024px) {
-  .accounts-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-}
-@media (max-width: 600px) {
-  .accounts-grid { grid-template-columns: 1fr; gap: 12px; }
-  .account-card { padding: 20px 18px; }
-  .account-card-name { font-size: 14px; }
-}
+
 
 /* ── Trading activity table ──────────────────── */
-@media (max-width: 768px) {
-  .trading-layout { gap: 20px; }
-  .tat-header,
-  .tat-row { grid-template-columns: 1.8fr 1fr 1fr; }
-  .tat-header span:nth-child(n+4),
-  .tat-row > *:nth-child(n+4) { display: none; }
-  .tat-filters { flex-wrap: wrap; gap: 8px; }
-  .tat-filter-btn { font-size: 11px; padding: 6px 12px; }
-}
-@media (max-width: 480px) {
-  .tat-header,
-  .tat-row { grid-template-columns: 1fr 1fr; }
-  .tat-header span:nth-child(n+3),
-  .tat-row > *:nth-child(n+3) { display: none; }
-  .tat-account-name { font-size: 13px; }
-  .tat-account-id   { display: none; }
-}
+
 
 /* ── Live dashboards ─────────────────────────── */
-@media (max-width: 768px) {
-  .live-grid { grid-template-columns: 1fr; gap: 20px; }
-  .live-card { padding: 20px 16px; }
-  .live-metrics { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .live-metric { padding: 14px; }
-  .live-metric-val { font-size: 18px; }
-}
-@media (max-width: 480px) {
-  .live-metrics { grid-template-columns: 1fr 1fr; }
-  .live-metric-val { font-size: 16px; }
-}
+
 
 /* ── PNL Calendar ────────────────────────────── */
-@media (max-width: 768px) {
-  .cal-grid {
-    grid-template-columns: repeat(7, 1fr);
-    gap: 3px;
-  }
-  .cal-day { min-height: 44px; padding: 5px 6px; font-size: 9px; }
-  .cal-day-num { font-size: 11px; }
-  .cal-day-pnl { font-size: 10px; }
-  .cal-day-trades { display: none; }
-  .cal-summary { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .cal-tab { font-size: 12px; padding: 8px 14px; }
-}
-@media (max-width: 480px) {
-  .cal-day { min-height: 40px; padding: 4px 3px; font-size: 9px; }
-  .cal-day-num { font-size: 10px; }
-  .cal-day-pnl { font-size: 9px; }
-  .cal-summary { grid-template-columns: 1fr 1fr; }
-  .cal-summary-val { font-size: 17px; }
-}
+
 
 /* ── Fund dashboards ─────────────────────────── */
-@media (max-width: 768px) {
-  .funds-grid { grid-template-columns: 1fr; gap: 20px; }
-  .fund-card { padding: 20px 16px; }
-  .holding-row { gap: 8px; }
-  .holding-name { display: none; }
-}
-@media (max-width: 480px) {
-  .holding-change { min-width: 52px; }
-}
+
 
 /* ── Performance section ─────────────────────── */
-@media (max-width: 768px) {
-  .perf-grid { grid-template-columns: 1fr; gap: 16px; }
-  .perf-card { padding: 20px 16px; }
-  .perf-card--wide { grid-column: span 1; }
-}
+
 
 /* ── Drawer — full-screen on mobile ──────────── */
-@media (max-width: 640px) {
-  .drawer {
-    width: 100vw;
-    top: 0; left: 0; right: 0; bottom: 0;
-    border-radius: 0;
-  }
-  .drawer-header { padding: 20px 16px 16px; }
-  .drawer-body   { padding: 0 16px 32px; }
-  .drawer-stats  { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .drawer-stat   { padding: 12px 10px; }
-  .drawer-stat-val { font-size: 16px; }
-  .drawer-stat-label { font-size: 10px; }
-  .drawer-title  { font-size: 16px; }
-  .drawer-subtitle { font-size: 11px; }
 
-  /* Trade table — collapse to 3 cols */
-  .drawer-trades-header,
-  .drawer-trade-row {
-    grid-template-columns: 1fr auto auto;
-  }
-  .drawer-trades-header span:nth-child(n+4),
-  .drawer-trade-row > *:nth-child(n+4) { display: none; }
-
-  .drawer-source-badge { font-size: 10px; padding: 5px 10px; }
-  .drawer-source-tip   { display: none; }
-}
-@media (max-width: 480px) {
-  .drawer-stats { grid-template-columns: repeat(2, 1fr); }
-  .drawer-stat:last-child { display: none; } /* hide least important stat */
-}
 
 /* footer mobile handled in primary responsive block */
 
+
 /* ── Global touch targets ────────────────────── */
-@media (max-width: 768px) {
-  .btn { min-height: 44px; }
-  .market-pill, .tat-filter-btn, .cal-tab { min-height: 40px; }
-  .account-card { cursor: pointer; -webkit-tap-highlight-color: transparent; }
-  .drawer-close { width: 40px; height: 40px; }
-}
+
 
 /* ── Tooltip on mobile — position bottom ─────── */
-@media (max-width: 640px) {
-  .cal-tooltip {
-    top: auto;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-  }
-}
+
 
 /* ── Typography scale down ───────────────────── */
-@media (max-width: 480px) {
-  :root {
-    --radius-xl: 14px;
-    --radius-lg: 10px;
-  }
-  .section { padding: 56px 0; }
-  .container { padding: 0 16px; }
-}
+
 
 /* ── Drawer swipe handle (mobile only) ───────── */
 .drawer-handle-bar {
@@ -2114,22 +1928,18 @@ canvas { display: block; }
   margin: 10px auto 0;
   flex-shrink: 0;
 }
-@media (max-width: 640px) {
-  .drawer-handle-bar { display: block; }
-  .drawer {
-    top: 0; /* full screen, handle signals swipeability */
-    border-radius: 0;
-  }
-}
+
 
 /* ════════════════════════════════════════════════
    PHASE 5 — ANALYTICS
 ════════════════════════════════════════════════ */
 
+
 /* ── Stat strip ──────────────────────────────── */
 .an-stat-strip {
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  justify-content: center;
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
@@ -2162,6 +1972,7 @@ canvas { display: block; }
   letter-spacing: 0.06em;
 }
 
+
 /* ── Grid layouts ────────────────────────────── */
 .an-grid {
   display: grid;
@@ -2170,6 +1981,7 @@ canvas { display: block; }
 }
 .an-grid--2-1 { grid-template-columns: 2fr 1fr; }
 .an-grid--1-1 { grid-template-columns: 1fr 1fr; }
+
 
 /* ── Card ────────────────────────────────────── */
 .an-card {
@@ -2210,6 +2022,7 @@ canvas { display: block; }
   color: var(--text-3);
 }
 
+
 /* ── Peak badge on equity card ───────────────── */
 .an-peak-badge {
   display: flex;
@@ -2230,18 +2043,26 @@ canvas { display: block; }
   color: var(--green);
 }
 
+
 /* ── Direction stats ─────────────────────────── */
 .an-dir-wrap {
   display: flex;
   flex-direction: column;
   gap: 16px;
   margin-top: 8px;
+  justify-content: center;
+  align-items: stretch;
+  height: 100%;
+  min-height: 180px;
 }
 .an-dir-block {
+  background: var(--bg-alt);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 16px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
 }
+
 .an-dir-label {
   font-size: 12px;
   font-weight: 700;
@@ -2279,27 +2100,9 @@ canvas { display: block; }
 .an-dir-bar.long  { background: var(--teal); }
 .an-dir-bar.short { background: #f59e0b; }
 
+
 /* ── Responsive ──────────────────────────────── */
-@media (max-width: 1024px) {
-  .an-grid--2-1 { grid-template-columns: 1fr; }
-  .an-grid--1-1 { grid-template-columns: 1fr; }
-  .an-stat-val  { font-size: 18px; }
-}
-@media (max-width: 768px) {
-  .an-stat-strip { flex-wrap: wrap; }
-  .an-stat { flex: none; width: 33.333%; text-align: center; }
-  .an-stat-divider { display: none; }
-  .an-stat:not(:nth-child(3n)) { border-right: 1px solid var(--border); }
-  .an-stat:nth-child(-n+3)     { border-bottom: 1px solid var(--border); }
-}
-@media (max-width: 480px) {
-  .an-stat { width: 50%; text-align: center; }
-  .an-stat:not(:nth-child(2n))  { border-right: 1px solid var(--border); }
-  .an-stat:nth-child(-n+4)      { border-bottom: 1px solid var(--border); }
-  .an-card { padding: 18px 16px; }
-  /* Center direction stat bars on mobile */
-  .an-dir-wrap { max-width: 320px; margin: 0 auto; }
-}
+
 
 /* ════════════════════════════════════════════════
    INVESTORS / FUNDING SECTION
@@ -2310,7 +2113,7 @@ canvas { display: block; }
   gap: 28px;
   margin-bottom: 32px;
 }
-@media (max-width: 768px) { .funding-grid { grid-template-columns: 1fr; } }
+
 
 .funding-card {
   background: var(--white);
@@ -2366,6 +2169,7 @@ canvas { display: block; }
 .funder-amount { font-family: var(--font-mono); font-size: 13px; color: var(--text-1); font-weight: 600; flex: 1; }
 .funder-pct { font-size: 12px; color: var(--text-3); width: 36px; text-align: right; }
 
+
 /* funding summary row */
 .funding-summary {
   background: var(--white);
@@ -2377,11 +2181,12 @@ canvas { display: block; }
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 }
-@media (max-width: 768px) { .funding-summary { grid-template-columns: 1fr 1fr; } }
+
 .funding-summary-item { text-align: center; }
 .funding-summary-val { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--text-1); }
 .funding-summary-label { font-size: 12px; color: var(--text-3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
 .funding-summary-sub { font-size: 11px; color: var(--text-3); }
+
 
 /* Live price ticker */
 .live-ticker-bar {
@@ -2461,9 +2266,6 @@ canvas { display: block; }
 .ticker-ngx-note { font-size: 11px; opacity: 0.4; font-style: italic; }
 .ticker-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; flex-shrink: 0; }
 
-/* ════════════════════════════════════════════════
-   GLOBAL ALIGNMENT & CENTERING FIXES
-════════════════════════════════════════════════ */
 
 /* -- Section containers: ensure all sections are properly centred -- */
 .section > .container,
@@ -2472,159 +2274,21 @@ canvas { display: block; }
   box-sizing: border-box;
 }
 
+
 /* -- Analytics: force cards to fill their grid cell fully -- */
-.an-card {
-  display: flex;
-  flex-direction: column;
-}
 
 
 /* -- Analytics direction block: centre within card -- */
-.an-dir-wrap {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  height: 100%;
-  min-height: 180px;
-}
+
 
 /* -- Analytics stat strip: centre on all screens -- */
-.an-stat-strip {
-  justify-content: center;
-}
-.an-stat {
-  text-align: center;
-}
+
 
 /* -- Performance section: ensure monthly bar chart is full-width -- */
 /* ════════════════════════════════════════════════
    MOBILE CENTERING OVERHAUL
 ════════════════════════════════════════════════ */
-@media (max-width: 768px) {
-  /* Section headers */
-  .section-header {
-    text-align: center;
-    align-items: center;
-  }
-  .section-tag {
-    align-self: center;
-  }
 
-  /* Account cards: single column centred */
-  .accounts-grid {
-    grid-template-columns: 1fr;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* Hero text: centre */
-  .hero-content {
-    text-align: center;
-  }
-  .hero-ctas {
-    justify-content: center;
-  }
-  .hero-badges {
-    justify-content: center;
-  }
-
-  /* Analytics: single-column, centred */
-  .an-grid--2-1,
-  .an-grid--1-1 {
-    grid-template-columns: 1fr;
-  }
-  .an-stat-strip {
-    flex-wrap: wrap;
-  }
-  .an-stat {
-    flex: 1 1 calc(50% - 1px);
-    min-width: 0;
-    text-align: center;
-  }
-  .an-card {
-    padding: 18px;
-  }
-  .an-card-head {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  /* Funding grid: centred single column */
-  .funding-grid {
-    grid-template-columns: 1fr;
-    max-width: 520px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* Performance chart cards */
-  .perf-grid {
-    grid-template-columns: 1fr;
-  }
-  .perf-card {
-    padding: 18px;
-  }
-
-  /* Fund dashboard tabs */
-  .fund-tabs {
-    justify-content: center;
-  }
-
-  /* Calendar: shrink day cells gracefully */
-  .cal-day {
-    min-height: 68px;
-    padding: 8px 10px 6px;
-  }
-  .cal-day-num {
-    font-size: 12px;
-  }
-  .cal-day-pnl {
-    font-size: 10px;
-  }
-  .cal-day-trades {
-    display: none;
-  }
-  .cal-dow {
-    font-size: 9px;
-    padding: 7px 0;
-  }
-
-  /* Drawer: full width on mobile */
-  .drawer {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 20px 20px 0 0;
-  }
-}
-
-@media (max-width: 480px) {
-  /* Tighter padding on smallest screens */
-  .container {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-  .section {
-    padding-top: 48px;
-    padding-bottom: 48px;
-  }
-  .an-stat {
-    flex: 1 1 calc(50% - 1px);
-  }
-  .hero-h {
-    font-size: clamp(28px, 9vw, 48px);
-  }
-
-  /* Calendar: 7-column stays, but cells even smaller */
-  .cal-day {
-    min-height: 54px;
-    padding: 6px 4px;
-  }
-  .cal-day-pnl {
-    font-size: 9px;
-  }
-}
 
 /* ════════════════════════════════════════════════
    PERFORMANCE SECTION — CHART ALIGNMENT
@@ -2640,63 +2304,37 @@ canvas { display: block; }
   display: block;
 }
 
+
 /* Ensure the doughnut chart in Long vs Short card
    is vertically centred and has room to breathe */
-.an-dir-block {
-  background: var(--bg-alt);
-  border-radius: var(--radius-lg);
-  padding: 16px 20px;
-  margin-bottom: 12px;
-}
+
 .an-dir-block:last-child {
   margin-bottom: 0;
 }
+
 
 /* ════════════════════════════════════════════════
    GLOBAL MOBILE & CENTERING FIXES
 ════════════════════════════════════════════════ */
 
+
 /* Center section headers on all screens */
-.section-header {
-  text-align: center;
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
-}
+
 
 /* Ensure funding grid items center content on mobile */
-@media (max-width: 768px) {
-  .funding-grid { grid-template-columns: 1fr; }
-  .funding-card { max-width: 520px; margin: 0 auto; width: 100%; }
-}
+
 
 /* Performance section charts: center on small screens */
-@media (max-width: 768px) {
-  .perf-charts-row { grid-template-columns: 1fr; }
-  .perf-charts-row > * { max-width: 100%; }
-}
+
 
 /* Account cards grid: center when too few cards */
-@media (max-width: 600px) {
-  .overview-cards {
-    display: grid !important;
-    grid-template-columns: 1fr;
-    place-items: center;
-  }
-  .account-card { width: 100%; max-width: 420px; }
-}
+
 
 /* Align analytics stat strip center on all screens */
-.an-stat-strip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 
 /* Long/Short direction bars: full width on mobile */
-@media (max-width: 480px) {
-  .an-dir-block { padding: 12px 14px; }
-}
+
 
 /* Doughnut/pie charts: constrain and center */
 
@@ -2707,148 +2345,59 @@ canvas { display: block; }
   gap: 32px;
 }
 
+
 /* Hero centering improvement */
-@media (max-width: 600px) {
-  .hero-content {
-    text-align: center;
-  }
-  .hero-cta-row {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-}
+
 
 /* ════════════════════════════════════════════════
    COMPREHENSIVE MOBILE IMPROVEMENTS
 ════════════════════════════════════════════════ */
 
+
 /* Ticker: slower on mobile */
-@media (max-width: 640px) {
-  .live-ticker-inner {
-    animation-duration: 70s;
-  }
-}
+
 
 /* Nav: tighter on mobile */
-@media (max-width: 480px) {
-  .nav-inner { padding: 0 16px; }
-  .nav-logo span { font-size: 15px; }
-}
+
 
 /* Hero: better mobile layout */
-@media (max-width: 640px) {
-  .hero { padding: 20px 0 40px; }
-  .hero-title { font-size: clamp(32px, 9vw, 52px); }
-  .hero-stats { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .hero-stat-divider { display: none; }
-  .hero-cta { flex-direction: column; align-items: stretch; gap: 10px; }
-  .hero-cta .btn { text-align: center; }
-  .hero-timeline { margin-top: 32px; }
-}
+
 
 /* Overview stat cards: single col on small mobile */
-@media (max-width: 480px) {
-  .overview-cards { grid-template-columns: 1fr !important; }
-  .stat-card { padding: 18px 20px; }
-  .stat-card-value { font-size: 24px; }
-}
+
 
 /* Section: reduce padding on mobile */
-@media (max-width: 640px) {
-  .section { padding: 48px 0; }
-  .section-title { font-size: clamp(22px, 6vw, 36px); }
-  .container { padding: 0 16px; }
-}
+
 
 /* Account cards: full width on mobile */
-@media (max-width: 640px) {
-  .accounts-grid { grid-template-columns: 1fr !important; }
-  .account-card { max-width: 100%; }
-}
+
 
 /* Performance grid: single col on mobile */
-@media (max-width: 640px) {
-  .perf-grid { grid-template-columns: 1fr !important; }
-  .perf-card--wide { grid-column: span 1 !important; }
-  .perf-card { overflow: hidden; }
-  .perf-card canvas { max-height: 180px; }
-}
+
 
 /* Funding summary strip: 2×2 grid on mobile */
-@media (max-width: 480px) {
-  .funding-summary { grid-template-columns: 1fr 1fr !important; gap: 12px; }
-  .funding-summary-val { font-size: 20px; }
-}
+
 
 /* Analytics grid: single col on mobile */
-@media (max-width: 768px) {
-  .an-grid { grid-template-columns: 1fr !important; }
 
-}
 
 /* Analytics stat strip: wrap on mobile */
-@media (max-width: 640px) {
-  .an-stat-strip {
-    flex-wrap: wrap;
-    gap: 12px 0;
-    justify-content: center;
-  }
-  .an-stat { min-width: 90px; padding: 10px 12px; }
-  .an-stat-divider { display: none; }
-  .an-stat-val { font-size: 18px; }
-}
+
 
 /* Calendar: better cell sizes on mobile */
-@media (max-width: 640px) {
-  .cal-day {
-    min-height: 64px;
-    padding: 8px 6px;
-  }
-  .cal-day-num { font-size: 11px; margin-bottom: 2px; }
-  .cal-day-pnl { font-size: 11px; }
-  .cal-day-trades { display: none; }
-  .cal-dow { font-size: 10px; padding: 6px 0; }
-  .cal-summary { grid-template-columns: 1fr 1fr; gap: 10px; }
-}
-@media (max-width: 400px) {
-  .cal-day {
-    min-height: 48px;
-    padding: 6px 4px;
-  }
-  .cal-day-pnl { display: none; }
-}
+
 
 /* Drawer: full screen on mobile */
-@media (max-width: 640px) {
-  .drawer {
-    width: 100% !important;
-    max-width: 100% !important;
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-    bottom: 0;
-    top: auto;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-}
+
 
 /* Trading table: horizontal scroll on mobile */
-@media (max-width: 768px) {
-  .trading-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .trading-table { min-width: 600px; }
-}
+
 
 /* Fund cards: single col + better spacing on mobile */
-@media (max-width: 640px) {
-  .funds-grid { grid-template-columns: 1fr !important; }
-  .fund-card { max-width: 100%; }
-  .fund-stats { grid-template-columns: 1fr 1fr; }
-}
+
 
 /* Buttons: larger tap targets on mobile */
-@media (max-width: 640px) {
-  .btn { padding: 12px 22px; font-size: 14px; }
-  .btn-sm { padding: 8px 14px; font-size: 12px; }
-}
+
 
 /* ════════════════════════════════════════════════
    PORTFOLIO NAV GRID (overview page links)
@@ -2930,13 +2479,6 @@ canvas { display: block; }
   letter-spacing: 0.01em;
 }
 
-@media (max-width: 1024px) {
-  .portfolio-nav-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 640px) {
-  .portfolio-nav-grid { grid-template-columns: 1fr; gap: 14px; }
-  .pnav-card { padding: 20px 18px; }
-}
 
 /* ════════════════════════════════════════════════
    EQUITY CURVE — proper height in live cards
@@ -2947,6 +2489,7 @@ canvas { display: block; }
   display: block;
 }
 
+
 /* ════════════════════════════════════════════════
    ANALYTICS: ensure canvas fills cards vertically
 ════════════════════════════════════════════════ */
@@ -2955,7 +2498,286 @@ canvas { display: block; }
 /* ════════════════════════════════════════════════
    MOBILE IMPROVEMENTS — comprehensive
 ════════════════════════════════════════════════ */
+
+
+/* ════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS — Consolidated
+   Breakpoints: 1024 · 768 · 640 · 600 · 480 · 400 · 380
+════════════════════════════════════════════════ */
+
+
+@media (max-width: 1024px) {
+  .overview-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .overview-charts {
+    grid-template-columns: 1fr 1fr;
+  }
+  .chart-card--wide { grid-column: span 2; }
+  .market-pills { grid-template-columns: repeat(2, 1fr); }
+  .accounts-grid { grid-template-columns: repeat(2, 1fr); }
+  .trading-layout { grid-template-columns: 1fr; }
+  .trading-stats { position: static; }
+  .funds-grid { grid-template-columns: 1fr; }
+  .perf-grid { grid-template-columns: 1fr; }
+  .perf-card--wide { grid-column: span 1; }
+
+  .live-grid { grid-template-columns: 1fr; }
+  .live-metrics { grid-template-columns: repeat(4, 1fr); }
+  .cal-summary { grid-template-columns: repeat(3, 1fr); }
+
+  .accounts-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+  .an-grid--2-1 { grid-template-columns: 1fr; }
+  .an-grid--1-1 { grid-template-columns: 1fr; }
+  .an-stat-val  { font-size: 18px; }
+
+  .portfolio-nav-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+
 @media (max-width: 768px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+  .footer-meta { text-align: center; }
+  .footer-bottom { text-align: center; }
+
+  .nav-links { display: none; }
+  .nav-menu-btn { display: flex; }
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  .hero-stat {
+    flex: none;
+    width: 50%;
+    padding: 16px;
+  }
+  .hero-stat-divider { display: none; }
+  .overview-charts { grid-template-columns: 1fr; }
+  .chart-card--wide { grid-column: span 1; }
+  .market-pills { grid-template-columns: 1fr; }
+  .accounts-grid { grid-template-columns: 1fr; }
+  .tat-header,
+  .tat-row { grid-template-columns: 2fr 1fr 1fr; }
+  .tat-header span:nth-child(n+4),
+  .tat-row > *:nth-child(n+4) { display: none; }
+  .funds-grid { grid-template-columns: 1fr; }
+  .footer-meta { order: unset; }
+
+  .nav-inner { padding: 0 16px; }
+  .nav-logo-text { font-size: 14px; }
+
+  .hero { padding: 80px 0 60px; }
+  .hero-eyebrow { font-size: 11px; }
+  .hero-title { font-size: clamp(28px, 8vw, 44px); }
+  .hero-subtitle { font-size: 15px; }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+  .hero-stat {
+    width: 100%;
+    padding: 18px 14px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-stat:nth-child(2n) { border-right: none; }
+  .hero-stat:nth-last-child(-n+2) { border-bottom: none; }
+  .hero-stat-divider { display: none; }
+  .hero-stat-val { font-size: 20px; }
+  .hero-stat-label { font-size: 10px; }
+
+  .timeline-wrapper { height: 60px; }
+  .timeline-bar { border-radius: 4px; }
+  .timeline-bar span { font-size: 9px; }
+
+  .section-tag  { font-size: 10px; }
+  .section-head { font-size: clamp(22px, 6vw, 32px); }
+  .section-sub  { font-size: 14px; }
+
+  .overview-charts { grid-template-columns: 1fr; gap: 16px; }
+  .chart-card { padding: 20px 16px; }
+  .chart-card--wide { grid-column: span 1; }
+
+  .market-pills {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .market-pill { padding: 10px 8px; font-size: 11px; }
+  .market-pill-count { font-size: 14px; }
+
+  .trading-layout { gap: 20px; }
+  .tat-header,
+  .tat-row { grid-template-columns: 1.8fr 1fr 1fr; }
+  .tat-header span:nth-child(n+4),
+  .tat-row > *:nth-child(n+4) { display: none; }
+  .tat-filters { flex-wrap: wrap; gap: 8px; }
+  .tat-filter-btn { font-size: 11px; padding: 6px 12px; }
+
+  .live-grid { grid-template-columns: 1fr; gap: 20px; }
+  .live-card { padding: 20px 16px; }
+  .live-metrics { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .live-metric { padding: 14px; }
+  .live-metric-val { font-size: 18px; }
+
+  .cal-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+  }
+  .cal-day { min-height: 44px; padding: 5px 6px; font-size: 9px; }
+  .cal-day-num { font-size: 11px; }
+  .cal-day-pnl { font-size: 10px; }
+  .cal-day-trades { display: none; }
+  .cal-summary { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .cal-tab { font-size: 12px; padding: 8px 14px; }
+
+  .funds-grid { grid-template-columns: 1fr; gap: 20px; }
+  .fund-card { padding: 20px 16px; }
+  .holding-row { gap: 8px; }
+  .holding-name { display: none; }
+
+  .perf-grid { grid-template-columns: 1fr; gap: 16px; }
+  .perf-card { padding: 20px 16px; }
+  .perf-card--wide { grid-column: span 1; }
+
+  .btn { min-height: 44px; }
+  .market-pill, .tat-filter-btn, .cal-tab { min-height: 40px; }
+  .account-card { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .drawer-close { width: 40px; height: 40px; }
+
+  .an-stat-strip { flex-wrap: wrap; }
+  .an-stat { flex: none; width: 33.333%; text-align: center; }
+  .an-stat-divider { display: none; }
+  .an-stat:not(:nth-child(3n)) { border-right: 1px solid var(--border); }
+  .an-stat:nth-child(-n+3)     { border-bottom: 1px solid var(--border); }
+
+  .funding-grid { grid-template-columns: 1fr; }
+
+  .funding-summary { grid-template-columns: 1fr 1fr; }
+
+  /* Section headers */
+  .section-header {
+    text-align: center;
+    align-items: center;
+  }
+  .section-tag {
+    align-self: center;
+  }
+
+
+  /* Account cards: single column centred */
+  .accounts-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+  /* Hero text: centre */
+  .hero-content {
+    text-align: center;
+  }
+  .hero-ctas {
+    justify-content: center;
+  }
+  .hero-badges {
+    justify-content: center;
+  }
+
+
+  /* Analytics: single-column, centred */
+  .an-grid--2-1,
+  .an-grid--1-1 {
+    grid-template-columns: 1fr;
+  }
+  .an-stat-strip {
+    flex-wrap: wrap;
+  }
+  .an-stat {
+    flex: 1 1 calc(50% - 1px);
+    min-width: 0;
+    text-align: center;
+  }
+  .an-card {
+    padding: 18px;
+  }
+  .an-card-head {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+
+  /* Funding grid: centred single column */
+  .funding-grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+  /* Performance chart cards */
+  .perf-grid {
+    grid-template-columns: 1fr;
+  }
+  .perf-card {
+    padding: 18px;
+  }
+
+
+  /* Fund dashboard tabs */
+  .fund-tabs {
+    justify-content: center;
+  }
+
+
+  /* Calendar: shrink day cells gracefully */
+  .cal-day {
+    min-height: 68px;
+    padding: 8px 10px 6px;
+  }
+  .cal-day-num {
+    font-size: 12px;
+  }
+  .cal-day-pnl {
+    font-size: 10px;
+  }
+  .cal-day-trades {
+    display: none;
+  }
+  .cal-dow {
+    font-size: 9px;
+    padding: 7px 0;
+  }
+
+
+  /* Drawer: full width on mobile */
+  .drawer {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .funding-grid { grid-template-columns: 1fr; }
+  .funding-card { max-width: 520px; margin: 0 auto; width: 100%; }
+
+  .perf-charts-row { grid-template-columns: 1fr; }
+  .perf-charts-row > * { max-width: 100%; }
+
+  .an-grid { grid-template-columns: 1fr !important; }
+
+  .trading-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .trading-table { min-width: 600px; }
+
   /* Hero adjustments */
   .hero-title { font-size: clamp(32px, 9vw, 56px); }
   .hero-desc { font-size: 14px; }
@@ -2966,36 +2788,44 @@ canvas { display: block; }
   .hero-cta { flex-direction: column; gap: 10px; }
   .hero-cta .btn { width: 100%; text-align: center; }
 
+
   /* Overview cards */
   .overview-cards { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .stat-card { padding: 16px; }
   .stat-card-value { font-size: 24px; }
   .overview-charts { grid-template-columns: 1fr; }
 
+
   /* Market pills */
   .market-pill { flex-direction: column; align-items: flex-start; gap: 6px; }
   .pill-count { margin-left: 0; }
+
 
   /* Section headers */
   .section-title { font-size: clamp(22px, 6vw, 36px); }
   .section-desc { font-size: 14px; }
 
+
   /* Filter tabs scroll */
   .filter-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; padding-bottom: 4px; }
   .filter-tab { flex-shrink: 0; }
+
 
   /* Account cards */
   .accounts-grid { grid-template-columns: 1fr; }
   .account-card { padding: 18px 16px; }
 
+
   /* Live metrics */
   .live-card-head { flex-direction: column; gap: 10px; }
   .live-metrics { grid-template-columns: repeat(2, 1fr); }
+
 
   /* Funding summary */
   .funding-summary { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .funding-summary-val { font-size: 22px; }
   .funding-grid { grid-template-columns: 1fr; }
+
 
   /* Analytics stat strip — scroll on mobile */
   .an-stat-strip { flex-wrap: wrap; gap: 0; }
@@ -3004,36 +2834,470 @@ canvas { display: block; }
   .an-stat-divider { display: none; }
 }
 
+
+@media (max-width: 640px) {
+  .live-metrics { grid-template-columns: repeat(2, 1fr); }
+  .cal-grid-wrap { padding: 6px; }
+  .cal-dow-row { gap: 3px; }
+  .cal-weeks { gap: 3px; }
+  .cal-week { gap: 3px; }
+  .cal-day { min-height: 54px; padding: 6px 5px; font-size: 10px; }
+  .cal-day-pnl { font-size: 11px; }
+  .cal-summary { grid-template-columns: repeat(2, 1fr); }
+
+  .drawer {
+    width: 100vw;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 0;
+  }
+  .drawer-header { padding: 20px 16px 16px; }
+  .drawer-body   { padding: 0 16px 32px; }
+  .drawer-stats  { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .drawer-stat   { padding: 12px 10px; }
+  .drawer-stat-val { font-size: 16px; }
+  .drawer-stat-label { font-size: 10px; }
+  .drawer-title  { font-size: 16px; }
+  .drawer-subtitle { font-size: 11px; }
+
+
+  /* Trade table — collapse to 3 cols */
+  .drawer-trades-header,
+  .drawer-trade-row {
+    grid-template-columns: 1fr auto auto;
+  }
+  .drawer-trades-header span:nth-child(n+4),
+  .drawer-trade-row > *:nth-child(n+4) { display: none; }
+
+
+  .drawer-source-badge { font-size: 10px; padding: 5px 10px; }
+  .drawer-source-tip   { display: none; }
+
+  .cal-tooltip {
+    top: auto;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+  }
+
+  .drawer-handle-bar { display: block; }
+  .drawer {
+    top: 0; /* full screen, handle signals swipeability */
+    border-radius: 0;
+  }
+
+  .live-ticker-inner {
+    animation-duration: 70s;
+  }
+
+  .hero { padding: 20px 0 40px; }
+  .hero-title { font-size: clamp(32px, 9vw, 52px); }
+  .hero-stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .hero-stat-divider { display: none; }
+  .hero-cta { flex-direction: column; align-items: stretch; gap: 10px; }
+  .hero-cta .btn { text-align: center; }
+  .hero-timeline { margin-top: 32px; }
+
+  .section { padding: 48px 0; }
+  .section-title { font-size: clamp(22px, 6vw, 36px); }
+  .container { padding: 0 16px; }
+
+  .accounts-grid { grid-template-columns: 1fr !important; }
+  .account-card { max-width: 100%; }
+
+  .perf-grid { grid-template-columns: 1fr !important; }
+  .perf-card--wide { grid-column: span 1 !important; }
+  .perf-card { overflow: hidden; }
+  .perf-card canvas { max-height: 180px; }
+
+  .an-stat-strip {
+    flex-wrap: wrap;
+    gap: 12px 0;
+    justify-content: center;
+  }
+  .an-stat { min-width: 90px; padding: 10px 12px; }
+  .an-stat-divider { display: none; }
+  .an-stat-val { font-size: 18px; }
+
+  .cal-day {
+    min-height: 64px;
+    padding: 8px 6px;
+  }
+  .cal-day-num { font-size: 11px; margin-bottom: 2px; }
+  .cal-day-pnl { font-size: 11px; }
+  .cal-day-trades { display: none; }
+  .cal-dow { font-size: 10px; padding: 6px 0; }
+  .cal-summary { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .drawer {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    bottom: 0;
+    top: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .funds-grid { grid-template-columns: 1fr !important; }
+  .fund-card { max-width: 100%; }
+  .fund-stats { grid-template-columns: 1fr 1fr; }
+
+  .btn { padding: 12px 22px; font-size: 14px; }
+  .btn-sm { padding: 8px 14px; font-size: 12px; }
+
+  .portfolio-nav-grid { grid-template-columns: 1fr; gap: 14px; }
+  .pnav-card { padding: 20px 18px; }
+}
+
+
+@media (max-width: 600px) {
+  .accounts-grid { grid-template-columns: 1fr; gap: 12px; }
+  .account-card { padding: 20px 18px; }
+  .account-card-name { font-size: 14px; }
+
+  .overview-cards {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    place-items: center;
+  }
+  .account-card { width: 100%; max-width: 420px; }
+
+  .hero-content {
+    text-align: center;
+  }
+  .hero-cta-row {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+
 @media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .section { padding: 64px 0; }
+  .overview-cards { grid-template-columns: 1fr; }
+  .hero-cta { flex-direction: column; }
+  .hero-cta .btn { text-align: center; justify-content: center; }
+
+  .hero { padding: 72px 0 48px; }
+  .hero-cta { flex-direction: column; align-items: stretch; }
+  .hero-cta .btn { justify-content: center; }
+
+  .overview-cards { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .overview-card { padding: 18px 16px; }
+  .card-value { font-size: 22px; }
+
+  .market-pills { grid-template-columns: repeat(2, 1fr); }
+
+  .tat-header,
+  .tat-row { grid-template-columns: 1fr 1fr; }
+  .tat-header span:nth-child(n+3),
+  .tat-row > *:nth-child(n+3) { display: none; }
+  .tat-account-name { font-size: 13px; }
+  .tat-account-id   { display: none; }
+
+  .live-metrics { grid-template-columns: 1fr 1fr; }
+  .live-metric-val { font-size: 16px; }
+
+  .cal-day { min-height: 40px; padding: 4px 3px; font-size: 9px; }
+  .cal-day-num { font-size: 10px; }
+  .cal-day-pnl { font-size: 9px; }
+  .cal-summary { grid-template-columns: 1fr 1fr; }
+  .cal-summary-val { font-size: 17px; }
+
+  .holding-change { min-width: 52px; }
+
+  .drawer-stats { grid-template-columns: repeat(2, 1fr); }
+  .drawer-stat:last-child { display: none; } /* hide least important stat */
+
+  :root {
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+  }
+  .section { padding: 56px 0; }
+  .container { padding: 0 16px; }
+
+  .an-stat { width: 50%; text-align: center; }
+  .an-stat:not(:nth-child(2n))  { border-right: 1px solid var(--border); }
+  .an-stat:nth-child(-n+4)      { border-bottom: 1px solid var(--border); }
+  .an-card { padding: 18px 16px; }
+  /* Center direction stat bars on mobile */
+  .an-dir-wrap { max-width: 320px; margin: 0 auto; }
+
+  /* Tighter padding on smallest screens */
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .section {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  .an-stat {
+    flex: 1 1 calc(50% - 1px);
+  }
+  .hero-h {
+    font-size: clamp(28px, 9vw, 48px);
+  }
+
+
+  /* Calendar: 7-column stays, but cells even smaller */
+  .cal-day {
+    min-height: 54px;
+    padding: 6px 4px;
+  }
+  .cal-day-pnl {
+    font-size: 9px;
+  }
+
+  .an-dir-block { padding: 12px 14px; }
+
+  .nav-inner { padding: 0 16px; }
+  .nav-logo span { font-size: 15px; }
+
+  .overview-cards { grid-template-columns: 1fr !important; }
+  .stat-card { padding: 18px 20px; }
+  .stat-card-value { font-size: 24px; }
+
+  .funding-summary { grid-template-columns: 1fr 1fr !important; gap: 12px; }
+  .funding-summary-val { font-size: 20px; }
+
   /* Container padding */
   .container { padding: 0 14px; }
   .section { padding: 48px 0; }
+
 
   /* Hero */
   .hero-stats { flex-direction: row; flex-wrap: wrap; }
   .hero-stat { flex: 0 0 50%; border-right: none; }
   .hero-stat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.1); }
 
+
   /* Overview 2-col cards */
   .overview-cards { grid-template-columns: 1fr 1fr; }
+
 
   /* Account card details */
   .account-card-meta { flex-wrap: wrap; gap: 6px; }
   .account-card-badges { flex-wrap: wrap; }
 
+
   /* Funding card */
   .funder-row { flex-wrap: wrap; gap: 4px; }
+
 
   /* Live card metrics - 2 col */
   .live-metrics { grid-template-columns: 1fr 1fr; gap: 10px; }
   .live-metric { padding: 12px; }
 
+
   /* Ticker bar - slow down on small screens */
   .live-ticker-inner { animation-duration: 60s; }
 }
 
+
+@media (max-width: 400px) {
+  .cal-day {
+    min-height: 48px;
+    padding: 6px 4px;
+  }
+  .cal-day-pnl { display: none; }
+}
+
+
 @media (max-width: 380px) {
+  .overview-cards { grid-template-columns: 1fr; }
+
   .hero-stat { flex: 0 0 100%; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.1); }
   .overview-cards { grid-template-columns: 1fr; }
 }
 
+/* ════════════════════════════════════════════════
+   ACCESSIBILITY ADDITIONS
+════════════════════════════════════════════════ */
+
+/* Skip Navigation */
+.skip-nav {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: #40B5AD;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 6px 6px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  z-index: 9999;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-nav:focus {
+  top: 0;
+}
+
+/* Focus visible ring */
+:focus-visible {
+  outline: 2px solid #40B5AD;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ════════════════════════════════════════════════
+   DARK MODE TOGGLE BUTTON
+════════════════════════════════════════════════ */
+.nav-dark-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid rgba(64,181,173,0.2);
+  background: transparent;
+  color: #40B5AD;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.nav-dark-btn:hover {
+  background: rgba(64,181,173,0.1);
+  border-color: rgba(64,181,173,0.4);
+}
+.nav-dark-btn svg {
+  pointer-events: none;
+}
+
+/* ════════════════════════════════════════════════
+   DARK MODE TOKENS
+════════════════════════════════════════════════ */
+:root {
+  --bg: #f5f9f9;
+  --bg-alt: #eef5f4;
+  --bg-card: #ffffff;
+  --text: #0e2422;
+  --text-muted: #7a9896;
+  --border: rgba(64,181,173,0.12);
+  --nav-bg: rgba(245,249,249,0.95);
+}
+
+[data-theme="dark"] {
+  --bg: #0d1c1b;
+  --bg-alt: #112120;
+  --bg-card: #162e2c;
+  --text: #e0f0ee;
+  --text-muted: #6aaeaa;
+  --border: rgba(64,181,173,0.18);
+  --nav-bg: rgba(13,28,27,0.97);
+}
+
+[data-theme="dark"] body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+[data-theme="dark"] .nav {
+  background: var(--nav-bg);
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .section--alt {
+  background: var(--bg-alt);
+}
+
+[data-theme="dark"] .an-card,
+[data-theme="dark"] .acc-card,
+[data-theme="dark"] .fund-card,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .live-card,
+[data-theme="dark"] .drawer-inner {
+  background: var(--bg-card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .section-header h2,
+[data-theme="dark"] .section-header .sh-title {
+  color: var(--text);
+}
+
+[data-theme="dark"] .section-header p,
+[data-theme="dark"] .stat-label,
+[data-theme="dark"] .an-stat-label,
+[data-theme="dark"] .nav-tagline {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] table th,
+[data-theme="dark"] table td {
+  border-color: var(--border);
+  color: var(--text);
+}
+
+[data-theme="dark"] table th {
+  background: var(--bg-alt);
+}
+
+[data-theme="dark"] .nav-dark-btn {
+  color: #40B5AD;
+  border-color: rgba(64,181,173,0.3);
+}
+
+[data-theme="dark"] .hero {
+  background: radial-gradient(ellipse at 60% 40%, rgba(64,181,173,0.08) 0%, transparent 70%), var(--bg);
+}
+
+[data-theme="dark"] .hero-grid {
+  opacity: 0.08;
+}
+
+[data-theme="dark"] .acc-badge,
+[data-theme="dark"] .tag {
+  background: rgba(64,181,173,0.15);
+}
+
+/* ════════════════════════════════════════════════
+   LOADING SKELETON
+════════════════════════════════════════════════ */
+.skeleton-row {
+  padding: 0.5rem 0;
+}
+.skeleton-pulse {
+  height: 1.5rem;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--bg-alt, #eef5f4) 25%, rgba(64,181,173,0.08) 50%, var(--bg-alt, #eef5f4) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s infinite;
+}
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ════════════════════════════════════════════════
+   ERROR STATE
+════════════════════════════════════════════════ */
+.error-state {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(220,38,38,0.06);
+  border: 1px solid rgba(220,38,38,0.2);
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+[data-theme="dark"] .error-state {
+  background: rgba(220,38,38,0.1);
+  border-color: rgba(220,38,38,0.25);
+}
+
+.price-error .live-rate {
+  color: #dc2626;
+}
+.price-error .live-rate::after {
+  content: ' (unavailable)';
+  font-size: 0.75em;
+  opacity: 0.8;
+}
