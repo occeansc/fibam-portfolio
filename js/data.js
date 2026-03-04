@@ -170,7 +170,6 @@ const ALPARI20_TRADES = [
 const TRADE_DATA = {
   'FDNT-6KX1':   FDNT_TRADES,
   'T5RS-5KX1':   T5RS_TRADES,
-  '1KHOOD':      KHOOD_TRADES,
   'NGX':         NGX_TRADES,
   'MFFU-X1':     MFFU_X1_TRADES,
   'MFFU-X2':     MFFU_X2_TRADES,
@@ -378,3 +377,24 @@ const FUNDING_DATA = [
     ]
   },
 ];
+
+/* ────────────────────────────────────────────
+   TRADE DATA MAP (Placed at bottom so all arrays exist first)
+──────────────────────────────────────────── */
+const TRADE_DATA = {
+  'FDNT-6KX1':   FDNT_TRADES,
+  'T5RS-5KX1':   T5RS_TRADES,
+  '1KHOOD':      KHOOD_TRADES,
+  'NGX':         NGX_TRADES,
+  'MFFU-X1':     MFFU_X1_TRADES,
+  'MFFU-X2':     MFFU_X2_TRADES,
+  'MFFU-X3':     MFFU_X3_TRADES,
+  'MFFU-X4':     MFFU_X4_TRADES,
+  'MFFU-X5':     MFFU_X5_TRADES,
+  'MFFX-X1':     MFFX_X1_TRADES,
+  'MFFX-X2':     MFFX_X2_TRADES,
+  'MFFX-X3':     MFFX_X3_TRADES,
+  'MFFX-X4':     MFFX_X4_TRADES,
+  'ALPARI-2020': ALPARI20_TRADES,
+  'ALPARI-2023': ALPARI23_TRADES,
+};
