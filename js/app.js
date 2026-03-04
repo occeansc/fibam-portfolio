@@ -235,9 +235,12 @@ const CAL_ACCOUNTS = [
   { id:'FDNT-6KX1',   label:'FDNT',      group:'Active' },
   { id:'T5RS-5KX1',   label:'T5RS',      group:'Active' },
   { id:'1KHOOD',       label:'1kHooD',    group:'Active' },
+  { id:'NGX',          label:'NGX',       group:'Active' },
   { id:'MFFX-X1',     label:'MFFX X1',   group:'FX Evals' },
   { id:'MFFX-X2',     label:'MFFX X2',   group:'FX Evals' },
   { id:'MFFX-X3',     label:'MFFX X3',   group:'FX Evals' },
+  { id:'MFFX-X4',     label:'MFFX X4',   group:'FX Evals' },
+  { id:'ALPARI-2020',  label:"ALP '20",   group:'Personal' },
   { id:'ALPARI-2023',  label:"ALP '23",   group:'Personal' },
   { id:'MFFU-X1',     label:'MFFU X1',   group:'Futures' },
   { id:'MFFU-X2',     label:'MFFU X2',   group:'Futures' },
@@ -253,13 +256,21 @@ function _calDailyMap(accId) {
   const trades = TRADE_DATA[accId] || [];
   const dm = {};
   trades.forEach(t => {
-    const key = (t.closeDate || t.openDate || '').slice(0,10);
+    // Only show closed trades on calendar (open positions have no closeDate)
+    if (t.open) return;
+    const key = (t.closeDate || '').slice(0,10);
     if (!key) return;
     if (!dm[key]) dm[key] = { pnl:0, trades:[] };
     dm[key].pnl = parseFloat((dm[key].pnl + (t.netPnl||0)).toFixed(2));
     dm[key].trades.push(t);
   });
   return dm;
+}
+
+function _calCurrency(accId) {
+  // Returns currency symbol for given account
+  const ngn = ['NGX'];
+  return ngn.includes(accId) ? '₦' : '$';
 }
 
 function _calYears(dm) {
@@ -332,7 +343,7 @@ function _calRenderYear(root) {
       const yearTrades = Object.entries(CAL.dm).filter(([d])=>d.startsWith(y));
       const total = yearTrades.reduce((s,[,v])=>s+v.pnl, 0);
       const cls = total >= 0 ? 'pos' : 'neg';
-      html += `<button class="cal-yr-pill ${yr2===yr?'active':''}" data-yr="${yr2}">${y} <span class="${cls}">${total>=0?'+':''}$${Math.abs(total).toFixed(0)}</span></button>`;
+      html += `<button class="cal-yr-pill ${yr2===yr?'active':''}" data-yr="${yr2}">${y} <span class="${cls}">${total>=0?'+':''}${_calCurrency(CAL.accId)}${Math.abs(total).toFixed(0)}</span></button>`;
     });
     html += `</div>`;
   }
@@ -348,7 +359,8 @@ function _calRenderYear(root) {
     const winDays = monthDays.filter(([,v])=>v.pnl>0).length;
     const monthName = new Date(yr, m-1, 1).toLocaleDateString('en-GB',{month:'short'});
     const cls = monthDays.length === 0 ? 'empty' : total >= 0 ? 'pos' : 'neg';
-    const totalStr = total >= 0 ? `+$${total.toFixed(0)}` : `-$${Math.abs(total).toFixed(0)}`;
+    const sym = _calCurrency(CAL.accId);
+    const totalStr = total >= 0 ? `+${sym}${total.toFixed(0)}` : `-${sym}${Math.abs(total).toFixed(0)}`;
 
     // Mini heatmap (max 31 cells)
     let heat = '<div class="cal-mini-heat">';
@@ -424,7 +436,7 @@ function _calRenderMonth(root) {
     </div>
   </div>
   <div class="cal-month-stats-bar">
-    <div class="cal-ms-item"><span class="cal-ms-label">Net P&L</span><span class="cal-ms-val ${total>=0?'pos':'neg'}">${total>=0?'+':''}${fmtFull(total)}</span></div>
+    <div class="cal-ms-item"><span class="cal-ms-label">Net P&L</span><span class="cal-ms-val ${total>=0?'pos':'neg'}">${total>=0?'+':''}${_calCurrency(CAL.accId)}${fmtFull(Math.abs(total))}</span></div>
     <div class="cal-ms-item"><span class="cal-ms-label">Days</span><span class="cal-ms-val">${winDays}W / ${monthDays.length-winDays}L</span></div>
     <div class="cal-ms-item"><span class="cal-ms-label">Trades</span><span class="cal-ms-val">${allTrades.length}</span></div>
     ${mStats ? `<div class="cal-ms-item"><span class="cal-ms-label">Win Rate</span><span class="cal-ms-val ${mStats.winRate>=0.5?'pos':'neg'}">${(mStats.winRate*100).toFixed(0)}%</span></div>` : ''}
@@ -479,7 +491,9 @@ function _calRenderMonth(root) {
     if (dayData) {
       const cls = dayData.pnl >= 0 ? 'cal-day--profit' : 'cal-day--loss';
       const intensity = Math.min(0.9, 0.25 + (Math.abs(dayData.pnl) / maxPnl) * 0.65);
-      const pStr = (dayData.pnl >= 0 ? '+' : '') + (Math.abs(dayData.pnl) >= 100 ? '$'+Math.round(Math.abs(dayData.pnl)) : fmtFull(dayData.pnl));
+      const _sym = _calCurrency(CAL.accId);
+      const _abs = Math.abs(dayData.pnl);
+      const pStr = (dayData.pnl >= 0 ? '+' : '-') + _sym + (_abs >= 1000 ? Math.round(_abs/1000)+'k' : _abs >= 100 ? Math.round(_abs) : _abs.toFixed(1));
       dayEl.className = `cal-day ${cls}`;
       dayEl.style.setProperty('--cal-intensity', intensity);
       dayEl.innerHTML = `<span class="cal-d-num">${d}</span><span class="cal-d-pnl">${pStr}</span><span class="cal-d-cnt">${dayData.trades.length}</span>`;
@@ -494,37 +508,70 @@ function _calRenderMonth(root) {
 
 // ── Day detail panel (bottom sheet on mobile, inline on desktop) ──
 let _calPanel = null;
+function _calClosePanel() {
+  if (_calPanel) _calPanel.classList.remove('open');
+  const ov = document.getElementById('calPanelOverlay');
+  if (ov) ov.classList.remove('open');
+}
+
 function _calShowDayPanel(dateStr, dayData) {
   if (!_calPanel) {
+    // Create overlay
+    let overlay = document.getElementById('calPanelOverlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'calPanelOverlay';
+      overlay.className = 'cal-day-panel-overlay';
+      overlay.addEventListener('click', _calClosePanel);
+      document.body.appendChild(overlay);
+    }
     _calPanel = document.createElement('div');
     _calPanel.className = 'cal-day-panel';
-    _calPanel.innerHTML = '<div class="cal-panel-handle"></div><div class="cal-panel-body"></div>';
+    _calPanel.innerHTML = '<div class="cal-panel-handle"><button class="cal-panel-close" aria-label="Close">&#x2715;</button></div><div class="cal-panel-body"></div>';
     document.body.appendChild(_calPanel);
-    _calPanel.querySelector('.cal-panel-handle').addEventListener('click', () => _calPanel.classList.remove('open'));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') _calPanel.classList.remove('open'); });
+    _calPanel.querySelector('.cal-panel-close').addEventListener('click', _calClosePanel);
+    _calPanel.querySelector('.cal-panel-handle').addEventListener('click', e => {
+      if (!e.target.closest('.cal-panel-close')) _calClosePanel();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') _calClosePanel(); });
     // Swipe down to dismiss
     let ty = 0;
     _calPanel.addEventListener('touchstart', e => { ty = e.touches[0].clientY; }, {passive:true});
-    _calPanel.addEventListener('touchend', e => { if (e.changedTouches[0].clientY - ty > 60) _calPanel.classList.remove('open'); }, {passive:true});
+    _calPanel.addEventListener('touchend', e => { if (e.changedTouches[0].clientY - ty > 60) _calClosePanel(); }, {passive:true});
   }
+  // Show overlay on mobile
+  const overlay = document.getElementById('calPanelOverlay');
+  if (overlay && window.innerWidth < 768) overlay.classList.add('open');
   const df = new Date(dateStr+'T00:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   const pc = dayData.pnl >= 0 ? 'pos' : 'neg';
-  const ps = (dayData.pnl >= 0 ? '+' : '') + fmtFull(dayData.pnl);
+  const _panelSym = _calCurrency(CAL.accId);
+  const ps = (dayData.pnl >= 0 ? '+' : '') + _panelSym + fmtFull(Math.abs(dayData.pnl));
   const rows = dayData.trades.map(t => {
     const tc = t.netPnl >= 0 ? 'pos' : 'neg';
-    const ts = (t.netPnl >= 0 ? '+' : '') + fmtFull(t.netPnl);
+    const ts = (t.netPnl >= 0 ? '+' : '') + _panelSym + fmtFull(Math.abs(t.netPnl));
     const instr = t.instrument || t.ticker || '—';
+    // Summary-only accounts: show note instead of trade row
+    if (instr === 'ACCOUNT SUMMARY') {
+      return `<div class="cal-panel-trade cal-panel-summary-row">
+        <span class="cal-pt-instr" style="font-style:italic;opacity:0.7">Account summary — no individual trade log</span>
+        <span class="cal-pt-pnl ${tc}">${ts}</span>
+      </div>${t.notes ? `<div class="cal-panel-note">${t.notes}</div>` : ''}`;
+    }
     const dir = t.direction ? (t.direction === 'Long' ? '▲' : '▼') : '';
-    const lots = t.lots ? ` ${t.lots}L` : (t.qty ? ` ${t.qty}` : '');
+    const qty  = t.qty  ? ` ×${t.qty}` : (t.lots ? ` ${t.lots}L` : '');
     return `<div class="cal-panel-trade">
       <span class="cal-pt-instr">${instr}</span>
-      <span class="cal-pt-dir">${dir}${lots}</span>
+      <span class="cal-pt-dir">${dir}${qty}</span>
       <span class="cal-pt-pnl ${tc}">${ts}</span>
     </div>`;
   }).join('');
+    const _isSummary = dayData.trades.every(t => (t.instrument||t.ticker||'') === 'ACCOUNT SUMMARY');
+  const _tradeLabel = _isSummary ? 'summary'
+    : CAL.accId === 'NGX' ? `${dayData.trades.length} position${dayData.trades.length!==1?'s':''}`
+    : `${dayData.trades.length} trade${dayData.trades.length!==1?'s':''}`;
   _calPanel.querySelector('.cal-panel-body').innerHTML = `
     <div class="cal-panel-date">${df}</div>
-    <div class="cal-panel-total ${pc}">${ps} · ${dayData.trades.length} trade${dayData.trades.length!==1?'s':''}</div>
+    <div class="cal-panel-total ${pc}">${ps} · ${_tradeLabel}</div>
     <div class="cal-panel-trades">${rows}</div>`;
   _calPanel.classList.add('open');
 }
