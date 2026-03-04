@@ -304,7 +304,7 @@ const FUNDING_DATA = [
     group: '1kHooD US Equities Fund',
     totalUSD: 1000,
     sources: [
-      { tag:'IF', usd:1000, pct:100 },
+      { tag:'TA', usd:1000, pct:100 },
     ]
   },
   {
