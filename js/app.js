@@ -225,142 +225,311 @@ function buildLiveCard(id,mId,cId,tPId,tBId,dPId,dBId) {
   new Chart(canvas.getContext('2d'),{type:'line',data:{labels,datasets:[{data:values,borderColor:lc,borderWidth:2.5,pointRadius:4,pointBackgroundColor:lc,pointBorderColor:'#fff',pointBorderWidth:2,tension:0.3,fill:true,backgroundColor:ctx=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,90);g.addColorStop(0,lc+'33');g.addColorStop(1,lc+'00');return g;}}]},options:{responsive:true,animation:{duration:800},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` Cumulative: ${fmtFull(ctx.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10,family:'JetBrains Mono'}}},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10,family:'JetBrains Mono'},callback:v=>'$'+v}}}}});
 }
 
-/* ────────────────────────────────────────────
-   PNL CALENDARS
-──────────────────────────────────────────── */
-let calTooltip=null;
+/* ════════════════════════════════════════════════
+   PNL CALENDARS — 3-level drill-down
+   Levels: years-overview → year (12 months) → month (daily grid)
+   Covers all accounts with trade data
+════════════════════════════════════════════════ */
+
+const CAL_ACCOUNTS = [
+  { id:'FDNT-6KX1',   label:'FDNT',      group:'Active' },
+  { id:'T5RS-5KX1',   label:'T5RS',      group:'Active' },
+  { id:'1KHOOD',       label:'1kHooD',    group:'Active' },
+  { id:'MFFX-X1',     label:'MFFX X1',   group:'FX Evals' },
+  { id:'MFFX-X2',     label:'MFFX X2',   group:'FX Evals' },
+  { id:'MFFX-X3',     label:'MFFX X3',   group:'FX Evals' },
+  { id:'ALPARI-2023',  label:"ALP '23",   group:'Personal' },
+  { id:'MFFU-X1',     label:'MFFU X1',   group:'Futures' },
+  { id:'MFFU-X2',     label:'MFFU X2',   group:'Futures' },
+  { id:'MFFU-X3',     label:'MFFU X3',   group:'Futures' },
+  { id:'MFFU-X4',     label:'MFFU X4',   group:'Futures' },
+  { id:'MFFU-X5',     label:'MFFU X5',   group:'Futures' },
+];
+
+// Calendar state
+let CAL = { accId: 'FDNT-6KX1', view: 'year', year: null, month: null, dm: {} };
+
+function _calDailyMap(accId) {
+  const trades = TRADE_DATA[accId] || [];
+  const dm = {};
+  trades.forEach(t => {
+    const key = (t.closeDate || t.openDate || '').slice(0,10);
+    if (!key) return;
+    if (!dm[key]) dm[key] = { pnl:0, trades:[] };
+    dm[key].pnl = parseFloat((dm[key].pnl + (t.netPnl||0)).toFixed(2));
+    dm[key].trades.push(t);
+  });
+  return dm;
+}
+
+function _calYears(dm) {
+  return [...new Set(Object.keys(dm).map(d=>d.slice(0,4)))].sort();
+}
 
 function initCalendars() {
-  calTooltip=document.createElement('div');
-  calTooltip.className='cal-tooltip';
-  document.body.appendChild(calTooltip);
-  document.querySelectorAll('.cal-tab').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      document.querySelectorAll('.cal-tab').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      renderCalendars(btn.dataset.account);
+  const root = document.getElementById('calRoot');
+  if (!root) return;
+
+  // Build tabs
+  const tabBar = document.getElementById('calTabBar');
+  if (tabBar) {
+    let lastGroup = '';
+    CAL_ACCOUNTS.forEach(ac => {
+      const trades = TRADE_DATA[ac.id];
+      if (!trades || !trades.length) return;
+      if (ac.group !== lastGroup) {
+        const sep = document.createElement('span');
+        sep.className = 'cal-tab-sep';
+        sep.textContent = ac.group;
+        tabBar.appendChild(sep);
+        lastGroup = ac.group;
+      }
+      const btn = document.createElement('button');
+      btn.className = 'cal-tab' + (ac.id === CAL.accId ? ' active' : '');
+      btn.textContent = ac.label;
+      btn.dataset.account = ac.id;
+      btn.addEventListener('click', () => {
+        tabBar.querySelectorAll('.cal-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        CAL.accId = ac.id;
+        CAL.dm = _calDailyMap(ac.id);
+        const years = _calYears(CAL.dm);
+        CAL.year = years[years.length-1] ? parseInt(years[years.length-1]) : new Date().getFullYear();
+        CAL.view = 'year';
+        _calRender();
+      });
+      tabBar.appendChild(btn);
+    });
+  }
+
+  // Initial render
+  CAL.dm = _calDailyMap(CAL.accId);
+  const years = _calYears(CAL.dm);
+  CAL.year = years[years.length-1] ? parseInt(years[years.length-1]) : new Date().getFullYear();
+  CAL.view = 'year';
+  _calRender();
+}
+
+function _calRender() {
+  const root = document.getElementById('calRoot');
+  if (!root) return;
+  if (CAL.view === 'year') _calRenderYear(root);
+  else if (CAL.view === 'month') _calRenderMonth(root);
+}
+
+// ── Year view: 12 month tiles ───────────────────
+function _calRenderYear(root) {
+  const years = _calYears(CAL.dm);
+  const yr = CAL.year;
+
+  let html = `<div class="cal-header">`;
+
+  // Year navigation
+  if (years.length > 1) {
+    html += `<div class="cal-year-nav">`;
+    years.forEach(y => {
+      const yr2 = parseInt(y);
+      const yearTrades = Object.entries(CAL.dm).filter(([d])=>d.startsWith(y));
+      const total = yearTrades.reduce((s,[,v])=>s+v.pnl, 0);
+      const cls = total >= 0 ? 'pos' : 'neg';
+      html += `<button class="cal-yr-pill ${yr2===yr?'active':''}" data-yr="${yr2}">${y} <span class="${cls}">${total>=0?'+':''}$${Math.abs(total).toFixed(0)}</span></button>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `<div class="cal-breadcrumb"><span class="cal-bc-current">${yr}</span></div></div>`;
+  html += `<div class="cal-months-grid">`;
+
+  for (let m = 1; m <= 12; m++) {
+    const ym = `${yr}-${String(m).padStart(2,'0')}`;
+    const monthDays = Object.entries(CAL.dm).filter(([d])=>d.startsWith(ym));
+    const total = parseFloat(monthDays.reduce((s,[,v])=>s+v.pnl,0).toFixed(2));
+    const tradeCount = monthDays.reduce((s,[,v])=>s+v.trades.length,0);
+    const winDays = monthDays.filter(([,v])=>v.pnl>0).length;
+    const monthName = new Date(yr, m-1, 1).toLocaleDateString('en-GB',{month:'short'});
+    const cls = monthDays.length === 0 ? 'empty' : total >= 0 ? 'pos' : 'neg';
+    const totalStr = total >= 0 ? `+$${total.toFixed(0)}` : `-$${Math.abs(total).toFixed(0)}`;
+
+    // Mini heatmap (max 31 cells)
+    let heat = '<div class="cal-mini-heat">';
+    const daysInMonth = new Date(yr, m, 0).getDate();
+    for (let d = 1; d <= daysInMonth; d++) {
+      const ds = `${ym}-${String(d).padStart(2,'0')}`;
+      const dd = CAL.dm[ds];
+      if (dd) heat += `<div class="cal-heat-cell ${dd.pnl>=0?'g':'r'}" title="${ds}: ${dd.pnl>=0?'+':''}${dd.pnl.toFixed(2)}"></div>`;
+      else heat += `<div class="cal-heat-cell"></div>`;
+    }
+    heat += '</div>';
+
+    html += `<div class="cal-month-tile ${cls}" data-ym="${ym}">
+      <div class="cal-tile-name">${monthName}</div>
+      ${heat}
+      <div class="cal-tile-total ${cls}">${monthDays.length ? totalStr : '—'}</div>
+      ${tradeCount ? `<div class="cal-tile-meta">${tradeCount} trades · ${winDays}W/${monthDays.length-winDays}L</div>` : '<div class="cal-tile-meta cal-tile-meta--none">no trades</div>'}
+    </div>`;
+  }
+
+  html += `</div>`;
+  root.innerHTML = html;
+
+  // Year pill clicks
+  root.querySelectorAll('.cal-yr-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      CAL.year = parseInt(btn.dataset.yr);
+      _calRenderYear(root);
     });
   });
-  renderCalendars('FDNT-6KX1');
-}
 
-function renderCalendars(accId) {
-  const container=document.getElementById('calContainer');if(!container)return;
-  const trades=TRADE_DATA[accId];
-  if(!trades){container.innerHTML='<p style="color:var(--text-3);text-align:center;padding:40px">No trade data loaded for this account yet.</p>';return;}
-  // Build daily map: date → {pnl, trades[]}
-  const dm={};
-  trades.forEach(t=>{
-    if(!dm[t.closeDate])dm[t.closeDate]={pnl:0,trades:[]};
-    dm[t.closeDate].pnl=parseFloat((dm[t.closeDate].pnl+t.netPnl).toFixed(2));
-    dm[t.closeDate].trades.push(t);
+  // Month tile clicks
+  root.querySelectorAll('.cal-month-tile:not(.empty)').forEach(tile => {
+    if (!tile.dataset.ym) return;
+    const [y, mo] = tile.dataset.ym.split('-').map(Number);
+    const hasTrades = Object.keys(CAL.dm).some(d => d.startsWith(tile.dataset.ym));
+    if (!hasTrades) return;
+    tile.style.cursor = 'pointer';
+    tile.addEventListener('click', () => {
+      CAL.view = 'month';
+      CAL.year = y;
+      CAL.month = mo;
+      _calRenderMonth(root);
+    });
   });
-  // Get unique months
-  const months=[...new Set(Object.keys(dm).map(d=>d.slice(0,7)))].sort();
-  container.innerHTML='';
-  months.forEach(ym=>container.appendChild(buildMonthCalendar(ym,dm)));
 }
 
-function buildMonthCalendar(ym,dm) {
-  const [year,mon]=ym.split('-').map(Number);
-  const monthName=new Date(year,mon-1,1).toLocaleDateString('en-GB',{month:'long',year:'numeric'});
-  let monthTotal=0,tradingDays=0,winDays=0;
-  Object.entries(dm).forEach(([d,v])=>{if(d.startsWith(ym)){monthTotal=parseFloat((monthTotal+v.pnl).toFixed(2));tradingDays++;if(v.pnl>0)winDays++;}});
-  const tc=monthTotal>=0?'pos':'neg';
-  const ts=(monthTotal>=0?'+':'')+fmtFull(monthTotal);
+// ── Month view: daily grid ──────────────────────
+function _calRenderMonth(root) {
+  const yr = CAL.year, mo = CAL.month;
+  const ym = `${yr}-${String(mo).padStart(2,'0')}`;
+  const monthName = new Date(yr, mo-1, 1).toLocaleDateString('en-GB',{month:'long', year:'numeric'});
+  const daysInMonth = new Date(yr, mo, 0).getDate();
+  const monthDays = Object.entries(CAL.dm).filter(([d])=>d.startsWith(ym));
+  const total = parseFloat(monthDays.reduce((s,[,v])=>s+v.pnl,0).toFixed(2));
+  const winDays = monthDays.filter(([,v])=>v.pnl>0).length;
+  const allTrades = monthDays.flatMap(([,v])=>v.trades);
+  const mStats = allTrades.length ? tradeStats(allTrades) : null;
+  const maxPnl = Math.max(...monthDays.map(([,v])=>Math.abs(v.pnl)), 1);
 
-  const allTrades=Object.entries(dm).filter(([d])=>d.startsWith(ym)).flatMap(([,v])=>v.trades);
-  const mStats=tradeStats(allTrades);
-  const maxPnl=Math.max(...Object.entries(dm).filter(([d])=>d.startsWith(ym)).map(([,v])=>Math.abs(v.pnl)),1);
+  const prevMo = mo === 1 ? `${yr-1}-12` : `${yr}-${String(mo-1).padStart(2,'0')}`;
+  const nextMo = mo === 12 ? `${yr+1}-01` : `${yr}-${String(mo+1).padStart(2,'0')}`;
+  const hasPrev = Object.keys(CAL.dm).some(d=>d.startsWith(prevMo));
+  const hasNext = Object.keys(CAL.dm).some(d=>d.startsWith(nextMo));
 
-  const block=document.createElement('div');
-  block.className='cal-month-block';
-  block.innerHTML=`
-    <div class="cal-month-title">${monthName}<span class="cal-month-total ${tc}">${ts}</span></div>
-    <div class="cal-grid-wrap">
-      <div class="cal-dow-row">
-        <div class="cal-dow">Mon</div><div class="cal-dow">Tue</div><div class="cal-dow">Wed</div>
-        <div class="cal-dow">Thu</div><div class="cal-dow">Fri</div>
-        <div class="cal-dow">Sat</div><div class="cal-dow">Sun</div>
-      </div>
-      <div class="cal-weeks" id="wk_${ym}"></div>
+  let html = `
+  <div class="cal-header">
+    <button class="cal-back-btn" id="calBack">&#8592; ${yr}</button>
+    <div class="cal-month-nav">
+      <button class="cal-nav-btn" id="calPrev" ${hasPrev?'':'disabled'}>&#8249;</button>
+      <span class="cal-month-label">${monthName}</span>
+      <button class="cal-nav-btn" id="calNext" ${hasNext?'':'disabled'}>&#8250;</button>
     </div>
-    <div class="cal-summary">
-      <div class="cal-summary-item"><div class="cal-summary-label">Net P&L</div><div class="cal-summary-val ${tc}">${ts}</div></div>
-      <div class="cal-summary-item"><div class="cal-summary-label">Trading Days</div><div class="cal-summary-val">${tradingDays}</div></div>
-      <div class="cal-summary-item"><div class="cal-summary-label">Win Days</div><div class="cal-summary-val pos">${winDays} / ${tradingDays}</div></div>
-      <div class="cal-summary-item"><div class="cal-summary-label">Trades</div><div class="cal-summary-val">${allTrades.length}</div></div>
-      ${mStats?`<div class="cal-summary-item"><div class="cal-summary-label">Win Rate</div><div class="cal-summary-val ${mStats.winRate>=0.5?'pos':'neg'}">${(mStats.winRate*100).toFixed(0)}%</div></div>`:''}
-    </div>`;
+  </div>
+  <div class="cal-month-stats-bar">
+    <div class="cal-ms-item"><span class="cal-ms-label">Net P&L</span><span class="cal-ms-val ${total>=0?'pos':'neg'}">${total>=0?'+':''}${fmtFull(total)}</span></div>
+    <div class="cal-ms-item"><span class="cal-ms-label">Days</span><span class="cal-ms-val">${winDays}W / ${monthDays.length-winDays}L</span></div>
+    <div class="cal-ms-item"><span class="cal-ms-label">Trades</span><span class="cal-ms-val">${allTrades.length}</span></div>
+    ${mStats ? `<div class="cal-ms-item"><span class="cal-ms-label">Win Rate</span><span class="cal-ms-val ${mStats.winRate>=0.5?'pos':'neg'}">${(mStats.winRate*100).toFixed(0)}%</span></div>` : ''}
+  </div>
+  <div class="cal-grid-wrap">
+    <div class="cal-dow-row">
+      <div class="cal-dow">M</div><div class="cal-dow">T</div><div class="cal-dow">W</div>
+      <div class="cal-dow">T</div><div class="cal-dow">F</div>
+      <div class="cal-dow">S</div><div class="cal-dow">S</div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>`;
 
-  const weeksEl=block.querySelector(`#wk_${ym}`);
-  // startDow Mon=0
-  let startDow=new Date(year,mon-1,1).getDay();
-  startDow=startDow===0?6:startDow-1;
-  const daysInMonth=new Date(year,mon,0).getDate();
-  const numWeeks=Math.ceil((startDow+daysInMonth)/7);
+  root.innerHTML = html;
 
-  for(let w=0;w<numWeeks;w++){
-    const weekEl=document.createElement('div');
-    weekEl.className='cal-week';
-    for(let d=0;d<7;d++){
-      const idx=w*7+d, dayNum=idx-startDow+1;
-      const dayEl=document.createElement('div');
-      if(dayNum<1||dayNum>daysInMonth){
-        dayEl.className='cal-day cal-day--empty';
-      } else {
-        const dateStr=`${ym}-${String(dayNum).padStart(2,'0')}`;
-        const isWknd=d>=5;
-        const dayData=dm[dateStr];
-        if(dayData){
-          const cls=dayData.pnl>=0?'cal-day--profit':'cal-day--loss';
-          dayEl.className=`cal-day ${cls}`;
-          const barPct=Math.min(100,(Math.abs(dayData.pnl)/maxPnl)*100);
-          const barC=dayData.pnl>=0?'var(--green)':'var(--red)';
-          const pStr=(dayData.pnl>=0?'+':'')+fmtFull(dayData.pnl);
-          const cnt=dayData.trades.length;
-          dayEl.innerHTML=`<div class="cal-day-num">${dayNum}</div><div class="cal-day-pnl">${pStr}</div><div class="cal-day-trades">${cnt} trade${cnt!==1?'s':''}</div><div class="cal-day-bar" style="background:${barC};opacity:0.45;width:${barPct}%"></div>`;
-          dayEl.addEventListener('mouseenter',e=>showTip(e,dateStr,dayData));
-          dayEl.addEventListener('mousemove',e=>moveTip(e));
-          dayEl.addEventListener('mouseleave',hideTip);
-        } else {
-          dayEl.className=`cal-day${isWknd?' cal-day--weekend':''}`;
-          dayEl.innerHTML=`<div class="cal-day-num">${dayNum}</div>`;
-        }
-      }
-      weekEl.appendChild(dayEl);
-    }
-    weeksEl.appendChild(weekEl);
+  // Back button
+  root.querySelector('#calBack').addEventListener('click', () => {
+    CAL.view = 'year';
+    _calRenderYear(root);
+  });
+
+  // Prev/Next month
+  root.querySelector('#calPrev').addEventListener('click', () => {
+    if (mo === 1) { CAL.year = yr-1; CAL.month = 12; }
+    else CAL.month = mo - 1;
+    _calRenderMonth(root);
+  });
+  root.querySelector('#calNext').addEventListener('click', () => {
+    if (mo === 12) { CAL.year = yr+1; CAL.month = 1; }
+    else CAL.month = mo + 1;
+    _calRenderMonth(root);
+  });
+
+  // Build grid
+  const grid = root.querySelector('#calGrid');
+  let startDow = new Date(yr, mo-1, 1).getDay();
+  startDow = startDow === 0 ? 6 : startDow - 1;
+
+  // Empty start cells
+  for (let i = 0; i < startDow; i++) {
+    const e = document.createElement('div');
+    e.className = 'cal-day cal-day--empty';
+    grid.appendChild(e);
   }
-  return block;
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ds = `${ym}-${String(d).padStart(2,'0')}`;
+    const isWknd = ((startDow + d - 1) % 7) >= 5;
+    const dayEl = document.createElement('div');
+    const dayData = CAL.dm[ds];
+
+    if (dayData) {
+      const cls = dayData.pnl >= 0 ? 'cal-day--profit' : 'cal-day--loss';
+      const intensity = Math.min(0.9, 0.25 + (Math.abs(dayData.pnl) / maxPnl) * 0.65);
+      const pStr = (dayData.pnl >= 0 ? '+' : '') + (Math.abs(dayData.pnl) >= 100 ? '$'+Math.round(Math.abs(dayData.pnl)) : fmtFull(dayData.pnl));
+      dayEl.className = `cal-day ${cls}`;
+      dayEl.style.setProperty('--cal-intensity', intensity);
+      dayEl.innerHTML = `<span class="cal-d-num">${d}</span><span class="cal-d-pnl">${pStr}</span><span class="cal-d-cnt">${dayData.trades.length}</span>`;
+      dayEl.addEventListener('click', () => _calShowDayPanel(ds, dayData));
+    } else {
+      dayEl.className = `cal-day${isWknd ? ' cal-day--wknd' : ' cal-day--blank'}`;
+      dayEl.innerHTML = `<span class="cal-d-num">${d}</span>`;
+    }
+    grid.appendChild(dayEl);
+  }
 }
 
-function showTip(e,dateStr,dayData) {
-  if(!calTooltip)return;
-  const df=new Date(dateStr+'T00:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
-  const pc=dayData.pnl>=0?'pos':'neg';
-  const ps=(dayData.pnl>=0?'+':'')+fmtFull(dayData.pnl);
-  const rows=dayData.trades.map(t=>{
-    const tc=t.netPnl>=0?'pos':'neg';
-    const ts=(t.netPnl>=0?'+':'')+fmtFull(t.netPnl);
-    return `<div class="cal-tooltip-trade"><span class="cal-tooltip-instr">${t.instrument}</span><span class="cal-tooltip-dir">${t.direction==='Long'?'▲':'▼'} ${t.lots}L</span><span class="cal-tooltip-pnl ${tc}">${ts}</span></div>`;
+// ── Day detail panel (bottom sheet on mobile, inline on desktop) ──
+let _calPanel = null;
+function _calShowDayPanel(dateStr, dayData) {
+  if (!_calPanel) {
+    _calPanel = document.createElement('div');
+    _calPanel.className = 'cal-day-panel';
+    _calPanel.innerHTML = '<div class="cal-panel-handle"></div><div class="cal-panel-body"></div>';
+    document.body.appendChild(_calPanel);
+    _calPanel.querySelector('.cal-panel-handle').addEventListener('click', () => _calPanel.classList.remove('open'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') _calPanel.classList.remove('open'); });
+    // Swipe down to dismiss
+    let ty = 0;
+    _calPanel.addEventListener('touchstart', e => { ty = e.touches[0].clientY; }, {passive:true});
+    _calPanel.addEventListener('touchend', e => { if (e.changedTouches[0].clientY - ty > 60) _calPanel.classList.remove('open'); }, {passive:true});
+  }
+  const df = new Date(dateStr+'T00:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const pc = dayData.pnl >= 0 ? 'pos' : 'neg';
+  const ps = (dayData.pnl >= 0 ? '+' : '') + fmtFull(dayData.pnl);
+  const rows = dayData.trades.map(t => {
+    const tc = t.netPnl >= 0 ? 'pos' : 'neg';
+    const ts = (t.netPnl >= 0 ? '+' : '') + fmtFull(t.netPnl);
+    const instr = t.instrument || t.ticker || '—';
+    const dir = t.direction ? (t.direction === 'Long' ? '▲' : '▼') : '';
+    const lots = t.lots ? ` ${t.lots}L` : (t.qty ? ` ${t.qty}` : '');
+    return `<div class="cal-panel-trade">
+      <span class="cal-pt-instr">${instr}</span>
+      <span class="cal-pt-dir">${dir}${lots}</span>
+      <span class="cal-pt-pnl ${tc}">${ts}</span>
+    </div>`;
   }).join('');
-  calTooltip.innerHTML=`<div class="cal-tooltip-date">${df}</div><div class="cal-tooltip-total ${pc}">${ps}</div>${rows}`;
-  calTooltip.classList.add('visible');
-  moveTip(e);
+  _calPanel.querySelector('.cal-panel-body').innerHTML = `
+    <div class="cal-panel-date">${df}</div>
+    <div class="cal-panel-total ${pc}">${ps} · ${dayData.trades.length} trade${dayData.trades.length!==1?'s':''}</div>
+    <div class="cal-panel-trades">${rows}</div>`;
+  _calPanel.classList.add('open');
 }
-function moveTip(e) {
-  if(!calTooltip)return;
-  const vw=window.innerWidth,vh=window.innerHeight,w=calTooltip.offsetWidth||280,h=calTooltip.offsetHeight||200;
-  let x=e.clientX+16,y=e.clientY-16;
-  if(x+w>vw-16)x=e.clientX-w-16;
-  if(y+h>vh-16)y=vh-h-16;
-  if(y<8)y=8;
-  calTooltip.style.left=x+'px';
-  calTooltip.style.top=y+'px';
-}
-function hideTip(){if(calTooltip)calTooltip.classList.remove('visible');}
 
+/* ────────────────────────────────────────────
 /* ────────────────────────────────────────────
    TRADING TABLE
 ──────────────────────────────────────────── */
@@ -598,31 +767,33 @@ function initScrollReveal() {
    INIT
 ──────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded',()=>{
-  initNav();
-  initCountUp();
-  buildHeroTimeline();
-  buildOverviewCharts();
-  buildAccountCards();
-  initAccountFilters();
-  buildLiveDashboards();
-  initCalendars();
-  buildTradingTable();
-  buildFunds();
-  buildFundingSection();
-  buildPerformance();
-  fetchLivePrices();
+  const safe = (label, fn) => { try { fn(); } catch(e) { console.error('[FIBAM]', label, e); } };
+
+  safe('initNav',           initNav);
+  safe('initCountUp',       initCountUp);
+  safe('buildHeroTimeline', buildHeroTimeline);
+  safe('buildOverviewCharts', buildOverviewCharts);
+  safe('buildAccountCards', buildAccountCards);
+  safe('initAccountFilters', initAccountFilters);
+  safe('buildLiveDashboards', buildLiveDashboards);
+  safe('initCalendars',     initCalendars);
+  safe('buildTradingTable', buildTradingTable);
+  safe('buildFunds',        buildFunds);
+  safe('buildFundingSection', buildFundingSection);
+  safe('buildPerformance',  buildPerformance);
+  safe('buildAnalytics',    buildAnalytics);
+  safe('fetchLivePrices',   fetchLivePrices);
 
   const drawerCloseBtn = document.getElementById('drawerClose');
   const drawerOverlayEl = document.getElementById('drawerOverlay');
   if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
   if (drawerOverlayEl) drawerOverlayEl.addEventListener('click', closeDrawer);
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
-  initDrawerSwipe();
+  safe('initDrawerSwipe', initDrawerSwipe);
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});
   });
-  try { buildAnalytics(); } catch(e) { console.error('buildAnalytics failed:', e); }
-  requestAnimationFrame(()=>initScrollReveal());
+  requestAnimationFrame(()=>safe('initScrollReveal', initScrollReveal));
 
   // Refresh live prices every 60 seconds
   setInterval(fetchLivePrices, 60000);
