@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIBAM — Trading Portfolio</title>
+  <meta name="description" content="FIBAM Trading Portfolio — Spot FX, Futures, US Equities & Nigerian Stocks. Purpose not money, is your real asset.">
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="FIBAM — Trading Portfolio">
+  <meta property="og:description" content="15 accounts · 1,673 trades · Spot FX, US Futures, US Equities, Nigerian Stocks. Purpose not money is your real asset.">
+  <meta property="og:site_name" content="FIBAM">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FIBAM — Trading Portfolio">
+  <meta name="twitter:description" content="15 accounts · 1,673 trades · Spot FX, US Futures, US Equities, Nigerian Stocks.">
+  <!-- Theme color for mobile browsers -->
+  <meta name="theme-color" content="#40B5AD">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="print.css" media="print">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════ -->
+  <a href="#hero" class="skip-nav">Skip to main content</a>
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
+          <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
+        </svg>
+        <div class="nav-brand">
+          <span class="nav-name">FIBAM</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link nav-link--active">Overview</a>
+        <a href="#accounts" class="nav-link">Accounts</a>
+        <a href="funds.html#calendars" class="nav-link">Calendars</a>
+        <a href="funds.html#trading" class="nav-link">Trading</a>
+        <a href="funds.html#funds" class="nav-link">Funds</a>
+        <a href="funds.html#funding" class="nav-link">Funding</a>
+        <a href="analytics.html" class="nav-link">Analytics</a>
+      </div>
+      <button class="nav-dark-btn" id="darkBtn" aria-label="Toggle dark mode" aria-pressed="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="nav-menu-btn" id="menuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu">
+      <a href="index.html" class="nav-mobile-link">Overview</a>
+      <a href="#accounts" class="nav-mobile-link">Accounts</a>
+      <a href="funds.html#calendars" class="nav-mobile-link">Calendars</a>
+      <a href="funds.html#trading" class="nav-mobile-link">Trading</a>
+      <a href="funds.html#funds" class="nav-mobile-link">Funds</a>
+      <a href="funds.html#funding" class="nav-mobile-link">Funding</a>
+      <a href="analytics.html" class="nav-mobile-link">Analytics</a>
+    </div>
+  </nav>
+
+  <!-- Live Price Ticker Bar -->
+  <div class="live-ticker-bar" id="tickerBar">
+    <div class="live-ticker-inner" id="tickerInner">
+      <!-- Segment 1 -->
+      <div class="ticker-segment">
+        <div class="ticker-item">
+          <span class="ticker-dot"></span>
+          <span class="ticker-label">Live</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">USD/JPY</span>
+          <span class="ticker-price" id="tickerUSDJPY">—</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">EUR/USD</span>
+          <span class="ticker-price" id="tickerEURUSD">—</span>
+        </div>
+        <div class="ticker-item ticker-item--sep">
+          <span class="ticker-pair">PANW</span>
+          <span class="ticker-price" id="tickerPANW">—</span>
+          <span class="ticker-change" id="tickerPANWchg"></span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">LMND</span>
+          <span class="ticker-price" id="tickerLMND">—</span>
+          <span class="ticker-change" id="tickerLMNDchg"></span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">RKLB</span>
+          <span class="ticker-price" id="tickerRKLB">—</span>
+          <span class="ticker-change" id="tickerRKLBchg"></span>
+        </div>
+        <div class="ticker-item ticker-item--sep">
+          <span class="ticker-pair">GEREGU</span>
+          <span class="ticker-price">₦1,141.50</span>
+          <span class="ticker-change pos">+26.8%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">ACCESSCORP</span>
+          <span class="ticker-price">₦22.90</span>
+          <span class="ticker-change neg">−1.2%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">ZENITHBANK</span>
+          <span class="ticker-price">₦64.50</span>
+          <span class="ticker-change neg">−3.7%</span>
+        </div>
+        <span class="ticker-ngx-note" style="padding:0 40px">NGX: manual · US: Yahoo Finance · FX: Frankfurter</span>
+      </div>
+      <!-- Segment 2 — duplicate for seamless loop -->
+      <div class="ticker-segment" aria-hidden="true">
+        <div class="ticker-item">
+          <span class="ticker-dot"></span>
+          <span class="ticker-label">Live</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">USD/JPY</span>
+          <span class="ticker-price ticker-clone--usdjpy">—</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">EUR/USD</span>
+          <span class="ticker-price ticker-clone--eurusd">—</span>
+        </div>
+        <div class="ticker-item ticker-item--sep">
+          <span class="ticker-pair">PANW</span>
+          <span class="ticker-price ticker-clone--panw">—</span>
+          <span class="ticker-change ticker-clone--panwchg"></span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">LMND</span>
+          <span class="ticker-price ticker-clone--lmnd">—</span>
+          <span class="ticker-change ticker-clone--lmndchg"></span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">RKLB</span>
+          <span class="ticker-price ticker-clone--rklb">—</span>
+          <span class="ticker-change ticker-clone--rklbchg"></span>
+        </div>
+        <div class="ticker-item ticker-item--sep">
+          <span class="ticker-pair">GEREGU</span>
+          <span class="ticker-price">₦1,141.50</span>
+          <span class="ticker-change pos">+26.8%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">ACCESSCORP</span>
+          <span class="ticker-price">₦22.90</span>
+          <span class="ticker-change neg">−1.2%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-pair">ZENITHBANK</span>
+          <span class="ticker-price">₦64.50</span>
+          <span class="ticker-change neg">−3.7%</span>
+        </div>
+        <span class="ticker-ngx-note" style="padding:0 40px">NGX: manual · US: Yahoo Finance · FX: Frankfurter</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <section id="hero" class="hero" aria-label="Portfolio Overview">
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
+      <div class="hero-glow"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge animate-in" style="--delay:0.1s">
+          <span class="badge-dot"></span>
+          <span>2 Active Evaluations · 1kHooD Fund Live · NGX Portfolio Live</span>
+        </div>
+        <h1 class="hero-title animate-in" style="--delay:0.2s">
+          <span class="hero-name">FIBAM</span>
+          <span class="hero-sub">Trading Portfolio</span>
+        </h1>
+        <p class="hero-desc animate-in" style="--delay:0.3s">
+          Six years of systematic participation across Spot FX, US Futures, US Equities and Nigerian Stocks. 
+          From personal accounts to prop firm evaluations to managed funds — a full record of every campaign.
+        </p>
+
+        <div class="hero-stats animate-in" style="--delay:0.5s">
+          <div class="hero-stat">
+            <span class="hero-stat-num" data-target="15" data-suffix="">0</span>
+            <span class="hero-stat-label">Total Accounts</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-num" data-target="1673" data-suffix="+">0</span>
+            <span class="hero-stat-label">Trades Executed</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-num" data-target="4" data-suffix="">0</span>
+            <span class="hero-stat-label">Markets Traded</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-num" data-target="6" data-suffix=" yrs">0</span>
+            <span class="hero-stat-label">Years Active</span>
+          </div>
+        </div>
+
+        <div class="hero-cta animate-in" style="--delay:0.6s">
+          <a href="#accounts" class="btn btn-primary">View All Accounts</a>
+          <a href="#performance" class="btn btn-ghost">See Performance</a>
+        </div>
+      </div>
+
+      <div class="hero-timeline animate-in" style="--delay:0.7s">
+        <div class="timeline-label">Account History  2020 → Present</div>
+        <div class="timeline-track" id="heroTimeline"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       PORTFOLIO OVERVIEW
+  ══════════════════════════════════════════ -->
+  <section class="section" id="overview">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Portfolio Overview</div>
+        <h2 class="section-title">The Full Picture</h2>
+        <p class="section-desc">All accounts across all markets — personal capital, prop firm evaluations and managed funds — mapped in one place.</p>
+      </div>
+
+      <div class="overview-grid">
+
+        <!-- Summary Cards -->
+        <div class="overview-cards">
+          <div class="stat-card stat-card--teal">
+            <div class="stat-card-icon">◈</div>
+            <div class="stat-card-value">$381k</div>
+            <div class="stat-card-label">Nominal AUM Managed</div>
+            <div class="stat-card-note">Includes $50k prop firm accounts</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">↗</div>
+            <div class="stat-card-value">$1,699</div>
+            <div class="stat-card-label">Total Evaluation Fees</div>
+            <div class="stat-card-note">Across 13 prop firm attempts</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">◉</div>
+            <div class="stat-card-value">4</div>
+            <div class="stat-card-label">Active Accounts</div>
+            <div class="stat-card-note">2 evals · 2 live funds</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">⊞</div>
+            <div class="stat-card-value">4</div>
+            <div class="stat-card-label">Markets</div>
+            <div class="stat-card-note">FX · Futures · US Stocks · NGX</div>
+          </div>
+        </div>
+
+        <!-- Charts row -->
+        <div class="overview-charts">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3 class="chart-card-title">Capital by Market</h3>
+              <span class="chart-card-note">Nominal account sizes</span>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="marketDonut" width="200" height="200"></canvas>
+              <div class="donut-center">
+                <span class="donut-total">$382k</span>
+                <span class="donut-label">total</span>
+              </div>
+            </div>
+            <div class="chart-legend" id="marketLegend"></div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3 class="chart-card-title">Account Types</h3>
+              <span class="chart-card-note">By count</span>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="typeDonut" width="200" height="200"></canvas>
+              <div class="donut-center">
+                <span class="donut-total">15</span>
+                <span class="donut-label">accounts</span>
+              </div>
+            </div>
+            <div class="chart-legend" id="typeLegend"></div>
+          </div>
+
+          <div class="chart-card chart-card--wide">
+            <div class="chart-card-header">
+              <h3 class="chart-card-title">P&L by Account</h3>
+              <span class="chart-card-note">Closed accounts · USD</span>
+            </div>
+            <canvas id="pnlBar" height="140"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Market pills -->
+      <div class="market-pills">
+        <div class="market-pill market-pill--fx">
+          <span class="pill-dot"></span>
+          <div class="pill-content">
+            <span class="pill-name">Spot FX</span>
+            <span class="pill-detail">GBPUSD · EURUSD · USDJPY · WTI · XAU</span>
+          </div>
+          <span class="pill-count">6 accounts</span>
+        </div>
+        <div class="market-pill market-pill--futures">
+          <span class="pill-dot"></span>
+          <div class="pill-content">
+            <span class="pill-name">US Futures</span>
+            <span class="pill-detail">NQ · MNQ · YM · MYM · ES</span>
+          </div>
+          <span class="pill-count">5 accounts</span>
+        </div>
+        <div class="market-pill market-pill--stocks">
+          <span class="pill-dot"></span>
+          <div class="pill-content">
+            <span class="pill-name">US Equities</span>
+            <span class="pill-detail">Robinhood · NASDAQ · NYSE</span>
+          </div>
+          <span class="pill-count">1 fund</span>
+        </div>
+        <div class="market-pill market-pill--ngx">
+          <span class="pill-dot"></span>
+          <div class="pill-content">
+            <span class="pill-name">Nigerian Stocks</span>
+            <span class="pill-detail">NGX Exchange · NGN</span>
+          </div>
+          <span class="pill-count">1 fund</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ACCOUNT CARDS
+  ══════════════════════════════════════════ -->
+  <section class="section section--alt" id="accounts">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Account Registry</div>
+        <h2 class="section-title">Every Campaign</h2>
+        <p class="section-desc">15 accounts across 6 years. Each one a chapter — from the first deposit to active evaluations running today.</p>
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="filter-tabs" id="accountFilters">
+        <button class="filter-tab active" data-filter="all">All <span class="tab-count">15</span></button>
+        <button class="filter-tab" data-filter="active">Active <span class="tab-count">4</span></button>
+        <button class="filter-tab" data-filter="prop-eval">Prop Evaluations <span class="tab-count">9</span></button>
+        <button class="filter-tab" data-filter="personal">Personal <span class="tab-count">2</span></button>
+        <button class="filter-tab" data-filter="fund">Funds <span class="tab-count">2</span></button>
+      </div>
+
+      <div class="accounts-grid" id="accountsGrid">
+        <!-- Populated by JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ACTIVE ACCOUNT DASHBOARDS
+  ══════════════════════════════════════════ -->
+  <section class="section section--alt" id="live">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag live-tag">
+          <span class="live-dot"></span> Live Now
+        </div>
+        <h2 class="section-title">Active Evaluations</h2>
+        <p class="section-desc">Real-time dashboards for both running prop firm evaluations, built from actual trade data.</p>
+      </div>
+
+      <div class="live-grid">
+
+        <!-- FDNT Dashboard -->
+        <div class="live-card" id="liveFDNT">
+          <div class="live-card-head">
+            <div>
+              <div class="live-card-platform">FundedNext · Phase 1 · $6,000</div>
+              <h3 class="live-card-name">FDNT Evaluation</h3>
+              <div class="live-card-id">FDNT$6KX1-STP-PFF · Started Feb 5, 2026</div>
+            </div>
+            <div class="live-card-status">
+              <span class="badge badge--active">● Active</span>
+            </div>
+          </div>
+
+          <div class="live-metrics" id="fdntMetrics"></div>
+
+          <div class="live-progress-wrap">
+            <div class="live-progress-row">
+              <span class="live-progress-label">Profit target ($600 · 10%)</span>
+              <span class="live-progress-val" id="fdntTargetPct">—</span>
+            </div>
+            <div class="live-bar-track">
+              <div class="live-bar-fill live-bar-fill--profit" id="fdntTargetBar" style="width:0%"></div>
+            </div>
+            <div class="live-progress-row" style="margin-top:10px">
+              <span class="live-progress-label">Max drawdown used ($600 · 10%)</span>
+              <span class="live-progress-val" id="fdntDDPct">—</span>
+            </div>
+            <div class="live-bar-track">
+              <div class="live-bar-fill live-bar-fill--danger" id="fdntDDBar" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="live-equity-wrap">
+            <div class="live-chart-label">Equity Curve — Cumulative P&L</div>
+            <canvas id="fdntEquity" height="90"></canvas>
+          </div>
+        </div>
+
+        <!-- T5RS Dashboard -->
+        <div class="live-card" id="liveT5RS">
+          <div class="live-card-head">
+            <div>
+              <div class="live-card-platform">The5ers · Phase 1 · $5,000</div>
+              <h3 class="live-card-name">T5RS Evaluation</h3>
+              <div class="live-card-id">T5RS$5KX1-STP-PFF · Started Feb 22, 2026</div>
+            </div>
+            <div class="live-card-status">
+              <span class="badge badge--active">● Active</span>
+            </div>
+          </div>
+
+          <div class="live-metrics" id="t5rsMetrics"></div>
+
+          <div class="live-progress-wrap">
+            <div class="live-progress-row">
+              <span class="live-progress-label">Profit target ($250 · 5%)</span>
+              <span class="live-progress-val" id="t5rsTargetPct">—</span>
+            </div>
+            <div class="live-bar-track">
+              <div class="live-bar-fill live-bar-fill--profit" id="t5rsTargetBar" style="width:0%"></div>
+            </div>
+            <div class="live-progress-row" style="margin-top:10px">
+              <span class="live-progress-label">Max drawdown used ($200 · 4%)</span>
+              <span class="live-progress-val" id="t5rsDDPct">—</span>
+            </div>
+            <div class="live-bar-track">
+              <div class="live-bar-fill live-bar-fill--danger" id="t5rsDDBar" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="live-equity-wrap">
+            <div class="live-chart-label">Equity Curve — Cumulative P&L</div>
+            <canvas id="t5rsEquity" height="90"></canvas>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SECTION LINKS — Navigate to dedicated pages
+  ══════════════════════════════════════════ -->
+  <section class="section section--alt" id="portfolio-links">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Portfolio Pages</div>
+        <h2 class="section-title">Explore in Depth</h2>
+        <p class="section-desc">Each section has a dedicated page with full detail, charts, and breakdowns.</p>
+      </div>
+      <div class="portfolio-nav-grid">
+        <a href="funds.html#calendars" class="pnav-card">
+          <div class="pnav-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="8" cy="15" r="1" fill="currentColor"/><circle cx="12" cy="15" r="1" fill="currentColor"/><circle cx="16" cy="15" r="1" fill="currentColor"/></svg>
+          </div>
+          <div class="pnav-title">PnL Calendars</div>
+          <div class="pnav-desc">Daily P&amp;L heat maps for active evaluations. Green days, red days — the honest record.</div>
+          <div class="pnav-link">View Calendars →</div>
+        </a>
+        <a href="funds.html#trading" class="pnav-card">
+          <div class="pnav-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </div>
+          <div class="pnav-title">Trading Portfolio</div>
+          <div class="pnav-desc">All 13 prop firm accounts across Spot FX &amp; Futures. Full account register with P&amp;L.</div>
+          <div class="pnav-link">View Trading →</div>
+        </a>
+        <a href="funds.html#funds" class="pnav-card">
+          <div class="pnav-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14.8 9a2 2 0 0 0-1.8-1H11a2 2 0 0 0 0 4h2a2 2 0 0 1 0 4h-2.2a2 2 0 0 1-1.8-1"/><line x1="12" y1="6" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="18"/></svg>
+          </div>
+          <div class="pnav-title">Funds &amp; Holdings</div>
+          <div class="pnav-desc">1kHooD US Equities Fund and FIBAM NGX — live positions, holdings, and performance charts.</div>
+          <div class="pnav-link">View Funds →</div>
+        </a>
+        <a href="funds.html#funding" class="pnav-card">
+          <div class="pnav-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="pnav-title">Investors &amp; Funding</div>
+          <div class="pnav-desc">Capital allocation by contributor across all campaigns — PO, IF, TA, MO.</div>
+          <div class="pnav-link">View Funding →</div>
+        </a>
+        <a href="analytics.html" class="pnav-card pnav-card--highlight">
+          <div class="pnav-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+          </div>
+          <div class="pnav-title">Deep Analytics</div>
+          <div class="pnav-desc">1,673 trades. Equity curve, instrument breakdown, commission drag, win rates.</div>
+          <div class="pnav-link">View Analytics →</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="18" fill="#40B5AD"/>
+            <text x="18" y="18" text-anchor="middle" dominant-baseline="central" font-family="Public Sans" font-weight="700" font-size="20" fill="white">F</text>
+          </svg>
+          <div class="footer-brand-text">
+            <div class="footer-name">FIBAM</div>
+            <div class="footer-tagline"><em>purpose not money, is your real asset</em></div>
+          </div>
+        </div>
+        <div class="footer-meta">
+          <div>Trading Portfolio &middot; 2020 &ndash; Present</div>
+          <div>Spot FX &middot; US Futures &middot; US Equities &middot; NGX</div>
+        </div>
+        <div class="footer-update">
+          <span class="update-dot"></span>
+          <span id="lastUpdated">Updated Mar 2026</span>
+        </div>
+      </div>
+      <div class="footer-bottom">FIBAM Portfolio &mdash; Past performance does not guarantee future results</div>
+    </div>
+  </footer>
+
+  <!-- Account Detail Drawer -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <div class="drawer" id="accountDrawer">
+    <div class="drawer-handle-bar" aria-hidden="true"></div>
+    <div class="drawer-header">
+      <div class="drawer-title-wrap">
+        <h3 class="drawer-title" id="drawerTitle">Account Detail</h3>
+        <span class="drawer-subtitle" id="drawerSubtitle"></span>
+      </div>
+      <button class="drawer-close" id="drawerClose">✕</button>
+    </div>
+    <div class="drawer-body" id="drawerBody">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
