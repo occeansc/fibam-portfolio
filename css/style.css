@@ -1326,10 +1326,7 @@ canvas { display: block; }
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  max-width: 1140px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 24px;
+  width: 100%;
 }
 .footer-brand {
   display: flex;
@@ -1656,16 +1653,19 @@ canvas { display: block; }
 
 
 .cal-day {
-  min-height: 96px;
-  padding: 10px 12px 8px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
+  /* Desktop: compact heat-map cells */
+  min-height: 64px;
+  padding: 6px 7px 5px;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid transparent;
   background: var(--white);
   position: relative;
   transition: all 0.15s;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
+  overflow: hidden;
+  cursor: pointer;
 }
 .cal-day:last-child { border-right: 1px solid var(--border); }
 .cal-day--empty {
@@ -2544,6 +2544,8 @@ canvas { display: block; }
     gap: 20px;
   }
   .footer-meta { text-align: center; }
+  .footer-update { justify-content: center; }
+  .footer-meta { text-align: center; }
   .footer-bottom { text-align: center; }
 
   .nav-links { display: none; }
@@ -2975,125 +2977,78 @@ canvas { display: block; }
 
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
-  .section { padding: 64px 0; }
-  .overview-cards { grid-template-columns: 1fr; }
-  .hero-cta { flex-direction: column; }
-  .hero-cta .btn { text-align: center; justify-content: center; }
+  .section { padding: 56px 0; }
 
+  /* Hero */
   .hero { padding: 72px 0 48px; }
   .hero-cta { flex-direction: column; align-items: stretch; }
   .hero-cta .btn { justify-content: center; }
+  .hero-h { font-size: clamp(28px, 9vw, 48px); }
+  .hero-stats { flex-direction: row; flex-wrap: wrap; }
+  .hero-stat { flex: 0 0 50%; border-right: none; }
+  .hero-stat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.1); }
 
+  /* Overview cards: 2-col grid */
   .overview-cards { grid-template-columns: 1fr 1fr; gap: 12px; }
   .overview-card { padding: 18px 16px; }
   .card-value { font-size: 22px; }
+  .overview-charts { grid-template-columns: 1fr; gap: 16px; }
 
+  /* Market pills */
   .market-pills { grid-template-columns: repeat(2, 1fr); }
 
+  /* Account table */
   .tat-header,
   .tat-row { grid-template-columns: 1fr 1fr; }
   .tat-header span:nth-child(n+3),
   .tat-row > *:nth-child(n+3) { display: none; }
   .tat-account-name { font-size: 13px; }
-  .tat-account-id   { display: none; }
+  .tat-account-id { display: none; }
 
-  .live-metrics { grid-template-columns: 1fr 1fr; }
+  /* Live metrics */
+  .live-metrics { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .live-metric { padding: 12px; }
   .live-metric-val { font-size: 16px; }
 
-  .cal-day { min-height: 40px; padding: 4px 3px; font-size: 9px; }
-  .cal-day-num { font-size: 10px; }
-  .cal-day-pnl { font-size: 9px; }
+  /* Calendar: day cells */
+  .cal-day { min-height: 44px; padding: 4px 3px; }
+  .cal-d-num { font-size: 9px; }
+  .cal-d-pnl { font-size: 8px; }
   .cal-summary { grid-template-columns: 1fr 1fr; }
   .cal-summary-val { font-size: 17px; }
 
+  /* Drawer */
   .holding-change { min-width: 52px; }
-
   .drawer-stats { grid-template-columns: repeat(2, 1fr); }
-  .drawer-stat:last-child { display: none; } /* hide least important stat */
+  .drawer-stat:last-child { display: none; }
 
+  /* Funding */
+  .funding-summary { grid-template-columns: 1fr 1fr !important; gap: 12px; }
+  .funding-summary-val { font-size: 20px; }
+
+  /* Account card meta */
+  .account-card-meta { flex-wrap: wrap; gap: 6px; }
+  .account-card-badges { flex-wrap: wrap; }
+
+  /* Funder row */
+  .funder-row { flex-wrap: wrap; gap: 4px; }
+
+  /* Ticker */
+  .live-ticker-inner { animation-duration: 60s; }
+
+  /* Radius */
   :root {
     --radius-xl: 14px;
     --radius-lg: 10px;
   }
-  .section { padding: 56px 0; }
-  .container { padding: 0 16px; }
 
+  /* Analytics */
   .an-stat { width: 50%; text-align: center; }
-  .an-stat:not(:nth-child(2n))  { border-right: 1px solid var(--border); }
-  .an-stat:nth-child(-n+4)      { border-bottom: 1px solid var(--border); }
+  .an-stat:not(:nth-child(2n)) { border-right: 1px solid var(--border); }
+  .an-stat:nth-child(-n+4) { border-bottom: 1px solid var(--border); }
   .an-card { padding: 18px 16px; }
-  /* Center direction stat bars on mobile */
   .an-dir-wrap { max-width: 320px; margin: 0 auto; }
-
-  /* Tighter padding on smallest screens */
-  .container {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-  .section {
-    padding-top: 48px;
-    padding-bottom: 48px;
-  }
-  .an-stat {
-    flex: 1 1 calc(50% - 1px);
-  }
-  .hero-h {
-    font-size: clamp(28px, 9vw, 48px);
-  }
-
-
-  /* Calendar: 7-column stays, but cells even smaller */
-  .cal-day {
-    min-height: 54px;
-    padding: 6px 4px;
-  }
-  .cal-day-pnl {
-    font-size: 9px;
-  }
-
   .an-dir-block { padding: 12px 14px; }
-
-  .nav-inner { padding: 0 16px; }
-  .nav-logo span { font-size: 15px; }
-
-  .overview-cards { grid-template-columns: 1fr !important; }
-  .stat-card { padding: 18px 20px; }
-  .stat-card-value { font-size: 24px; }
-
-  .funding-summary { grid-template-columns: 1fr 1fr !important; gap: 12px; }
-  .funding-summary-val { font-size: 20px; }
-
-  /* Container padding */
-  .container { padding: 0 14px; }
-  .section { padding: 48px 0; }
-
-
-  /* Hero */
-  .hero-stats { flex-direction: row; flex-wrap: wrap; }
-  .hero-stat { flex: 0 0 50%; border-right: none; }
-  .hero-stat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.1); }
-
-
-  /* Overview 2-col cards */
-  .overview-cards { grid-template-columns: 1fr 1fr; }
-
-
-  /* Account card details */
-  .account-card-meta { flex-wrap: wrap; gap: 6px; }
-  .account-card-badges { flex-wrap: wrap; }
-
-
-  /* Funding card */
-  .funder-row { flex-wrap: wrap; gap: 4px; }
-
-
-  /* Live card metrics - 2 col */
-  .live-metrics { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .live-metric { padding: 12px; }
-
-
-  /* Ticker bar - slow down on small screens */
-  .live-ticker-inner { animation-duration: 60s; }
 }
 
 
@@ -3635,38 +3590,80 @@ canvas { display: block; }
 }
 
 /* ── Day detail panel (bottom sheet) ──────── */
+.cal-day-panel-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1099;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.cal-day-panel-overlay.open {
+  display: block;
+  opacity: 1;
+}
 .cal-day-panel {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  max-height: 70vh;
+  max-height: 75vh;
   background: var(--bg-card, #fff);
-  border-radius: 16px 16px 0 0;
-  box-shadow: 0 -4px 32px rgba(0,0,0,0.15);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
   z-index: 1100;
   transform: translateY(100%);
   transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  padding-bottom: env(safe-area-inset-bottom, 16px);
 }
 .cal-day-panel.open {
   transform: translateY(0);
 }
 .cal-panel-handle {
-  width: 40px;
-  height: 4px;
-  background: rgba(64,181,173,0.3);
-  border-radius: 2px;
-  margin: 10px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px 6px;
   flex-shrink: 0;
   cursor: pointer;
+  gap: 0;
+  position: relative;
+}
+.cal-panel-handle::before {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 4px;
+  background: rgba(64,181,173,0.35);
+  border-radius: 2px;
+}
+.cal-panel-close {
+  position: absolute;
+  right: 16px;
+  top: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(64,181,173,0.1);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--text-2, #4a6a68);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
 }
 .cal-panel-body {
   flex: 1;
   overflow-y: auto;
-  padding: 12px 20px 24px;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 20px 24px;
 }
 .cal-panel-date {
   font-size: 12px;
@@ -3713,6 +3710,18 @@ canvas { display: block; }
 }
 .cal-pt-pnl.pos { color: #16a34a; }
 .cal-pt-pnl.neg { color: #dc2626; }
+.cal-panel-summary-row {
+  background: rgba(64,181,173,0.06);
+  border-color: rgba(64,181,173,0.15);
+}
+.cal-panel-note {
+  font-size: 11px;
+  color: var(--text-muted, #7a9896);
+  padding: 5px 10px 5px 12px;
+  border-left: 2px solid rgba(64,181,173,0.25);
+  margin-top: -2px;
+  line-height: 1.5;
+}
 
 /* Desktop: panel becomes a small floating box */
 @media (min-width: 768px) {
@@ -3745,11 +3754,11 @@ canvas { display: block; }
 @media (max-width: 430px) {
 
   /* ── General spacing ── */
-  .container { padding: 0 16px; }
+  .container { padding: 0 14px; }
   .section { padding: 40px 0; }
 
   /* ── Nav ── */
-  .nav-inner { padding: 0 16px; }
+  .nav-inner { padding: 0 14px; }
   .nav-name { font-size: 18px; }
 
   /* ── Hero ── */
@@ -3774,6 +3783,20 @@ canvas { display: block; }
   .an-stat-val { font-size: 18px; }
   .an-stat-label { font-size: 9px; }
 
+  /* ── Overview portfolio cards - 2x2 grid on iPhone 12 ── */
+  .overview-cards {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px;
+  }
+  .stat-card { padding: 16px 14px; }
+  .stat-card-value { font-size: 22px; }
+  .stat-card-label { font-size: 10px; }
+  .stat-card-note { font-size: 9px; }
+
+  /* ── Overview charts ── */
+  .overview-charts { grid-template-columns: 1fr !important; gap: 14px; }
+  .overview-chart-card { padding: 16px 14px; }
+
   /* ── Account cards ── */
   .acc-cards-grid { grid-template-columns: 1fr; gap: 12px; }
   .acc-card { padding: 16px; }
@@ -3791,33 +3814,83 @@ canvas { display: block; }
     align-items: center;
     text-align: center;
     gap: 16px;
-    padding: 0 16px;
   }
   .footer-meta { text-align: center; }
   .footer-update { justify-content: center; }
 
-  /* ── Calendar tabs ── */
-  .cal-tab-bar { gap: 5px; }
-  .cal-tab { padding: 4px 10px; font-size: 11px; }
-  .cal-tab-sep { font-size: 9px; }
+  /* ── Calendar tabs: horizontally scrollable ── */
+  .cal-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .cal-tabs::-webkit-scrollbar { display: none; }
+  .cal-tab-bar { flex-wrap: nowrap; min-width: max-content; gap: 5px; }
+  .cal-tab { padding: 5px 11px; font-size: 11px; white-space: nowrap; }
+  .cal-tab-sep { font-size: 9px; white-space: nowrap; }
 
-  /* ── Calendar year view ── */
+  /* ── Calendar year view: 2 cols ── */
   .cal-months-grid { grid-template-columns: repeat(2, 1fr); gap: 7px; }
   .cal-month-tile { padding: 8px 8px 6px; }
   .cal-tile-total { font-size: 12px; }
 
-  /* ── Calendar month view cells ── */
-  .cal-day { min-height: 40px; padding: 3px 3px 2px; border-radius: 5px; }
-  .cal-d-num { font-size: 8px; }
-  .cal-d-pnl { font-size: 8px; }
-  .cal-d-cnt { font-size: 7px; }
+  /* ── Calendar month view: cells scaled for 390px wide ── */
+  .cal-grid-wrap { padding: 0; }
+  .cal-grid { gap: 2px; }
+  /* 7 cols in ~362px = ~50px per cell */
+  .cal-day {
+    min-height: 46px;
+    padding: 4px 3px 3px;
+    border-radius: 5px;
+    gap: 1px;
+  }
+  /* Day number */
+  .cal-d-num {
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+    opacity: 0.8;
+  }
+  /* P&L text — ensure always visible */
+  .cal-d-pnl {
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+  }
+  /* Trade count */
+  .cal-d-cnt {
+    font-size: 7px;
+    line-height: 1;
+  }
+
+  /* ── Calendar month header ── */
   .cal-month-label { min-width: 120px; font-size: 13px; }
   .cal-month-nav { gap: 6px; }
+  .cal-back-btn { font-size: 12px; }
 
-  /* ── Calendar month stats ── */
-  .cal-month-stats-bar { gap: 10px; padding: 8px 12px; }
+  /* ── Calendar month stats bar ── */
+  .cal-month-stats-bar { gap: 8px; padding: 8px 12px; flex-wrap: wrap; }
+  .cal-ms-item { flex: 1 1 auto; min-width: 60px; }
   .cal-ms-label { font-size: 9px; }
   .cal-ms-val { font-size: 12px; }
+
+  /* ── Day detail panel: full-screen bottom sheet ── */
+  .cal-day-panel { max-height: 80vh; }
+  .cal-panel-body { padding: 4px 16px 20px; }
+  .cal-panel-date { font-size: 11px; }
+  .cal-panel-total { font-size: 18px; margin-bottom: 10px; }
+  .cal-panel-trade {
+    grid-template-columns: 1fr auto auto;
+    gap: 6px;
+    padding: 7px 8px;
+  }
+  .cal-pt-instr { font-size: 12px; }
+  .cal-pt-dir { font-size: 10px; }
+  .cal-pt-pnl { font-size: 12px; }
 
   /* ── Tables ── */
   .trading-table { font-size: 11px; }
