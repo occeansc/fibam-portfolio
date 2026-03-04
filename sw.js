@@ -4,19 +4,22 @@
 ════════════════════════════════════════════════ */
 'use strict';
 
-const CACHE_NAME = 'fibam-v2';
+const CACHE_NAME = 'fibam-v3';
+// Use relative paths so cache works on both root deployments and
+// GitHub Pages subdirectory paths (e.g. /fibam-portfolio/)
+const BASE = self.registration.scope;
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/funds.html',
-  '/analytics.html',
-  '/performance.html',
-  '/css/style.css',
-  '/css/print.css',
-  '/js/data.js',
-  '/js/app.js',
-  '/manifest.json',
-  '/favicon.svg',
+  BASE,
+  BASE + 'index.html',
+  BASE + 'funds.html',
+  BASE + 'analytics.html',
+  BASE + 'performance.html',
+  BASE + 'style.css',
+  BASE + 'print.css',
+  BASE + 'data.js',
+  BASE + 'app.js',
+  BASE + 'manifest.json',
+  BASE + 'favicon.svg',
   'https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js'
 ];
@@ -77,4 +80,3 @@ self.addEventListener('fetch', event => {
     })
   );
 });
-
