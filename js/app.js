@@ -896,79 +896,137 @@ function buildFundingSection() {
   }).join('');
 }
 
-/* ════════════════════════════════════════════════
-   LIVE PRICE FEED — FX via Frankfurter, Stocks via Yahoo Finance
-════════════════════════════════════════════════ */
-async function fetchLivePrices() {
-  // ── Forex ──────────────────────────────────────
-  try {
-    const [usdRes, eurRes] = await Promise.all([
-      fetch('https://api.frankfurter.app/latest?from=USD&to=JPY'),
-      fetch('https://api.frankfurter.app/latest?from=EUR&to=USD')
-    ]);
-    const usdData = await usdRes.json();
-    const eurData = await eurRes.json();
-    const ujEl = document.getElementById('tickerUSDJPY');
-    const euEl = document.getElementById('tickerEURUSD');
-    if (ujEl && usdData.rates?.JPY) {
-      const v = usdData.rates.JPY.toFixed(3);
-      ujEl.textContent = v;
-      document.querySelectorAll('.ticker-clone--usdjpy').forEach(el=>el.textContent=v);
-    }
-    if (euEl && eurData.rates?.USD) {
-      const v = eurData.rates.USD.toFixed(5);
-      euEl.textContent = v;
-      document.querySelectorAll('.ticker-clone--eurusd').forEach(el=>el.textContent=v);
-    }
-  } catch(e) { console.log('FX fetch failed:', e.message); }
 
-  // ── 1kHooD open positions: live prices via CORS proxy ──
-  const openPositions = [
-    { ticker:'PANW', openPrice:150.17 },
-    { ticker:'RKLB', openPrice:71.84  },
-    { ticker:'LMND', openPrice:51.29  },
-  ];
-  const PROXY = 'https://corsproxy.io/?';
+/* ════════════════════════════════════════════════
+   LIVE PRICE FEED
+   Stocks : Yahoo Finance via multiple CORS proxy fallbacks
+   FX     : Frankfurter (primary) → Open Exchange Rates (backup)
+   Cache  : last-good values held in memory — never shows dashes
+            once a price has been fetched successfully
+════════════════════════════════════════════════ */
+
+// In-memory cache — survives poll failures, cleared on page refresh
+const _priceCache = {};
+
+// CORS proxies tried in order until one succeeds
+const CORS_PROXIES = [
+  url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  url => `https://api.codetabs.com/v1/proxy?quest=${url}`,
+];
+
+async function _fetchWithProxyFallback(targetUrl) {
+  for (const buildProxy of CORS_PROXIES) {
+    try {
+      const res = await fetch(buildProxy(targetUrl), { signal: AbortSignal.timeout(6000) });
+      if (!res.ok) continue;
+      const text = await res.text();
+      return JSON.parse(text);
+    } catch (_) { /* try next proxy */ }
+  }
+  return null;
+}
+
+async function _fetchFX(base, quote) {
+  // Primary: Frankfurter
   try {
-    const results = await Promise.allSettled(
-      openPositions.map(pos => {
-        const url = `https://query1.finance.yahoo.com/v8/finance/chart/${pos.ticker}?interval=1d&range=1d`;
-        return fetch(PROXY + encodeURIComponent(url))
-          .then(r => r.json())
-          .then(d => {
-            const meta = d?.chart?.result?.[0]?.meta;
-            if (!meta) return null;
-            const price = meta.regularMarketPrice ?? meta.chartPreviousClose;
-            const chg   = pos.openPrice ? (price - pos.openPrice) / pos.openPrice : 0;
-            return { ticker:pos.ticker, price, chg };
-          })
-      })
+    const res = await fetch(
+      `https://api.frankfurter.app/latest?from=${base}&to=${quote}`,
+      { signal: AbortSignal.timeout(5000) }
     );
-    results.forEach(r => {
-      if (r.status !== 'fulfilled' || !r.value) return;
-      const { ticker, price, chg } = r.value;
-      const priceEl = document.getElementById(`ticker${ticker}`);
-      const chgEl   = document.getElementById(`ticker${ticker}chg`);
-      if (priceEl) priceEl.textContent = `$${price.toFixed(2)}`;
-      if (chgEl) {
-        const pos = chg >= 0;
-        chgEl.textContent = `${pos?'+':''}${(chg*100).toFixed(1)}%`;
-        chgEl.className = `ticker-change ${pos?'pos':'neg'}`;
-      }
-      // Sync clone segment
-      const clonePrice = document.querySelector(`.ticker-clone--${ticker.toLowerCase()}`);
-      const cloneChg   = document.querySelector(`.ticker-clone--${ticker.toLowerCase()}chg`);
-      if (clonePrice) clonePrice.textContent = `$${price.toFixed(2)}`;
-      if (cloneChg) {
-        const pos2 = chg >= 0;
-        cloneChg.textContent = `${pos2?'+':''}${(chg*100).toFixed(1)}%`;
-        cloneChg.className = `ticker-change ${pos2?'pos':'neg'}`;
-      }
-      // Also update KHOOD_HOLDINGS in memory so fund card refreshes
-      const h = KHOOD_HOLDINGS.find(h => h.ticker === ticker);
-      if (h) { h.price = price; h.change = chg; }
-    });
-  } catch(e) { console.log('Stock fetch failed:', e.message); }
+    if (res.ok) {
+      const data = await res.json();
+      if (data.rates?.[quote] != null) return data.rates[quote];
+    }
+  } catch (_) {}
+
+  // Fallback: Open Exchange Rates (free, no key, covers all majors)
+  try {
+    const res = await fetch(
+      `https://open.er-api.com/v6/latest/${base}`,
+      { signal: AbortSignal.timeout(5000) }
+    );
+    if (res.ok) {
+      const data = await res.json();
+      if (data.rates?.[quote] != null) return data.rates[quote];
+    }
+  } catch (_) {}
+
+  return null;
+}
+
+function _applyPrice(ticker, price, openPrice) {
+  const chg = openPrice ? (price - openPrice) / openPrice : 0;
+  const isPos = chg >= 0;
+
+  const priceEl = document.getElementById(`ticker${ticker}`);
+  const chgEl   = document.getElementById(`ticker${ticker}chg`);
+  if (priceEl) priceEl.textContent = `$${price.toFixed(2)}`;
+  if (chgEl) {
+    chgEl.textContent = `${isPos ? '+' : ''}${(chg * 100).toFixed(1)}%`;
+    chgEl.className = `ticker-change ${isPos ? 'pos' : 'neg'}`;
+  }
+  // Sync ticker-strip clones
+  const clonePrice = document.querySelector(`.ticker-clone--${ticker.toLowerCase()}`);
+  const cloneChg   = document.querySelector(`.ticker-clone--${ticker.toLowerCase()}chg`);
+  if (clonePrice) clonePrice.textContent = `$${price.toFixed(2)}`;
+  if (cloneChg) {
+    cloneChg.textContent = `${isPos ? '+' : ''}${(chg * 100).toFixed(1)}%`;
+    cloneChg.className = `ticker-change ${isPos ? 'pos' : 'neg'}`;
+  }
+  // Update in-memory holdings so fund card reflects current price
+  const h = KHOOD_HOLDINGS.find(h => h.ticker === ticker);
+  if (h) { h.price = price; h.change = chg; }
+}
+
+function _applyFX(pair, rate) {
+  const [base, quote] = [pair.slice(0,3), pair.slice(3,6)];
+  const decimals = (base === 'USD' && quote === 'JPY') ? 3 : 5;
+  const v = rate.toFixed(decimals);
+  const el = document.getElementById(`ticker${pair}`);
+  if (el) el.textContent = v;
+  document.querySelectorAll(`.ticker-clone--${pair.toLowerCase()}`).forEach(el => el.textContent = v);
+}
+
+async function fetchLivePrices() {
+  // ── FX ───────────────────────────────────────────────────────────────
+  const fxPairs = [
+    { pair: 'USDJPY', base: 'USD', quote: 'JPY' },
+    { pair: 'EURUSD', base: 'EUR', quote: 'USD' },
+  ];
+
+  await Promise.allSettled(fxPairs.map(async ({ pair, base, quote }) => {
+    const rate = await _fetchFX(base, quote);
+    if (rate != null) {
+      _priceCache[pair] = rate;
+      _applyFX(pair, rate);
+    } else if (_priceCache[pair] != null) {
+      // Use last-good cached value — stale but better than dash
+      _applyFX(pair, _priceCache[pair]);
+    }
+  }));
+
+  // ── Stocks (1kHooD open positions) ───────────────────────────────────
+  const openPositions = [
+    { ticker: 'PANW', openPrice: 150.17 },
+    { ticker: 'RKLB', openPrice: 71.84  },
+    { ticker: 'LMND', openPrice: 51.29  },
+  ];
+
+  await Promise.allSettled(openPositions.map(async ({ ticker, openPrice }) => {
+    const yahooUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=1d`;
+    const data = await _fetchWithProxyFallback(yahooUrl);
+    const meta  = data?.chart?.result?.[0]?.meta;
+    const price = meta?.regularMarketPrice ?? meta?.chartPreviousClose ?? null;
+
+    if (price != null) {
+      _priceCache[ticker] = price;
+      _applyPrice(ticker, price, openPrice);
+    } else if (_priceCache[ticker] != null) {
+      // Show last known good price rather than leaving as dash
+      _applyPrice(ticker, _priceCache[ticker], openPrice);
+    }
+  }));
 }
 
 /* ════════════════════════════════════════════════
@@ -1189,43 +1247,6 @@ function showError(containerId, message = 'Failed to load data') {
       </svg>
       <span>${message}</span>
     </div>`;
-}
-
-/* ════════════════════════════════════════════════
-   LIVE PRICE FETCH — with error state
-════════════════════════════════════════════════ */
-async function fetchLivePrices() {
-  const liveCards = document.querySelectorAll('[data-live-pair]');
-  if (!liveCards.length) return;
-
-  // Group FX pairs
-  const fxPairs = [...new Set(
-    [...liveCards]
-      .map(c => c.dataset.livePair)
-      .filter(p => p && !p.includes(':'))
-  )];
-
-  if (fxPairs.length) {
-    for (const pair of fxPairs) {
-      const base = pair.slice(0,3);
-      const quote = pair.slice(3,6);
-      const el = document.querySelector(`[data-live-pair="${pair}"]`);
-      if (!el) continue;
-      try {
-        const r = await fetch(`https://api.frankfurter.app/latest?from=${base}&to=${quote}`);
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        const data = await r.json();
-        const rate = data.rates[quote];
-        if (rate != null && el) {
-          el.textContent = rate.toFixed(base === 'USD' && quote === 'JPY' ? 3 : 5);
-          el.closest('.live-price-row')?.classList.remove('price-error');
-        }
-      } catch(err) {
-        console.warn(`Live price fetch failed for ${pair}:`, err);
-        if (el) el.closest('.live-price-row')?.classList.add('price-error');
-      }
-    }
-  }
 }
 
 /* ════════════════════════════════════════════════
