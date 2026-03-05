@@ -264,32 +264,90 @@ const CAL_ACCOUNTS = [
   { id:'MFFU-X5',     label:'MFFU X5',   group:'Futures' },
 ];
 
-// Calendar state
-let CAL = { accId: 'FDNT-6KX1', view: 'year', year: null, month: null, dm: {} };
+// ── Calendar state ──────────────────────────────
+let CAL = { accId: 'FDNT-6KX1', view: 'year', year: null, month: null, dm: {}, idx: {} };
+let _calRendering = false; // debounce guard
+
+/* _calBuildIndex — called once per account switch.
+   Pre-computes yearly and monthly summaries so every
+   subsequent render is O(1) lookups, not O(n) scans.  */
+function _calBuildIndex(dm) {
+  const idx = { years: {}, months: {} };
+  Object.entries(dm).forEach(([dateKey, dayData]) => {
+    const yr  = dateKey.slice(0, 4);
+    const ym  = dateKey.slice(0, 7);
+    // Monthly index
+    if (!idx.months[ym]) idx.months[ym] = { pnl: 0, tradeCount: 0, winDays: 0, lossDays: 0, days: [] };
+    const ms = idx.months[ym];
+    ms.pnl        = parseFloat((ms.pnl + dayData.pnl).toFixed(2));
+    ms.tradeCount += dayData.trades.length;
+    if (dayData.pnl > 0) ms.winDays++;
+    else if (dayData.pnl < 0) ms.lossDays++;
+    ms.days.push(dateKey);
+    // Yearly index
+    if (!idx.years[yr]) idx.years[yr] = { pnl: 0 };
+    idx.years[yr].pnl = parseFloat((idx.years[yr].pnl + dayData.pnl).toFixed(2));
+  });
+  idx.sortedYears = Object.keys(idx.years).sort();
+  // Sorted month keys so prev/next can scan in O(log n) via indexOf
+  idx.sortedMonths = Object.keys(idx.months).sort();
+  return idx;
+}
 
 function _calDailyMap(accId) {
   const trades = TRADE_DATA[accId] || [];
   const dm = {};
   trades.forEach(t => {
-    // Only show closed trades on calendar (open positions have no closeDate)
     if (t.open) return;
-    const key = (t.closeDate || '').slice(0,10);
+    const key = (t.closeDate || '').slice(0, 10);
     if (!key) return;
-    if (!dm[key]) dm[key] = { pnl:0, trades:[] };
-    dm[key].pnl = parseFloat((dm[key].pnl + (t.netPnl||0)).toFixed(2));
+    if (!dm[key]) dm[key] = { pnl: 0, trades: [] };
+    dm[key].pnl = parseFloat((dm[key].pnl + (t.netPnl || 0)).toFixed(2));
     dm[key].trades.push(t);
   });
   return dm;
 }
 
 function _calCurrency(accId) {
-  // Returns currency symbol for given account
-  const ngn = ['NGX'];
-  return ngn.includes(accId) ? '₦' : '$';
+  return ['NGX'].includes(accId) ? '₦' : '$';
 }
 
-function _calYears(dm) {
-  return [...new Set(Object.keys(dm).map(d=>d.slice(0,4)))].sort();
+/* _calSwitchAccount — rebuilds dm + idx, resets to latest year view */
+function _calSwitchAccount(accId) {
+  CAL.accId = accId;
+  CAL.dm    = _calDailyMap(accId);
+  CAL.idx   = _calBuildIndex(CAL.dm);
+  const yrs = CAL.idx.sortedYears;
+  CAL.year  = yrs.length ? parseInt(yrs[yrs.length - 1]) : new Date().getFullYear();
+  CAL.view  = 'year';
+  CAL.month = null;
+}
+
+/* _calNavMonth — finds the nearest traded month in a given direction
+   from the current (yr, mo), skipping over gap months.
+   Returns { year, month } or null if none found.               */
+function _calNavMonth(yr, mo, direction) {
+  const sorted = CAL.idx.sortedMonths; // e.g. ['2023-03','2023-04',...]
+  if (!sorted.length) return null;
+  const current = `${yr}-${String(mo).padStart(2, '0')}`;
+  if (direction === -1) {
+    // find largest month key that is strictly less than current
+    for (let i = sorted.length - 1; i >= 0; i--) {
+      if (sorted[i] < current) {
+        const [y, m] = sorted[i].split('-').map(Number);
+        return { year: y, month: m };
+      }
+    }
+  } else {
+    // find smallest month key that is strictly greater than current
+    for (let i = 0; i < sorted.length; i++) {
+      if (sorted[i] > current) {
+        const [y, m] = sorted[i].split('-').map(Number);
+        return { year: y, month: m };
+      }
+    }
+  }
+  return null;
 }
 
 function initCalendars() {
@@ -315,13 +373,10 @@ function initCalendars() {
       btn.textContent = ac.label;
       btn.dataset.account = ac.id;
       btn.addEventListener('click', () => {
+        if (CAL.accId === ac.id) return; // no-op if same account
         tabBar.querySelectorAll('.cal-tab').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        CAL.accId = ac.id;
-        CAL.dm = _calDailyMap(ac.id);
-        const years = _calYears(CAL.dm);
-        CAL.year = years[years.length-1] ? parseInt(years[years.length-1]) : new Date().getFullYear();
-        CAL.view = 'year';
+        _calSwitchAccount(ac.id);
         _calRender();
       });
       tabBar.appendChild(btn);
@@ -329,132 +384,149 @@ function initCalendars() {
   }
 
   // Initial render
-  CAL.dm = _calDailyMap(CAL.accId);
-  const years = _calYears(CAL.dm);
-  CAL.year = years[years.length-1] ? parseInt(years[years.length-1]) : new Date().getFullYear();
-  CAL.view = 'year';
+  _calSwitchAccount(CAL.accId);
   _calRender();
 }
 
 function _calRender() {
-  const root = document.getElementById('calRoot');
-  if (!root) return;
-  if (CAL.view === 'year') _calRenderYear(root);
-  else if (CAL.view === 'month') _calRenderMonth(root);
+  if (_calRendering) return;          // guard against re-entrancy
+  _calRendering = true;
+  requestAnimationFrame(() => {       // yield to browser, then render
+    const root = document.getElementById('calRoot');
+    if (root) {
+      if (CAL.view === 'year')  _calRenderYear(root);
+      else                      _calRenderMonth(root);
+    }
+    _calRendering = false;
+  });
 }
 
 // ── Year view: 12 month tiles ───────────────────
 function _calRenderYear(root) {
-  const years = _calYears(CAL.dm);
-  const yr = CAL.year;
+  const idx = CAL.idx;
+  const yr  = CAL.year;
+  const sym = _calCurrency(CAL.accId);
 
+  // ── Header ──
   let html = `<div class="cal-header">`;
-
-  // Year navigation
-  if (years.length > 1) {
+  if (idx.sortedYears.length > 1) {
     html += `<div class="cal-year-nav">`;
-    years.forEach(y => {
-      const yr2 = parseInt(y);
-      const yearTrades = Object.entries(CAL.dm).filter(([d])=>d.startsWith(y));
-      const total = yearTrades.reduce((s,[,v])=>s+v.pnl, 0);
-      const cls = total >= 0 ? 'pos' : 'neg';
-      html += `<button class="cal-yr-pill ${yr2===yr?'active':''}" data-yr="${yr2}">${y} <span class="${cls}">${total>=0?'+':''}${_calCurrency(CAL.accId)}${Math.abs(total).toFixed(0)}</span></button>`;
+    idx.sortedYears.forEach(y => {
+      const yr2   = parseInt(y);
+      const yData = idx.years[y];
+      const total = yData ? yData.pnl : 0;
+      const cls   = total >= 0 ? 'pos' : 'neg';
+      html += `<button class="cal-yr-pill ${yr2 === yr ? 'active' : ''}" data-yr="${yr2}">${y} <span class="${cls}">${total >= 0 ? '+' : ''}${sym}${Math.abs(total).toFixed(0)}</span></button>`;
     });
     html += `</div>`;
   }
-
   html += `<div class="cal-breadcrumb"><span class="cal-bc-current">${yr}</span></div></div>`;
+
+  // ── Month tiles — O(1) lookups from pre-built index ──
   html += `<div class="cal-months-grid">`;
-
   for (let m = 1; m <= 12; m++) {
-    const ym = `${yr}-${String(m).padStart(2,'0')}`;
-    const monthDays = Object.entries(CAL.dm).filter(([d])=>d.startsWith(ym));
-    const total = parseFloat(monthDays.reduce((s,[,v])=>s+v.pnl,0).toFixed(2));
-    const tradeCount = monthDays.reduce((s,[,v])=>s+v.trades.length,0);
-    const winDays = monthDays.filter(([,v])=>v.pnl>0).length;
-    const monthName = new Date(yr, m-1, 1).toLocaleDateString('en-GB',{month:'short'});
-    const cls = monthDays.length === 0 ? 'empty' : total >= 0 ? 'pos' : 'neg';
-    const sym = _calCurrency(CAL.accId);
-    const totalStr = total >= 0 ? `+${sym}${total.toFixed(0)}` : `-${sym}${Math.abs(total).toFixed(0)}`;
+    const ym       = `${yr}-${String(m).padStart(2, '0')}`;
+    const ms       = idx.months[ym]; // undefined if no trades
+    const monthName = new Date(yr, m - 1, 1).toLocaleDateString('en-GB', { month: 'short' });
 
-    // Mini heatmap (max 31 cells)
-    let heat = '<div class="cal-mini-heat">';
-    const daysInMonth = new Date(yr, m, 0).getDate();
-    for (let d = 1; d <= daysInMonth; d++) {
-      const ds = `${ym}-${String(d).padStart(2,'0')}`;
-      const dd = CAL.dm[ds];
-      if (dd) heat += `<div class="cal-heat-cell ${dd.pnl>=0?'g':'r'}" title="${ds}: ${dd.pnl>=0?'+':''}${dd.pnl.toFixed(2)}"></div>`;
-      else heat += `<div class="cal-heat-cell"></div>`;
+    if (!ms) {
+      // No trades — lightweight empty tile, NO heat cells
+      html += `<div class="cal-month-tile empty" data-ym="${ym}">
+        <div class="cal-tile-name">${monthName}</div>
+        <div class="cal-mini-heat cal-mini-heat--empty"></div>
+        <div class="cal-tile-total">—</div>
+        <div class="cal-tile-meta cal-tile-meta--none">no trades</div>
+      </div>`;
+    } else {
+      const totalStr = ms.pnl >= 0
+        ? `+${sym}${ms.pnl.toFixed(0)}`
+        : `-${sym}${Math.abs(ms.pnl).toFixed(0)}`;
+      const cls = ms.pnl >= 0 ? 'pos' : 'neg';
+
+      // Mini heatmap — only render TRADE days, not all 31 blank cells
+      // Each traded day is a coloured dot; the strip is compact & cheap
+      const daysInMonth = new Date(yr, m, 0).getDate();
+      let heat = '<div class="cal-mini-heat">';
+      for (let d = 1; d <= daysInMonth; d++) {
+        const ds = `${ym}-${String(d).padStart(2, '0')}`;
+        const dd = CAL.dm[ds];
+        heat += dd
+          ? `<div class="cal-heat-cell ${dd.pnl >= 0 ? 'g' : 'r'}" title="${ds}: ${dd.pnl >= 0 ? '+' : ''}${dd.pnl.toFixed(2)}"></div>`
+          : `<div class="cal-heat-cell"></div>`;
+      }
+      heat += '</div>';
+
+      html += `<div class="cal-month-tile ${cls}" data-ym="${ym}" style="cursor:pointer">
+        <div class="cal-tile-name">${monthName}</div>
+        ${heat}
+        <div class="cal-tile-total ${cls}">${totalStr}</div>
+        <div class="cal-tile-meta">${ms.tradeCount} trades · ${ms.winDays}W/${ms.lossDays}L</div>
+      </div>`;
     }
-    heat += '</div>';
-
-    html += `<div class="cal-month-tile ${cls}" data-ym="${ym}">
-      <div class="cal-tile-name">${monthName}</div>
-      ${heat}
-      <div class="cal-tile-total ${cls}">${monthDays.length ? totalStr : '—'}</div>
-      ${tradeCount ? `<div class="cal-tile-meta">${tradeCount} trades · ${winDays}W/${monthDays.length-winDays}L</div>` : '<div class="cal-tile-meta cal-tile-meta--none">no trades</div>'}
-    </div>`;
   }
-
   html += `</div>`;
+
   root.innerHTML = html;
 
-  // Year pill clicks
-  root.querySelectorAll('.cal-yr-pill').forEach(btn => {
-    btn.addEventListener('click', () => {
-      CAL.year = parseInt(btn.dataset.yr);
-      _calRenderYear(root);
-    });
-  });
+  // Year pill clicks — delegate via single listener on root
+  root.addEventListener('click', _calYearViewClickHandler);
+}
 
-  // Month tile clicks
-  root.querySelectorAll('.cal-month-tile:not(.empty)').forEach(tile => {
-    if (!tile.dataset.ym) return;
+function _calYearViewClickHandler(e) {
+  const root = document.getElementById('calRoot');
+  // Year pill
+  const pill = e.target.closest('.cal-yr-pill');
+  if (pill) {
+    CAL.year = parseInt(pill.dataset.yr);
+    root.removeEventListener('click', _calYearViewClickHandler);
+    _calRenderYear(root);
+    return;
+  }
+  // Month tile (non-empty)
+  const tile = e.target.closest('.cal-month-tile');
+  if (tile && !tile.classList.contains('empty') && tile.dataset.ym) {
     const [y, mo] = tile.dataset.ym.split('-').map(Number);
-    const hasTrades = Object.keys(CAL.dm).some(d => d.startsWith(tile.dataset.ym));
-    if (!hasTrades) return;
-    tile.style.cursor = 'pointer';
-    tile.addEventListener('click', () => {
-      CAL.view = 'month';
-      CAL.year = y;
-      CAL.month = mo;
-      _calRenderMonth(root);
-    });
-  });
+    CAL.view  = 'month';
+    CAL.year  = y;
+    CAL.month = mo;
+    root.removeEventListener('click', _calYearViewClickHandler);
+    _calRenderMonth(root);
+  }
 }
 
 // ── Month view: daily grid ──────────────────────
 function _calRenderMonth(root) {
-  const yr = CAL.year, mo = CAL.month;
-  const ym = `${yr}-${String(mo).padStart(2,'0')}`;
-  const monthName = new Date(yr, mo-1, 1).toLocaleDateString('en-GB',{month:'long', year:'numeric'});
+  const yr      = CAL.year;
+  const mo      = CAL.month;
+  const ym      = `${yr}-${String(mo).padStart(2, '0')}`;
+  const sym     = _calCurrency(CAL.accId);
+  const ms      = CAL.idx.months[ym] || { pnl: 0, tradeCount: 0, winDays: 0, lossDays: 0, days: [] };
+  const monthName   = new Date(yr, mo - 1, 1).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
   const daysInMonth = new Date(yr, mo, 0).getDate();
-  const monthDays = Object.entries(CAL.dm).filter(([d])=>d.startsWith(ym));
-  const total = parseFloat(monthDays.reduce((s,[,v])=>s+v.pnl,0).toFixed(2));
-  const winDays = monthDays.filter(([,v])=>v.pnl>0).length;
-  const allTrades = monthDays.flatMap(([,v])=>v.trades);
-  const mStats = allTrades.length ? tradeStats(allTrades) : null;
-  const maxPnl = Math.max(...monthDays.map(([,v])=>Math.abs(v.pnl)), 1);
 
-  const prevMo = mo === 1 ? `${yr-1}-12` : `${yr}-${String(mo-1).padStart(2,'0')}`;
-  const nextMo = mo === 12 ? `${yr+1}-01` : `${yr}-${String(mo+1).padStart(2,'0')}`;
-  const hasPrev = Object.keys(CAL.dm).some(d=>d.startsWith(prevMo));
-  const hasNext = Object.keys(CAL.dm).some(d=>d.startsWith(nextMo));
+  // All trades this month for stats
+  const allTrades = ms.days.flatMap(d => CAL.dm[d]?.trades || []);
+  const mStats    = allTrades.length ? tradeStats(allTrades) : null;
+  const maxPnl    = ms.days.reduce((max, d) => Math.max(max, Math.abs(CAL.dm[d]?.pnl || 0)), 1);
 
-  let html = `
+  // Nearest traded month in each direction — O(log n) via sorted index
+  const prevNav = _calNavMonth(yr, mo, -1);
+  const nextNav = _calNavMonth(yr, mo,  1);
+
+  const html = `
   <div class="cal-header">
     <button class="cal-back-btn" id="calBack">&#8592; ${yr}</button>
     <div class="cal-month-nav">
-      <button class="cal-nav-btn" id="calPrev" ${hasPrev?'':'disabled'}>&#8249;</button>
+      <button class="cal-nav-btn" id="calPrev" ${prevNav ? '' : 'disabled'}>&#8249;</button>
       <span class="cal-month-label">${monthName}</span>
-      <button class="cal-nav-btn" id="calNext" ${hasNext?'':'disabled'}>&#8250;</button>
+      <button class="cal-nav-btn" id="calNext" ${nextNav ? '' : 'disabled'}>&#8250;</button>
     </div>
   </div>
   <div class="cal-month-stats-bar">
-    <div class="cal-ms-item"><span class="cal-ms-label">Net P&L</span><span class="cal-ms-val ${total>=0?'pos':'neg'}">${total>=0?'+':''}${_calCurrency(CAL.accId)}${fmtFull(Math.abs(total))}</span></div>
-    <div class="cal-ms-item"><span class="cal-ms-label">Days</span><span class="cal-ms-val">${winDays}W / ${monthDays.length-winDays}L</span></div>
-    <div class="cal-ms-item"><span class="cal-ms-label">Trades</span><span class="cal-ms-val">${allTrades.length}</span></div>
-    ${mStats ? `<div class="cal-ms-item"><span class="cal-ms-label">Win Rate</span><span class="cal-ms-val ${mStats.winRate>=0.5?'pos':'neg'}">${(mStats.winRate*100).toFixed(0)}%</span></div>` : ''}
+    <div class="cal-ms-item"><span class="cal-ms-label">Net P&L</span><span class="cal-ms-val ${ms.pnl >= 0 ? 'pos' : 'neg'}">${ms.pnl >= 0 ? '+' : ''}${sym}${fmtFull(Math.abs(ms.pnl))}</span></div>
+    <div class="cal-ms-item"><span class="cal-ms-label">Days</span><span class="cal-ms-val">${ms.winDays}W / ${ms.lossDays}L</span></div>
+    <div class="cal-ms-item"><span class="cal-ms-label">Trades</span><span class="cal-ms-val">${ms.tradeCount}</span></div>
+    ${mStats ? `<div class="cal-ms-item"><span class="cal-ms-label">Win Rate</span><span class="cal-ms-val ${mStats.winRate >= 0.5 ? 'pos' : 'neg'}">${(mStats.winRate * 100).toFixed(0)}%</span></div>` : ''}
   </div>
   <div class="cal-grid-wrap">
     <div class="cal-dow-row">
@@ -467,49 +539,51 @@ function _calRenderMonth(root) {
 
   root.innerHTML = html;
 
-  // Back button
+  // Button listeners
   root.querySelector('#calBack').addEventListener('click', () => {
     CAL.view = 'year';
     _calRenderYear(root);
   });
-
-  // Prev/Next month
   root.querySelector('#calPrev').addEventListener('click', () => {
-    if (mo === 1) { CAL.year = yr-1; CAL.month = 12; }
-    else CAL.month = mo - 1;
+    if (!prevNav) return;
+    CAL.year  = prevNav.year;
+    CAL.month = prevNav.month;
     _calRenderMonth(root);
   });
   root.querySelector('#calNext').addEventListener('click', () => {
-    if (mo === 12) { CAL.year = yr+1; CAL.month = 1; }
-    else CAL.month = mo + 1;
+    if (!nextNav) return;
+    CAL.year  = nextNav.year;
+    CAL.month = nextNav.month;
     _calRenderMonth(root);
   });
 
-  // Build grid
+  // ── Build grid using DocumentFragment — single DOM insertion ──
   const grid = root.querySelector('#calGrid');
-  let startDow = new Date(yr, mo-1, 1).getDay();
+  const frag = document.createDocumentFragment();
+
+  let startDow = new Date(yr, mo - 1, 1).getDay();
   startDow = startDow === 0 ? 6 : startDow - 1;
 
-  // Empty start cells
+  // Empty leading cells
   for (let i = 0; i < startDow; i++) {
     const e = document.createElement('div');
     e.className = 'cal-day cal-day--empty';
-    grid.appendChild(e);
+    frag.appendChild(e);
   }
 
+  // Day cells
   for (let d = 1; d <= daysInMonth; d++) {
-    const ds = `${ym}-${String(d).padStart(2,'0')}`;
-    const isWknd = ((startDow + d - 1) % 7) >= 5;
-    const dayEl = document.createElement('div');
+    const ds      = `${ym}-${String(d).padStart(2, '0')}`;
+    const isWknd  = ((startDow + d - 1) % 7) >= 5;
     const dayData = CAL.dm[ds];
+    const dayEl   = document.createElement('div');
 
     if (dayData) {
-      const cls = dayData.pnl >= 0 ? 'cal-day--profit' : 'cal-day--loss';
       const intensity = Math.min(0.9, 0.25 + (Math.abs(dayData.pnl) / maxPnl) * 0.65);
-      const _sym = _calCurrency(CAL.accId);
-      const _abs = Math.abs(dayData.pnl);
-      const pStr = (dayData.pnl >= 0 ? '+' : '-') + _sym + (_abs >= 1000 ? Math.round(_abs/1000)+'k' : _abs >= 100 ? Math.round(_abs) : _abs.toFixed(1));
-      dayEl.className = `cal-day ${cls}`;
+      const abs  = Math.abs(dayData.pnl);
+      const pStr = (dayData.pnl >= 0 ? '+' : '-') + sym +
+                   (abs >= 1000 ? Math.round(abs / 1000) + 'k' : abs >= 100 ? Math.round(abs) : abs.toFixed(1));
+      dayEl.className = `cal-day ${dayData.pnl >= 0 ? 'cal-day--profit' : 'cal-day--loss'}`;
       dayEl.style.setProperty('--cal-intensity', intensity);
       dayEl.innerHTML = `<span class="cal-d-num">${d}</span><span class="cal-d-pnl">${pStr}</span><span class="cal-d-cnt">${dayData.trades.length}</span>`;
       dayEl.addEventListener('click', () => _calShowDayPanel(ds, dayData));
@@ -517,8 +591,10 @@ function _calRenderMonth(root) {
       dayEl.className = `cal-day${isWknd ? ' cal-day--wknd' : ' cal-day--blank'}`;
       dayEl.innerHTML = `<span class="cal-d-num">${d}</span>`;
     }
-    grid.appendChild(dayEl);
+    frag.appendChild(dayEl);
   }
+
+  grid.appendChild(frag); // Single DOM write — zero reflows during build
 }
 
 // ── Day detail panel (bottom sheet on mobile, inline on desktop) ──
