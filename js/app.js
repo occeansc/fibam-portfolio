@@ -6,6 +6,21 @@
 'use strict';
 
 /* ────────────────────────────────────────────
+   CHART REGISTRY — destroy before re-create to prevent memory leaks
+   Usage: safeChart(canvas, config) instead of new Chart(canvas, config)
+──────────────────────────────────────────── */
+function safeChart(canvasOrId, config) {
+  const canvas = typeof canvasOrId === 'string'
+    ? document.getElementById(canvasOrId)
+    : canvasOrId;
+  if (!canvas) return null;
+  // Destroy any existing Chart instance on this canvas
+  const existing = Chart.getChart(canvas);
+  if (existing) existing.destroy();
+  return new Chart(canvas, config);
+}
+
+/* ────────────────────────────────────────────
    UTILITIES
 ──────────────────────────────────────────── */
 const fmt     = (n,p='$',d=2) => n==null?'—':(n<0?'-':'')+p+(Math.abs(n)>=1000?((Math.abs(n)/1000).toFixed(1)+'k'):Math.abs(n).toFixed(d));
@@ -119,14 +134,14 @@ function buildOverviewCharts() {
 }
 function buildDonut(cId,lId,data,fv) {
   const c=document.getElementById(cId);if(!c)return;
-  new Chart(c.getContext('2d'),{type:'doughnut',data:{labels:data.map(d=>d.label),datasets:[{data:data.map(d=>d.value),backgroundColor:data.map(d=>d.color),borderWidth:3,borderColor:'#fff',hoverOffset:6}]},options:{cutout:'72%',...CD,plugins:{legend:{display:false},tooltip:{enabled:true,...TIP,callbacks:{label:ctx=>` ${ctx.label}: ${fv(ctx.raw)}`}}}}});
+  safeChart(c,{type:'doughnut',data:{labels:data.map(d=>d.label),datasets:[{data:data.map(d=>d.value),backgroundColor:data.map(d=>d.color),borderWidth:3,borderColor:'#fff',hoverOffset:6}]},options:{cutout:'72%',...CD,plugins:{legend:{display:false},tooltip:{enabled:true,...TIP,callbacks:{label:ctx=>` ${ctx.label}: ${fv(ctx.raw)}`}}}}});
   const l=document.getElementById(lId);if(!l)return;
   data.forEach(d=>{l.innerHTML+=`<div class="legend-item"><span class="legend-dot" style="background:${d.color}"></span><span>${d.label}</span><span class="legend-val">${fv(d.value)}</span></div>`;});
 }
 function buildPnlBar() {
   const c=document.getElementById('pnlBar');if(!c)return;
   const cl=ACCOUNTS.filter(a=>a.pnl!=null);
-  new Chart(c.getContext('2d'),{type:'bar',data:{labels:cl.map(a=>a.shortName),datasets:[{data:cl.map(a=>a.pnl),backgroundColor:cl.map(a=>a.pnl>=0?'rgba(22,163,74,0.8)':'rgba(220,38,38,0.8)'),borderRadius:4,borderSkipped:false}]},options:{responsive:true,animation:{duration:900},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` P&L: ${fmtFull(ctx.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10},maxRotation:40}},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},callback:v=>'$'+(v/1000).toFixed(1)+'k'}}}}});
+  safeChart(c,{type:'bar',data:{labels:cl.map(a=>a.shortName),datasets:[{data:cl.map(a=>a.pnl),backgroundColor:cl.map(a=>a.pnl>=0?'rgba(22,163,74,0.8)':'rgba(220,38,38,0.8)'),borderRadius:4,borderSkipped:false}]},options:{responsive:true,animation:{duration:900},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` P&L: ${fmtFull(ctx.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10},maxRotation:40}},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},callback:v=>'$'+(v/1000).toFixed(1)+'k'}}}}});
 }
 
 /* ────────────────────────────────────────────
@@ -222,7 +237,7 @@ function buildLiveCard(id,mId,cId,tPId,tBId,dPId,dBId) {
   const labels=s.equityCurve.map(p=>new Date(p.date+'T00:00:00').toLocaleDateString('en-GB',{month:'short',day:'numeric'}));
   const values=s.equityCurve.map(p=>p.cum);
   const lc=values[values.length-1]>=0?'#16a34a':'#dc2626';
-  new Chart(canvas.getContext('2d'),{type:'line',data:{labels,datasets:[{data:values,borderColor:lc,borderWidth:2.5,pointRadius:4,pointBackgroundColor:lc,pointBorderColor:'#fff',pointBorderWidth:2,tension:0.3,fill:true,backgroundColor:ctx=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,90);g.addColorStop(0,lc+'33');g.addColorStop(1,lc+'00');return g;}}]},options:{responsive:true,animation:{duration:800},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` Cumulative: ${fmtFull(ctx.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10,family:'JetBrains Mono'}}},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10,family:'JetBrains Mono'},callback:v=>'$'+v}}}}});
+  safeChart(canvas,{type:'line',data:{labels,datasets:[{data:values,borderColor:lc,borderWidth:2.5,pointRadius:4,pointBackgroundColor:lc,pointBorderColor:'#fff',pointBorderWidth:2,tension:0.3,fill:true,backgroundColor:ctx=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,90);g.addColorStop(0,lc+'33');g.addColorStop(1,lc+'00');return g;}}]},options:{responsive:true,animation:{duration:800},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` Cumulative: ${fmtFull(ctx.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10,family:'JetBrains Mono'}}},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10,family:'JetBrains Mono'},callback:v=>'$'+v}}}}});
 }
 
 /* ════════════════════════════════════════════════
@@ -635,7 +650,7 @@ function buildFundChart(cId,perf) {
   const labels=perf.map(p=>new Date(p.date+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'}));
   const values=perf.map(p=>{cum+=p.val;return parseFloat((cum*100).toFixed(2));});
   const lc=values[values.length-1]>=0?'#16a34a':'#dc2626';
-  new Chart(c.getContext('2d'),{type:'line',data:{labels,datasets:[{data:values,borderColor:lc,borderWidth:2,pointRadius:0,pointHoverRadius:4,tension:0.4,fill:true,backgroundColor:ctx=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,100);g.addColorStop(0,lc+'22');g.addColorStop(1,lc+'00');return g;}}]},options:{responsive:true,animation:{duration:900},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` Cumulative: ${ctx.raw}%`}}},scales:{x:{display:false},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},callback:v=>v+'%'}}}}});
+  safeChart(c,{type:'line',data:{labels,datasets:[{data:values,borderColor:lc,borderWidth:2,pointRadius:0,pointHoverRadius:4,tension:0.4,fill:true,backgroundColor:ctx=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,100);g.addColorStop(0,lc+'22');g.addColorStop(1,lc+'00');return g;}}]},options:{responsive:true,animation:{duration:900},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` Cumulative: ${ctx.raw}%`}}},scales:{x:{display:false},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},callback:v=>v+'%'}}}}});
 }
 
 /* ────────────────────────────────────────────
@@ -643,12 +658,12 @@ function buildFundChart(cId,perf) {
 ──────────────────────────────────────────── */
 function buildPerformance() {
   const mp=document.getElementById('monthlyPnlChart');
-  if(mp)new Chart(mp.getContext('2d'),{type:'bar',data:{labels:MONTHLY_PNL.map(m=>m.month),datasets:[{data:MONTHLY_PNL.map(m=>m.pnl),backgroundColor:MONTHLY_PNL.map(m=>m.pnl>=0?'rgba(22,163,74,0.75)':'rgba(220,38,38,0.75)'),borderRadius:4,borderSkipped:false}]},options:{responsive:true,animation:{duration:900},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` P&L: ${fmtFull(ctx.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10},maxRotation:45}},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},callback:v=>'$'+v}}}}});
+  if(mp)safeChart(mp,{type:'bar',data:{labels:MONTHLY_PNL.map(m=>m.month),datasets:[{data:MONTHLY_PNL.map(m=>m.pnl),backgroundColor:MONTHLY_PNL.map(m=>m.pnl>=0?'rgba(22,163,74,0.75)':'rgba(220,38,38,0.75)'),borderRadius:4,borderSkipped:false}]},options:{responsive:true,animation:{duration:900},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` P&L: ${fmtFull(ctx.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10},maxRotation:45}},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},callback:v=>'$'+v}}}}});
 
   const fees=ACCOUNTS.filter(a=>a.costOfFund&&a.type!=='personal'&&a.type!=='fund').reduce((s,a)=>s+a.costOfFund,0);
   const cc=document.getElementById('costChart');
   const costData=[{label:'Eval Fees',value:fees,color:'#dc2626'},{label:'Commission',value:320,color:'#d97706'},{label:'Swap/Overnight',value:58,color:'#6366f1'}];
-  if(cc)new Chart(cc.getContext('2d'),{type:'doughnut',data:{labels:costData.map(d=>d.label),datasets:[{data:costData.map(d=>d.value),backgroundColor:costData.map(d=>d.color),borderWidth:3,borderColor:'#fff',hoverOffset:5}]},options:{cutout:'68%',...CD,plugins:{legend:{display:false},tooltip:{enabled:true,...TIP,callbacks:{label:ctx=>` ${ctx.label}: ${fmtFull(ctx.raw)}`}}}}});
+  if(cc)safeChart(cc,{type:'doughnut',data:{labels:costData.map(d=>d.label),datasets:[{data:costData.map(d=>d.value),backgroundColor:costData.map(d=>d.color),borderWidth:3,borderColor:'#fff',hoverOffset:5}]},options:{cutout:'68%',...CD,plugins:{legend:{display:false},tooltip:{enabled:true,...TIP,callbacks:{label:ctx=>` ${ctx.label}: ${fmtFull(ctx.raw)}`}}}}});
   const bd=document.getElementById('costBreakdown');
   if(bd)bd.innerHTML=costData.map(d=>`<div class="cost-row"><span class="cost-dot" style="background:${d.color}"></span><span class="cost-name">${d.label}</span><span class="cost-val">${fmtFull(d.value)}</span></div>`).join('');
 
@@ -657,7 +672,7 @@ function buildPerformance() {
 
   const dc=document.getElementById('durationChart');
   const da=ACCOUNTS.filter(a=>a.endDate).slice(0,11);
-  if(dc)new Chart(dc.getContext('2d'),{type:'bar',data:{labels:da.map(a=>a.shortName),datasets:[{data:da.map(a=>daysBetween(a.startDate,a.endDate)),backgroundColor:da.map(a=>a.market==='futures'?'#6366f188':'#40B5AD88'),borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,animation:{duration:900},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` ${ctx.raw} days`}}},scales:{x:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},callback:v=>v+'d'}},y:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10}}}}}});
+  if(dc)safeChart(dc,{type:'bar',data:{labels:da.map(a=>a.shortName),datasets:[{data:da.map(a=>daysBetween(a.startDate,a.endDate)),backgroundColor:da.map(a=>a.market==='futures'?'#6366f188':'#40B5AD88'),borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,animation:{duration:900},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` ${ctx.raw} days`}}},scales:{x:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},callback:v=>v+'d'}},y:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10}}}}}});
 }
 
 /* ────────────────────────────────────────────
@@ -754,7 +769,7 @@ function openDrawer(id) {
       const labels=s.equityCurve.map(p=>new Date(p.date+'T00:00:00').toLocaleDateString('en-GB',{month:'short',day:'numeric'}));
       const values=s.equityCurve.map(p=>p.cum);
       const lc=values[values.length-1]>=0?'#16a34a':'#dc2626';
-      new Chart(ec.getContext('2d'),{type:'line',data:{labels,datasets:[{data:values,borderColor:lc,borderWidth:2.5,pointRadius:4,pointBackgroundColor:lc,pointBorderColor:'#fff',pointBorderWidth:2,tension:0.3,fill:true,backgroundColor:ctx=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,110);g.addColorStop(0,lc+'33');g.addColorStop(1,lc+'00');return g;}}]},options:{responsive:true,animation:{duration:600},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` Cumulative: ${fmtFull(ctx.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10}}},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},callback:v=>'$'+v}}}}});
+      safeChart(ec,{type:'line',data:{labels,datasets:[{data:values,borderColor:lc,borderWidth:2.5,pointRadius:4,pointBackgroundColor:lc,pointBorderColor:'#fff',pointBorderWidth:2,tension:0.3,fill:true,backgroundColor:ctx=>{const g=ctx.chart.ctx.createLinearGradient(0,0,0,110);g.addColorStop(0,lc+'33');g.addColorStop(1,lc+'00');return g;}}]},options:{responsive:true,animation:{duration:600},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` Cumulative: ${fmtFull(ctx.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10}}},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},callback:v=>'$'+v}}}}});
     });
   }
 
@@ -843,7 +858,16 @@ document.addEventListener('DOMContentLoaded',()=>{
   requestAnimationFrame(()=>safe('initScrollReveal', initScrollReveal));
 
   // Refresh live prices every 60 seconds
-  setInterval(fetchLivePrices, 60000);
+  // Refresh live prices every 60s — pause when tab is hidden to save memory
+  let _liveInterval = setInterval(fetchLivePrices, 60000);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      clearInterval(_liveInterval);
+    } else {
+      fetchLivePrices();
+      _liveInterval = setInterval(fetchLivePrices, 60000);
+    }
+  });
 });
 
 /* ════════════════════════════════════════════════
@@ -974,7 +998,7 @@ function buildAnalytics() {
     const grad = ctx.createLinearGradient(0,0,0,300);
     grad.addColorStop(0,'rgba(64,181,173,0.25)');
     grad.addColorStop(1,'rgba(64,181,173,0)');
-    new Chart(ctx,{type:'line',data:{labels,datasets:[{
+    safeChart(ec,{type:'line',data:{labels,datasets:[{
       data:eqVals,
       borderColor:'#40B5AD',borderWidth:2,
       fill:true,backgroundColor:grad,
@@ -1011,7 +1035,7 @@ function buildAnalytics() {
   const ic = document.getElementById('instrChart');
   if(ic) {
     const top = INSTR_STATS.slice(0,12);
-    new Chart(ic.getContext('2d'),{type:'bar',data:{
+    safeChart(ic,{type:'bar',data:{
       labels: top.map(x=>x.instr),
       datasets:[{
         data: top.map(x=>x.net),
@@ -1036,7 +1060,7 @@ function buildAnalytics() {
   if(cc) {
     const accs = ACC_STATS.filter(a=>Math.abs(a.comm)>0 && !a.acc.includes('ALPARI'));
     const labels = accs.map(a=>a.label || a.acc.replace('MFFU-','MFFU ').replace('MFFX-','MFFX ').replace('-TRADES',''));
-    new Chart(cc.getContext('2d'),{type:'bar',data:{
+    safeChart(cc,{type:'bar',data:{
       labels,
       datasets:[
         {label:'Gross P&L',data:accs.map(a=>a.gross),backgroundColor:'rgba(64,181,173,0.7)',borderRadius:4,borderSkipped:false},
@@ -1057,7 +1081,7 @@ function buildAnalytics() {
     const accs = ACC_STATS.filter(a=>!a.acc.includes('ALPARI'));
     const labels = accs.map(a=>a.label||a.acc);
     const wrs = accs.map(a=>+(a.wr*100).toFixed(1));
-    new Chart(wc.getContext('2d'),{type:'bar',data:{
+    safeChart(wc,{type:'bar',data:{
       labels,
       datasets:[{
         data:wrs,
@@ -1089,7 +1113,7 @@ function buildAnalytics() {
     const dailyPnls = EQUITY_CURVE.map(e=>e.pnl);
     const counts = buckets.map(b=>dailyPnls.filter(p=>p>b.min&&p<=b.max).length);
     const colors = buckets.map(b=>b.min>=0?'rgba(64,181,173,0.8)':'rgba(220,38,38,0.7)');
-    new Chart(dc.getContext('2d'),{type:'bar',data:{
+    safeChart(dc,{type:'bar',data:{
       labels:buckets.map(b=>b.label),
       datasets:[{data:counts,backgroundColor:colors,borderRadius:4,borderSkipped:false}]
     },options:{responsive:true,maintainAspectRatio:false,animation:{duration:900},plugins:{
