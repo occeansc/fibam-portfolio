@@ -4,11 +4,11 @@
 ════════════════════════════════════════════════ */
 'use strict';
 
-const CACHE_NAME = 'fibam-v4';
-// Use relative paths so cache works on both root deployments and
-// GitHub Pages subdirectory paths (e.g. /fibam-portfolio/)
+const CACHE_NAME = 'fibam-v5';
 const BASE = self.registration.scope;
-const STATIC_ASSETS = [
+
+// Local assets — cached with default mode (same-origin)
+const LOCAL_ASSETS = [
   BASE,
   BASE + 'index.html',
   BASE + 'funds.html',
@@ -20,16 +20,35 @@ const STATIC_ASSETS = [
   BASE + 'js/app.js',
   BASE + 'manifest.json',
   BASE + 'favicon.svg',
-  'https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js'
 ];
+
+// External assets — cached with no-cors (opaque responses)
+const EXTERNAL_ASSETS = [
+  'https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap',
+  'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js',
+];
+
+// Cache each URL individually — one failure won't abort the whole install
+async function cacheAll(cache, urls, mode) {
+  const results = await Promise.allSettled(
+    urls.map(url =>
+      cache.add(new Request(url, { mode })).catch(err => {
+        console.warn('[SW] Failed to cache:', url, err.message);
+      })
+    )
+  );
+  const failed = results.filter(r => r.status === 'rejected');
+  if (failed.length) console.warn('[SW] Some assets failed to cache:', failed.length);
+}
 
 // Install: pre-cache static assets
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(STATIC_ASSETS.map(url => new Request(url, { mode: 'no-cors' })));
-    }).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then(async cache => {
+      await cacheAll(cache, LOCAL_ASSETS, 'same-origin');
+      await cacheAll(cache, EXTERNAL_ASSETS, 'no-cors');
+      return self.skipWaiting();
+    })
   );
 });
 
@@ -49,7 +68,7 @@ self.addEventListener('fetch', event => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') return;
 
-  // Network-first for API calls (live prices, frankfurter)
+  // Network-first for live data APIs
   if (url.hostname.includes('frankfurter') || url.hostname.includes('finance.yahoo')) {
     event.respondWith(
       fetch(event.request)
@@ -73,9 +92,8 @@ self.addEventListener('fetch', event => {
         return response;
       });
     }).catch(() => {
-      // Offline fallback for HTML pages
       if (event.request.destination === 'document') {
-        return caches.match('/index.html');
+        return caches.match(BASE + 'index.html');
       }
     })
   );
