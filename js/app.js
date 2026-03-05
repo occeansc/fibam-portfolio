@@ -794,6 +794,7 @@ function closeDrawer() {
 
 function initDrawerSwipe() {
   const drawer = document.getElementById('accountDrawer');
+  if (!drawer) return;
   let startX=0, currentX=0, isDragging=false;
   drawer.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;isDragging=true;},{passive:true});
   drawer.addEventListener('touchmove',e=>{
