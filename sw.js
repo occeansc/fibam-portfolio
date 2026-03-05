@@ -4,7 +4,7 @@
 ════════════════════════════════════════════════ */
 'use strict';
 
-const CACHE_NAME = 'fibam-v3';
+const CACHE_NAME = 'fibam-v4';
 // Use relative paths so cache works on both root deployments and
 // GitHub Pages subdirectory paths (e.g. /fibam-portfolio/)
 const BASE = self.registration.scope;
@@ -14,10 +14,10 @@ const STATIC_ASSETS = [
   BASE + 'funds.html',
   BASE + 'analytics.html',
   BASE + 'performance.html',
-  BASE + 'style.css',
-  BASE + 'print.css',
-  BASE + 'data.js',
-  BASE + 'app.js',
+  BASE + 'css/style.css',
+  BASE + 'css/print.css',
+  BASE + 'js/data.js',
+  BASE + 'js/app.js',
   BASE + 'manifest.json',
   BASE + 'favicon.svg',
   'https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap',
