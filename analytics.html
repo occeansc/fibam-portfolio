@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FIBAM — Analytics & Performance</title>
-  <meta name="description" content="FIBAM Deep Analytics — Portfolio Equity Curve, Monthly P&L, Instrument Breakdown, Commission Analysis. 1,673 real trades.">
+  <meta name="description" content="FIBAM Deep Analytics — Portfolio Equity Curve, Monthly P&L, Instrument Breakdown, Commission Analysis. Full trading record 2020–present.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="FIBAM — Analytics & Performance">
-  <meta property="og:description" content="1,673 real trades · Equity Curve · Monthly P&L · Instrument Breakdown · Win Rate Analysis">
+  <meta property="og:description" content="Full trading analytics · Equity Curve · Monthly P&L · Instrument Breakdown · Win Rate Analysis">
   <meta property="og:site_name" content="FIBAM">
   <meta name="theme-color" content="#40B5AD">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,22 +86,22 @@
     <div class="container">
       <div class="section-tag" style="margin-bottom:12px;display:inline-block">Performance &amp; Analytics</div>
       <h1 style="font-size:clamp(28px,5vw,48px);font-weight:700;color:var(--text-1);line-height:1.1;margin-bottom:12px">The Full Picture</h1>
-      <p style="font-size:16px;color:var(--text-2);max-width:580px;line-height:1.65">1,673 trades across 15 accounts from 2020–2026. Every number computed from raw Rithmic and MT5 trade data.</p>
+      <p style="font-size:16px;color:var(--text-2);max-width:580px;line-height:1.65"><span id="anHeroTrades">—</span> trades across <span id="anHeroAccounts">—</span> accounts from 2020–present. Every number computed from raw Rithmic and MT5 trade data.</p>
       <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:28px">
         <div style="text-align:center;padding:14px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg)">
-          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text-1)">1,673</div>
+          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text-1)" id="anHeroTradesVal">—</div>
           <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Total Trades</div>
         </div>
         <div style="text-align:center;padding:14px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg)">
-          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text-1)">15</div>
+          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text-1)" id="anHeroAccountsVal">—</div>
           <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Accounts</div>
         </div>
         <div style="text-align:center;padding:14px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg)">
-          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:#dc2626">−$10.4k</div>
+          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700" id="anHeroNetPnl">—</div>
           <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Net P&L</div>
         </div>
         <div style="text-align:center;padding:14px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg)">
-          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:#16a34a">+$1,085</div>
+          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700" id="anHeroPeakEq">—</div>
           <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Peak Equity</div>
         </div>
       </div>
@@ -156,7 +156,7 @@
       <div class="section-header">
         <div class="section-tag">Deep Analytics</div>
         <h2 class="section-title">Trade-Level Breakdown</h2>
-        <p class="section-desc">1,548 prop firm trades across 10 accounts · 166 trading days. Every number from raw Rithmic and MT5 trade data.</p>
+        <p class="section-desc" id="anSectionDesc">All prop firm trades across accounts. Every number from raw Rithmic and MT5 trade data.</p>
       </div>
 
       <div class="an-stat-strip">
@@ -182,7 +182,7 @@
             </div>
             <div class="an-peak-badge">
               <span class="an-peak-label">Peak</span>
-              <span class="an-peak-val">+$1,085</span>
+              <span class="an-peak-val" id="anPeakBadge">—</span>
             </div>
           </div>
           <div class="an-chart-wrap" style="height:220px;position:relative;width:100%">
