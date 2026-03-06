@@ -1535,3 +1535,4 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.warn('[FIBAM] SW registration failed:', err));
   });
 }
+
