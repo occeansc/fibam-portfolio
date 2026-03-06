@@ -8,11 +8,11 @@
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="FIBAM — Trading Portfolio">
-  <meta property="og:description" content="15 accounts · 1,673 trades · Spot FX, US Futures, US Equities, Nigerian Stocks. Purpose not money is your real asset.">
+  <meta property="og:description" content="15 accounts · Spot FX, US Futures, US Equities, Nigerian Stocks. Full trading record 2020–present.">
   <meta property="og:site_name" content="FIBAM">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="FIBAM — Trading Portfolio">
-  <meta name="twitter:description" content="15 accounts · 1,673 trades · Spot FX, US Futures, US Equities, Nigerian Stocks.">
+  <meta name="twitter:description" content="15 accounts · Spot FX, US Futures, US Equities, Nigerian Stocks. Trading record 2020–present.">
   <!-- Theme color for mobile browsers -->
   <meta name="theme-color" content="#40B5AD">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -170,8 +170,8 @@
   ══════════════════════════════════════════ -->
   <section id="hero" class="hero" aria-label="Portfolio Overview">
     <div class="hero-bg">
-      <div class="hero-grid"></div>
-      <div class="hero-glow"></div>
+      <div class="hero-glow-1"></div>
+      <div class="hero-glow-2"></div>
     </div>
     <div class="container">
       <div class="hero-content">
@@ -190,22 +190,22 @@
 
         <div class="hero-stats animate-in" style="--delay:0.5s">
           <div class="hero-stat">
-            <span class="hero-stat-num" data-target="15" data-suffix="">0</span>
+            <span class="hero-stat-num" id="heroAccounts" data-target="15" data-suffix="">0</span>
             <span class="hero-stat-label">Total Accounts</span>
           </div>
           <div class="hero-stat-divider"></div>
           <div class="hero-stat">
-            <span class="hero-stat-num" data-target="1673" data-suffix="+">0</span>
+            <span class="hero-stat-num" id="heroTrades" data-target="1799" data-suffix="+">0</span>
             <span class="hero-stat-label">Trades Executed</span>
           </div>
           <div class="hero-stat-divider"></div>
           <div class="hero-stat">
-            <span class="hero-stat-num" data-target="4" data-suffix="">0</span>
+            <span class="hero-stat-num" id="heroMarkets" data-target="4" data-suffix="">0</span>
             <span class="hero-stat-label">Markets Traded</span>
           </div>
           <div class="hero-stat-divider"></div>
           <div class="hero-stat">
-            <span class="hero-stat-num" data-target="6" data-suffix=" yrs">0</span>
+            <span class="hero-stat-num" id="heroYears" data-target="6" data-suffix=" yrs">0</span>
             <span class="hero-stat-label">Years Active</span>
           </div>
         </div>
@@ -246,7 +246,7 @@
           </div>
           <div class="stat-card">
             <div class="stat-card-icon">↗</div>
-            <div class="stat-card-value">$1,699</div>
+            <div class="stat-card-value" id="overviewEvalFees">$1,699</div>
             <div class="stat-card-label">Total Evaluation Fees</div>
             <div class="stat-card-note">Across 13 prop firm attempts</div>
           </div>
@@ -516,7 +516,7 @@
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
           </div>
           <div class="pnav-title">Deep Analytics</div>
-          <div class="pnav-desc">1,673 trades. Equity curve, instrument breakdown, commission drag, win rates.</div>
+          <div class="pnav-desc">Full analytics · Equity curve, instrument breakdown, commission drag, win rates.</div>
           <div class="pnav-link">View Analytics →</div>
         </a>
       </div>
