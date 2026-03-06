@@ -4,7 +4,7 @@
 ════════════════════════════════════════════════ */
 'use strict';
 
-const CACHE_NAME = 'fibam-v5';
+const CACHE_NAME = 'fibam-v7';
 const BASE = self.registration.scope;
 
 // Local assets — cached with default mode (same-origin)
@@ -13,7 +13,7 @@ const LOCAL_ASSETS = [
   BASE + 'index.html',
   BASE + 'funds.html',
   BASE + 'analytics.html',
-  BASE + 'performance.html',
+
   BASE + 'css/style.css',
   BASE + 'css/print.css',
   BASE + 'js/data.js',
@@ -68,8 +68,9 @@ self.addEventListener('fetch', event => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') return;
 
-  // Network-first for live data APIs
-  if (url.hostname.includes('frankfurter') || url.hostname.includes('finance.yahoo')) {
+  // Network-first for live data APIs and CORS proxies
+  const LIVE_HOSTS = ['frankfurter', 'finance.yahoo', 'corsproxy.io', 'allorigins.win', 'codetabs.com', 'open.er-api.com'];
+  if (LIVE_HOSTS.some(h => url.hostname.includes(h))) {
     event.respondWith(
       fetch(event.request)
         .catch(() => new Response(JSON.stringify({ error: 'offline' }), {
