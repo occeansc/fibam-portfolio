@@ -29,6 +29,8 @@ const fmtPct  = (n,d=2)      => n==null?'—':(n>0?'+':'')+((n*100).toFixed(d))+
 const fmtDate = d => d ? new Date(d+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : 'Present';
 const fmtShrt = d => d ? new Date(d+'T00:00:00').toLocaleDateString('en-GB',{month:'short',year:'2-digit'}) : 'Now';
 const daysBetween = (a,b) => Math.max(1,Math.round((new Date((b||new Date().toISOString().slice(0,10))+'T00:00:00')-new Date(a+'T00:00:00'))/86400000));
+// Escape user-originated strings before injecting into innerHTML
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
 function tradeStats(trades) {
   if (!trades || !trades.length) return null;
@@ -63,12 +65,34 @@ function tradeStats(trades) {
 ──────────────────────────────────────────── */
 function initNav() {
   const nav=document.getElementById('nav'), btn=document.getElementById('menuBtn'), mob=document.getElementById('mobileMenu');
-  const secs=['hero','overview','accounts','live','calendars','trading','funds','performance'];
-  window.addEventListener('scroll',()=>{
-    nav.classList.toggle('scrolled',window.scrollY>20);
-    let cur='hero'; secs.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-120)cur=id;});
-    document.querySelectorAll('.nav-link').forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
-  },{passive:true});
+  const SEC_IDS=['hero','overview','accounts','live','calendars','trading','funds','performance'];
+
+  // Pre-compute section offsets once; refresh on resize to stay accurate
+  let secOffsets=[];
+  function cacheSectionOffsets() {
+    secOffsets = SEC_IDS
+      .map(id => { const el=document.getElementById(id); return el ? {id, top: el.getBoundingClientRect().top + window.scrollY} : null; })
+      .filter(Boolean);
+  }
+  cacheSectionOffsets();
+  window.addEventListener('resize', cacheSectionOffsets, {passive:true});
+
+  // rAF-throttled scroll handler — zero layout thrashing
+  let _rafPending = false;
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    if (_rafPending) return;
+    _rafPending = true;
+    requestAnimationFrame(() => {
+      _rafPending = false;
+      const y = window.scrollY;
+      nav.classList.toggle('scrolled', y > 20);
+      let cur = secOffsets[0]?.id || 'hero';
+      for (const s of secOffsets) { if (y >= s.top - 120) cur = s.id; }
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
+    });
+  }, {passive:true});
+
   btn.addEventListener('click',()=>{const isOpen=mob.classList.toggle('open');btn.setAttribute('aria-expanded',isOpen);document.body.style.overflow=isOpen?'hidden':'';});
   document.querySelectorAll('.nav-mobile-link').forEach(l=>l.addEventListener('click',()=>{mob.classList.remove('open');btn.setAttribute('aria-expanded','false');document.body.style.overflow='';}));
   // Close mobile nav on outside tap
@@ -79,6 +103,24 @@ function initNav() {
    COUNT-UP
 ──────────────────────────────────────────── */
 function initCountUp() {
+  // Populate dynamic targets from live data before animating
+  const totalTrades = Object.values(TRADE_DATA).reduce((s, arr) => s + arr.length, 0);
+  const totalAccounts = ACCOUNTS.length;
+  const totalMarkets = [...new Set(ACCOUNTS.map(a => a.market))].length;
+  const startYear = Math.min(...ACCOUNTS.map(a => new Date(a.startDate).getFullYear()));
+  const yearsActive = new Date().getFullYear() - startYear;
+
+  const dynamicTargets = {
+    'heroAccounts': totalAccounts,
+    'heroTrades':   totalTrades,
+    'heroMarkets':  totalMarkets,
+    'heroYears':    yearsActive,
+  };
+  Object.entries(dynamicTargets).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.dataset.target = val;
+  });
+
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(e=>{
       if(!e.isIntersecting)return;
@@ -118,6 +160,14 @@ const CD={plugins:{legend:{display:false},tooltip:{enabled:false}},animation:{du
 const TIP={backgroundColor:'#fff',titleColor:'#141f1e',bodyColor:'#3d5452',borderColor:'#ddecea',borderWidth:1,padding:10};
 
 function buildOverviewCharts() {
+  // ── Dynamic stat: total evaluation fees ──────────────────────────────
+  const evalFees = ACCOUNTS
+    .filter(a => a.type === 'prop-eval' && a.costOfFund)
+    .reduce((s, a) => s + a.costOfFund, 0);
+  const evalFeesEl = document.getElementById('overviewEvalFees');
+  if (evalFeesEl) {
+    evalFeesEl.textContent = '$' + evalFees.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }
   buildDonut('marketDonut','marketLegend',[
     {label:'US Futures',value:250000,color:'#6366f1'},
     {label:'Spot FX',value:31000,color:'#40B5AD'},
@@ -136,7 +186,7 @@ function buildDonut(cId,lId,data,fv) {
   const c=document.getElementById(cId);if(!c)return;
   safeChart(c,{type:'doughnut',data:{labels:data.map(d=>d.label),datasets:[{data:data.map(d=>d.value),backgroundColor:data.map(d=>d.color),borderWidth:3,borderColor:'#fff',hoverOffset:6}]},options:{cutout:'72%',...CD,plugins:{legend:{display:false},tooltip:{enabled:true,...TIP,callbacks:{label:ctx=>` ${ctx.label}: ${fv(ctx.raw)}`}}}}});
   const l=document.getElementById(lId);if(!l)return;
-  data.forEach(d=>{l.innerHTML+=`<div class="legend-item"><span class="legend-dot" style="background:${d.color}"></span><span>${d.label}</span><span class="legend-val">${fv(d.value)}</span></div>`;});
+  l.innerHTML=data.map(d=>`<div class="legend-item"><span class="legend-dot" style="background:${d.color}"></span><span>${d.label}</span><span class="legend-val">${fv(d.value)}</span></div>`).join('');
 }
 function buildPnlBar() {
   const c=document.getElementById('pnlBar');if(!c)return;
@@ -194,15 +244,43 @@ function initAccountFilters() {
 }
 
 /* ────────────────────────────────────────────
+   SKELETON / ERROR STATES
+   Provides loading and error UI for async sections
+──────────────────────────────────────────── */
+function showSkeleton(containerId, rows = 2) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = Array.from({ length: rows }, () =>
+    `<div class="skeleton-row"><div class="skeleton-block sk-wide"></div><div class="skeleton-block sk-narrow"></div></div>`
+  ).join('');
+}
+
+function hideSkeleton(containerId) {
+  // Content is replaced by the caller — this is a no-op hook kept for
+  // symmetry and potential future transition animation
+  const el = document.getElementById(containerId);
+  if (el) el.querySelectorAll('.skeleton-row').forEach(r => r.remove());
+}
+
+function showError(containerId, message = 'Data unavailable') {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = `<div class="error-state"><span class="error-icon">⚠</span> ${message}</div>`;
+}
+
+/* ────────────────────────────────────────────
    LIVE DASHBOARDS
 ──────────────────────────────────────────── */
 function buildLiveDashboards() {
+  // Show skeleton on first render while data loads
+  ['fdntMetrics','t5rsMetrics'].forEach(id => showSkeleton(id, 2));
   buildLiveCard('FDNT-6KX1','fdntMetrics','fdntEquity','fdntTargetPct','fdntTargetBar','fdntDDPct','fdntDDBar');
   buildLiveCard('T5RS-5KX1','t5rsMetrics','t5rsEquity','t5rsTargetPct','t5rsTargetBar','t5rsDDPct','t5rsDDBar');
 }
 function buildLiveCard(id,mId,cId,tPId,tBId,dPId,dBId) {
   const trades=TRADE_DATA[id], targets=PROP_TARGETS[id];
-  if(!trades||!targets)return;
+  if(!trades||!targets){ showError(mId,'Trade data unavailable'); return; }
+  hideSkeleton(mId);
   const s=tradeStats(trades);
 
   const el=document.getElementById(mId);
@@ -386,6 +464,17 @@ function initCalendars() {
   // Initial render
   _calSwitchAccount(CAL.accId);
   _calRender();
+
+  // ── Single delegated click listener for month-view day panels ──
+  // One handler covers all 365+ cells — no per-cell listeners ever attached
+  root.addEventListener('click', function(e) {
+    if (CAL.view !== 'month') return; // year view has its own handler
+    const dayCell = e.target.closest('.cal-day[data-date]');
+    if (!dayCell) return;
+    const dateStr = dayCell.dataset.date;
+    const dayData = CAL.dm[dateStr];
+    if (dayData) _calShowDayPanel(dateStr, dayData);
+  });
 }
 
 function _calRender() {
@@ -585,8 +674,8 @@ function _calRenderMonth(root) {
                    (abs >= 1000 ? Math.round(abs / 1000) + 'k' : abs >= 100 ? Math.round(abs) : abs.toFixed(1));
       dayEl.className = `cal-day ${dayData.pnl >= 0 ? 'cal-day--profit' : 'cal-day--loss'}`;
       dayEl.style.setProperty('--cal-intensity', intensity);
+      dayEl.dataset.date = ds; // event delegation: store date, look up data from CAL.dm on click
       dayEl.innerHTML = `<span class="cal-d-num">${d}</span><span class="cal-d-pnl">${pStr}</span><span class="cal-d-cnt">${dayData.trades.length}</span>`;
-      dayEl.addEventListener('click', () => _calShowDayPanel(ds, dayData));
     } else {
       dayEl.className = `cal-day${isWknd ? ' cal-day--wknd' : ' cal-day--blank'}`;
       dayEl.innerHTML = `<span class="cal-d-num">${d}</span>`;
@@ -700,6 +789,37 @@ function buildTradingTable() {
   const ai={};ACCOUNTS.filter(a=>a.type!=='fund').forEach(a=>a.instruments.forEach(i=>{ai[i]=a.market;}));
   const IC={spot:'#40B5AD',futures:'#6366f1',personal:'#7c3aed'};
   ir.innerHTML=Object.entries(ai).map(([s,m])=>`<span class="instrument-chip"><span style="background:${IC[m]||'#aaa'}"></span>${s}</span>`).join('');
+
+  // ── Populate data-driven stat strip ─────────────────────────────────
+  const propAccounts = ACCOUNTS.filter(a => a.type === 'prop-eval');
+  const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const setClass = (id, cls) => { const el = document.getElementById(id); if (el) el.className = el.className.replace(/tstat-value--\w+/g, '') + (cls ? ' ' + cls : ''); };
+
+  setTxt('tsPropCount',    propAccounts.length);
+  setTxt('tsSpotCount',    propAccounts.filter(a => a.market === 'spot').length);
+  setTxt('tsFuturesCount', propAccounts.filter(a => a.market === 'futures').length);
+
+  const totalFees = ACCOUNTS.filter(a => a.costOfFund && a.type !== 'personal' && a.type !== 'fund')
+    .reduce((s, a) => s + a.costOfFund, 0);
+  setTxt('tsEvalFees', '$' + totalFees.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}));
+
+  const closedPnl = ACCOUNTS.filter(a => a.pnl != null && a.status !== 'active')
+    .reduce((s, a) => s + a.pnl, 0);
+  const closedPnlFmt = (closedPnl < 0 ? '−$' : '+$') + Math.abs(closedPnl).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+  setTxt('tsClosedPnl', closedPnlFmt);
+  setClass('tsClosedPnl', closedPnl < 0 ? 'tstat-value--red' : '');
+
+  const byDays = ACCOUNTS.filter(a => a.endDate).map(a => ({acc: a, days: daysBetween(a.startDate, a.endDate)})).sort((a,b) => b.days - a.days);
+  if (byDays[0]) {
+    setTxt('tsLongestDays', byDays[0].days + ' days');
+    setTxt('tsLongestName', byDays[0].acc.shortName + ' · ' + byDays[0].acc.marketLabel);
+  }
+
+  const byTrades = ACCOUNTS.filter(a => a.trades > 0).sort((a,b) => b.trades - a.trades);
+  if (byTrades[0]) {
+    setTxt('tsMostTrades', byTrades[0].trades.toLocaleString());
+    setTxt('tsMostTradesName', byTrades[0].shortName + ' · ' + byTrades[0].marketLabel);
+  }
 }
 
 /* ────────────────────────────────────────────
@@ -737,8 +857,12 @@ function buildPerformance() {
   if(mp)safeChart(mp,{type:'bar',data:{labels:MONTHLY_PNL.map(m=>m.month),datasets:[{data:MONTHLY_PNL.map(m=>m.pnl),backgroundColor:MONTHLY_PNL.map(m=>m.pnl>=0?'rgba(22,163,74,0.75)':'rgba(220,38,38,0.75)'),borderRadius:4,borderSkipped:false}]},options:{responsive:true,animation:{duration:900},plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:ctx=>` P&L: ${fmtFull(ctx.raw)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a9896',font:{size:10},maxRotation:45}},y:{grid:{color:'#eef5f4'},ticks:{color:'#7a9896',font:{size:10},callback:v=>'$'+v}}}}});
 
   const fees=ACCOUNTS.filter(a=>a.costOfFund&&a.type!=='personal'&&a.type!=='fund').reduce((s,a)=>s+a.costOfFund,0);
+  // Commission and swap computed live from all trade records — never hardcoded
+  const _allTrades = Object.values(TRADE_DATA).flat();
+  const totalComm = parseFloat(_allTrades.reduce((s,t)=>s+(t.commission||0),0).toFixed(2));
+  const totalSwap = parseFloat(_allTrades.reduce((s,t)=>s+Math.abs(t.swap||0),0).toFixed(2));
   const cc=document.getElementById('costChart');
-  const costData=[{label:'Eval Fees',value:fees,color:'#dc2626'},{label:'Commission',value:320,color:'#d97706'},{label:'Swap/Overnight',value:58,color:'#6366f1'}];
+  const costData=[{label:'Eval Fees',value:fees,color:'#dc2626'},{label:'Commission',value:totalComm,color:'#d97706'},{label:'Swap/Overnight',value:totalSwap,color:'#6366f1'}];
   if(cc)safeChart(cc,{type:'doughnut',data:{labels:costData.map(d=>d.label),datasets:[{data:costData.map(d=>d.value),backgroundColor:costData.map(d=>d.color),borderWidth:3,borderColor:'#fff',hoverOffset:5}]},options:{cutout:'68%',...CD,plugins:{legend:{display:false},tooltip:{enabled:true,...TIP,callbacks:{label:ctx=>` ${ctx.label}: ${fmtFull(ctx.raw)}`}}}}});
   const bd=document.getElementById('costBreakdown');
   if(bd)bd.innerHTML=costData.map(d=>`<div class="cost-row"><span class="cost-dot" style="background:${d.color}"></span><span class="cost-name">${d.label}</span><span class="cost-val">${fmtFull(d.value)}</span></div>`).join('');
@@ -812,7 +936,7 @@ function openDrawer(id) {
   }
 
   html+=`<div class="drawer-section-title">Notes</div>
-    <p style="font-size:13px;color:var(--text-2);line-height:1.65;padding:14px;background:var(--bg);border-radius:var(--radius-md);margin-bottom:20px">${acc.notes}</p>`;
+    <p style="font-size:13px;color:var(--text-2);line-height:1.65;padding:14px;background:var(--bg);border-radius:var(--radius-md);margin-bottom:20px">${esc(acc.notes)}</p>`;
 
   if(trades.length){
     html+=`<div class="drawer-section-title">Trade Log — ${trades.length} trades</div>
@@ -909,6 +1033,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const safe = (label, fn) => { try { fn(); } catch(e) { console.error('[FIBAM]', label, e); } };
 
   safe('initNav',           initNav);
+  safe('computeHeroStats',  computeHeroStats); // must run before initCountUp reads data-target
   safe('initCountUp',       initCountUp);
   safe('buildHeroTimeline', buildHeroTimeline);
   safe('buildOverviewCharts', buildOverviewCharts);
@@ -923,7 +1048,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   safe('buildAnalytics',    buildAnalytics);
   safe('fetchLivePrices',   fetchLivePrices);
 
-  const drawerCloseBtn = document.getElementById('drawerClose');
+  // Update footer date dynamically
+  const updEl = document.getElementById('lastUpdated');
+  if (updEl) {
+    const now = new Date();
+    updEl.textContent = 'Updated ' + now.toLocaleDateString('en-GB', {month:'short', year:'numeric'});
+  }
   const drawerOverlayEl = document.getElementById('drawerOverlay');
   if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
   if (drawerOverlayEl) drawerOverlayEl.addEventListener('click', closeDrawer);
@@ -1066,6 +1196,18 @@ function _applyFX(pair, rate) {
 }
 
 async function fetchLivePrices() {
+  const isFirstLoad = Object.keys(_priceCache).length === 0;
+
+  // On first load, show loading indicator in ticker items that are still dashes
+  if (isFirstLoad) {
+    document.querySelectorAll('.ticker-price').forEach(el => {
+      if (el.textContent === '—') el.textContent = '…';
+    });
+  }
+
+  // Track whether any live data arrives so we can show offline badge if not
+  let anySuccess = false;
+
   // ── FX ───────────────────────────────────────────────────────────────
   const fxPairs = [
     { pair: 'USDJPY', base: 'USD', quote: 'JPY' },
@@ -1075,11 +1217,17 @@ async function fetchLivePrices() {
   await Promise.allSettled(fxPairs.map(async ({ pair, base, quote }) => {
     const rate = await _fetchFX(base, quote);
     if (rate != null) {
+      anySuccess = true;
       _priceCache[pair] = rate;
       _applyFX(pair, rate);
     } else if (_priceCache[pair] != null) {
-      // Use last-good cached value — stale but better than dash
+      anySuccess = true; // serving from cache — not truly offline
       _applyFX(pair, _priceCache[pair]);
+    } else {
+      // No cache, fetch failed — show unavailable
+      const el = document.getElementById(`ticker${pair}`);
+      if (el) el.textContent = 'n/a';
+      document.querySelectorAll(`.ticker-clone--${pair.toLowerCase()}`).forEach(e => e.textContent = 'n/a');
     }
   }));
 
@@ -1097,13 +1245,23 @@ async function fetchLivePrices() {
     const price = meta?.regularMarketPrice ?? meta?.chartPreviousClose ?? null;
 
     if (price != null) {
+      anySuccess = true;
       _priceCache[ticker] = price;
       _applyPrice(ticker, price, openPrice);
     } else if (_priceCache[ticker] != null) {
+      anySuccess = true;
       // Show last known good price rather than leaving as dash
       _applyPrice(ticker, _priceCache[ticker], openPrice);
+    } else {
+      // No cache, fetch failed — clear loading indicator
+      const priceEl = document.getElementById(`ticker${ticker}`);
+      if (priceEl && priceEl.textContent === '…') priceEl.textContent = '—';
     }
   }));
+
+  // ── Offline indicator ────────────────────────────────────────────────
+  // Show badge only when no data at all came through (cold start + all APIs down)
+  _setTickerOffline(!anySuccess && isFirstLoad);
 }
 
 /* ════════════════════════════════════════════════
@@ -1120,6 +1278,38 @@ function buildAnalytics() {
   if(q('anAvgLoss'))     q('anAvgLoss').textContent     = '-$'+Math.abs(s.avgLoss).toFixed(2);
   if(q('anCommDrag'))    q('anCommDrag').textContent    = pct(s.commDragPct);
   if(q('anPF'))          q('anPF').textContent          = s.profitFactor.toFixed(2)+'x';
+
+  // ── Hero banner stats (dynamic) ────────────
+  const totalTrades = Object.values(TRADE_DATA).reduce((a, arr) => a + arr.length, 0);
+  const totalAccounts = ACCOUNTS.length;
+  const startYear = Math.min(...ACCOUNTS.map(a => new Date(a.startDate).getFullYear()));
+  const netPnl = ACCOUNTS.filter(a => a.pnl != null).reduce((a, acc) => a + acc.pnl, 0);
+  const peakEq = s.peakEquity || 0;
+  const fmtPnl = (v) => (v >= 0 ? '+$' : '−$') + Math.abs(v).toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0});
+
+  if(q('anHeroTrades'))      q('anHeroTrades').textContent      = totalTrades.toLocaleString();
+  if(q('anHeroAccounts'))    q('anHeroAccounts').textContent    = totalAccounts;
+  if(q('anHeroTradesVal'))   q('anHeroTradesVal').textContent   = totalTrades.toLocaleString();
+  if(q('anHeroAccountsVal')) q('anHeroAccountsVal').textContent = totalAccounts;
+  if(q('anHeroNetPnl')) {
+    q('anHeroNetPnl').textContent = fmtPnl(netPnl);
+    q('anHeroNetPnl').style.color = netPnl >= 0 ? '#16a34a' : '#dc2626';
+  }
+  if(q('anHeroPeakEq')) {
+    q('anHeroPeakEq').textContent = fmtPnl(peakEq);
+    q('anHeroPeakEq').style.color = peakEq >= 0 ? '#16a34a' : '#dc2626';
+  }
+  if(q('anPeakBadge')) {
+    q('anPeakBadge').textContent = fmtPnl(peakEq);
+  }
+
+  // ── Section desc (dynamic) ─────────────────
+  const propTrades = ['MFFU-X1','MFFU-X2','MFFU-X3','MFFU-X4','MFFU-X5','MFFX-X1','MFFX-X2','MFFX-X3','FDNT-6KX1','T5RS-5KX1']
+    .reduce((a, id) => a + (TRADE_DATA[id]?.length || 0), 0);
+  const propAccounts = ACCOUNTS.filter(a => a.type === 'prop-eval').length;
+  const tradingDays = s.tradingDays || 0;
+  if(q('anSectionDesc')) q('anSectionDesc').textContent =
+    `${propTrades.toLocaleString()} prop firm trades across ${propAccounts} accounts · ${tradingDays} trading days. Every number from raw Rithmic and MT5 trade data.`;
 
   const TIP2 = {mode:'index',intersect:false,backgroundColor:'#141F1E',titleColor:'#9bbdbb',bodyColor:'#e8f4f3',borderColor:'#2a3f3e',borderWidth:1,padding:10,cornerRadius:6};
 
@@ -1295,35 +1485,45 @@ function buildAnalytics() {
 })();
 
 /* ════════════════════════════════════════════════
-   LOADING SKELETONS
+   HERO STAT COMPUTATION
+   Derives live totals from ACCOUNTS[] so hero
+   count-up targets never go stale.
 ════════════════════════════════════════════════ */
-function showSkeleton(containerId, rows = 3) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  el.innerHTML = Array.from({length: rows}, () =>
-    `<div class="skeleton-row"><div class="skeleton-pulse"></div></div>`
-  ).join('');
-}
+function computeHeroStats() {
+  const totalTrades   = ACCOUNTS.reduce((s, a) => s + (a.trades || 0), 0);
+  const totalAccounts = ACCOUNTS.length;
+  const earliest      = Math.min(...ACCOUNTS.map(a => new Date(a.startDate + 'T00:00:00').getTime()));
+  const yearsActive   = Math.floor((Date.now() - earliest) / (365.25 * 24 * 3600 * 1000));
 
-function hideSkeleton(containerId) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  el.querySelectorAll('.skeleton-row').forEach(r => r.remove());
+  const setTarget = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.dataset.target = val;
+  };
+  setTarget('heroAccounts', totalAccounts);
+  setTarget('heroTrades',   totalTrades);
+  setTarget('heroYears',    yearsActive);
+  // heroMarkets stays at whatever the HTML says (4) — markets don't change often
 }
 
 /* ════════════════════════════════════════════════
-   ERROR STATE HELPERS
+   TICKER OFFLINE INDICATOR
+   Shows a subtle badge in the ticker bar when all
+   live price fetches fail (no network / all APIs down).
 ════════════════════════════════════════════════ */
-function showError(containerId, message = 'Failed to load data') {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  el.innerHTML = `
-    <div class="error-state" role="alert">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-      </svg>
-      <span>${message}</span>
-    </div>`;
+function _setTickerOffline(offline) {
+  const bar = document.getElementById('tickerBar');
+  if (!bar) return;
+  bar.classList.toggle('ticker--offline', offline);
+  let badge = bar.querySelector('.ticker-offline-badge');
+  if (offline && !badge) {
+    badge = document.createElement('div');
+    badge.className = 'ticker-offline-badge';
+    badge.setAttribute('role', 'status');
+    badge.textContent = '⚠ Prices unavailable';
+    bar.appendChild(badge);
+  } else if (!offline && badge) {
+    badge.remove();
+  }
 }
 
 /* ════════════════════════════════════════════════
@@ -1332,7 +1532,6 @@ function showError(containerId, message = 'Failed to load data') {
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('[FIBAM] SW registered:', reg.scope))
       .catch(err => console.warn('[FIBAM] SW registration failed:', err));
   });
 }
