@@ -3860,13 +3860,15 @@ canvas { display: block; }
   overflow: hidden;
   cursor: pointer;
   border: 1px solid transparent;
-  /* Performance: paint containment stops hover from triggering full-page compositing */
-  contain: layout style paint;
-  /* Hardware-accelerated hover — only transform, no shadow repaints */
-  will-change: transform;
+  /* contain:style only — prevents style bleeding without creating layout/paint boundaries
+     that would break Chart.js ResizeObserver and cause compositor layer explosion */
+  contain: style;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.15s;
 }
 .cal-day:hover {
+  /* will-change only on hover — promotes to GPU layer only when actually needed,
+     not for all 365 cells simultaneously (which exhausts VRAM on load) */
+  will-change: transform;
   transform: scale(1.05);
   z-index: 10;
 }
@@ -4281,4 +4283,3 @@ canvas { display: block; }
   background: rgba(251,191,36,0.08);
   border-color: rgba(251,191,36,0.2);
 }
-
