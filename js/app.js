@@ -1076,6 +1076,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const now = new Date();
     updEl.textContent = 'Updated ' + now.toLocaleDateString('en-GB', {month:'short', year:'numeric'});
   }
+  const drawerCloseBtn = document.getElementById('drawerClose');
   const drawerOverlayEl = document.getElementById('drawerOverlay');
   if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
   if (drawerOverlayEl) drawerOverlayEl.addEventListener('click', closeDrawer);
