@@ -719,9 +719,9 @@ function _calShowDayPanel(dateStr, dayData) {
     _calPanel.addEventListener('touchstart', e => { ty = e.touches[0].clientY; }, {passive:true});
     _calPanel.addEventListener('touchend', e => { if (e.changedTouches[0].clientY - ty > 60) _calClosePanel(); }, {passive:true});
   }
-  // Show overlay on mobile
+  // Show overlay on all screen sizes — enables click-outside-to-close on desktop too
   const overlay = document.getElementById('calPanelOverlay');
-  if (overlay && window.innerWidth < 768) overlay.classList.add('open');
+  if (overlay) overlay.classList.add('open');
   const df = new Date(dateStr+'T00:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   const pc = dayData.pnl >= 0 ? 'pos' : 'neg';
   const _panelSym = _calCurrency(CAL.accId);
@@ -1535,4 +1535,3 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.warn('[FIBAM] SW registration failed:', err));
   });
 }
-
