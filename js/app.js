@@ -1041,7 +1041,7 @@ function initScrollReveal() {
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(!e.isIntersecting)return;e.target.style.opacity='1';e.target.style.transform='translateY(0)';obs.unobserve(e.target);});
   },{threshold:0.08});
-  document.querySelectorAll('.stat-card,.chart-card,.account-card,.fund-card,.perf-card,.market-pill,.live-card,.cal-month-block').forEach(el=>{
+  document.querySelectorAll('.chart-card,.account-card,.fund-card,.perf-card,.live-card,.cal-month-block,.kpi-band,.market-ledger').forEach(el=>{
     el.style.opacity='0';el.style.transform='translateY(20px)';
     el.style.transition='opacity 0.55s ease,transform 0.55s cubic-bezier(0.22,1,0.36,1)';
     obs.observe(el);
