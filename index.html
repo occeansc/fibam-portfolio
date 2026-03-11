@@ -228,118 +228,107 @@
   ══════════════════════════════════════════ -->
   <section class="section" id="overview">
     <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Portfolio Overview</div>
-        <h2 class="section-title">The Full Picture</h2>
-        <p class="section-desc">All accounts across all markets — personal capital, prop firm evaluations and managed funds — mapped in one place.</p>
+
+      <div class="ov-header">
+        <div class="ov-eyebrow">Portfolio Overview</div>
+        <h2 class="ov-title">The Full Picture</h2>
+        <p class="ov-desc">All accounts across all markets — personal capital, prop firm evaluations and managed funds — mapped in one place.</p>
       </div>
 
-      <div class="overview-grid">
-
-        <!-- Summary Cards -->
-        <div class="overview-cards">
-          <div class="stat-card stat-card--teal">
-            <div class="stat-card-icon">◈</div>
-            <div class="stat-card-value">$381k</div>
-            <div class="stat-card-label">Nominal AUM Managed</div>
-            <div class="stat-card-note">Includes $50k prop firm accounts</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card-icon">↗</div>
-            <div class="stat-card-value" id="overviewEvalFees">$1,699</div>
-            <div class="stat-card-label">Total Evaluation Fees</div>
-            <div class="stat-card-note">Across 13 prop firm attempts</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card-icon">◉</div>
-            <div class="stat-card-value">4</div>
-            <div class="stat-card-label">Active Accounts</div>
-            <div class="stat-card-note">2 evals · 2 live funds</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card-icon">⊞</div>
-            <div class="stat-card-value">4</div>
-            <div class="stat-card-label">Markets</div>
-            <div class="stat-card-note">FX · Futures · US Stocks · NGX</div>
-          </div>
+      <!-- KPI Band -->
+      <div class="kpi-band">
+        <div class="kpi-cell kpi-cell--hero">
+          <div class="kpi-cell-bg-pattern"></div>
+          <div class="kpi-label">Nominal AUM</div>
+          <div class="kpi-figure">$381k</div>
+          <div class="kpi-detail">Includes $50k prop firm accounts</div>
         </div>
-
-        <!-- Charts row -->
-        <div class="overview-charts">
-          <div class="chart-card">
-            <div class="chart-card-header">
-              <h3 class="chart-card-title">Capital by Market</h3>
-              <span class="chart-card-note">Nominal account sizes</span>
-            </div>
-            <div class="chart-wrap">
-              <canvas id="marketDonut" width="200" height="200"></canvas>
-              <div class="donut-center">
-                <span class="donut-total">$382k</span>
-                <span class="donut-label">total</span>
-              </div>
-            </div>
-            <div class="chart-legend" id="marketLegend"></div>
-          </div>
-
-          <div class="chart-card">
-            <div class="chart-card-header">
-              <h3 class="chart-card-title">Account Types</h3>
-              <span class="chart-card-note">By count</span>
-            </div>
-            <div class="chart-wrap">
-              <canvas id="typeDonut" width="200" height="200"></canvas>
-              <div class="donut-center">
-                <span class="donut-total">15</span>
-                <span class="donut-label">accounts</span>
-              </div>
-            </div>
-            <div class="chart-legend" id="typeLegend"></div>
-          </div>
-
-          <div class="chart-card chart-card--wide">
-            <div class="chart-card-header">
-              <h3 class="chart-card-title">P&L by Account</h3>
-              <span class="chart-card-note">Closed accounts · USD</span>
-            </div>
-            <canvas id="pnlBar" height="140"></canvas>
-          </div>
+        <div class="kpi-rule"></div>
+        <div class="kpi-cell">
+          <div class="kpi-label">Eval Fees Paid</div>
+          <div class="kpi-figure" id="overviewEvalFees">$977</div>
+          <div class="kpi-detail">13 prop firm attempts</div>
         </div>
-
+        <div class="kpi-rule"></div>
+        <div class="kpi-cell">
+          <div class="kpi-label">Active Accounts</div>
+          <div class="kpi-figure">4</div>
+          <div class="kpi-detail">2 evals · 2 live funds</div>
+        </div>
+        <div class="kpi-rule"></div>
+        <div class="kpi-cell">
+          <div class="kpi-label">Markets</div>
+          <div class="kpi-figure">4</div>
+          <div class="kpi-detail">FX · Futures · Stocks · NGX</div>
+        </div>
       </div>
 
-      <!-- Market pills -->
-      <div class="market-pills">
-        <div class="market-pill market-pill--fx">
-          <span class="pill-dot"></span>
-          <div class="pill-content">
-            <span class="pill-name">Spot FX</span>
-            <span class="pill-detail">GBPUSD · EURUSD · USDJPY · WTI · XAU</span>
-          </div>
-          <span class="pill-count">6 accounts</span>
+      <!-- Market ledger -->
+      <div class="market-ledger">
+        <div class="market-ledger-row market-ledger-row--fx">
+          <div class="mlr-accent"></div>
+          <div class="mlr-name">Spot FX</div>
+          <div class="mlr-instruments">GBPUSD · EURUSD · USDJPY · WTI · XAU</div>
+          <div class="mlr-count">6 accounts</div>
         </div>
-        <div class="market-pill market-pill--futures">
-          <span class="pill-dot"></span>
-          <div class="pill-content">
-            <span class="pill-name">US Futures</span>
-            <span class="pill-detail">NQ · MNQ · YM · MYM · ES</span>
-          </div>
-          <span class="pill-count">5 accounts</span>
+        <div class="market-ledger-row market-ledger-row--futures">
+          <div class="mlr-accent"></div>
+          <div class="mlr-name">US Futures</div>
+          <div class="mlr-instruments">NQ · MNQ · YM · MYM · ES</div>
+          <div class="mlr-count">5 accounts</div>
         </div>
-        <div class="market-pill market-pill--stocks">
-          <span class="pill-dot"></span>
-          <div class="pill-content">
-            <span class="pill-name">US Equities</span>
-            <span class="pill-detail">Robinhood · NASDAQ · NYSE</span>
-          </div>
-          <span class="pill-count">1 fund</span>
+        <div class="market-ledger-row market-ledger-row--stocks">
+          <div class="mlr-accent"></div>
+          <div class="mlr-name">US Equities</div>
+          <div class="mlr-instruments">Robinhood · NASDAQ · NYSE</div>
+          <div class="mlr-count">1 fund</div>
         </div>
-        <div class="market-pill market-pill--ngx">
-          <span class="pill-dot"></span>
-          <div class="pill-content">
-            <span class="pill-name">Nigerian Stocks</span>
-            <span class="pill-detail">NGX Exchange · NGN</span>
+        <div class="market-ledger-row market-ledger-row--ngx">
+          <div class="mlr-accent"></div>
+          <div class="mlr-name">Nigerian Stocks</div>
+          <div class="mlr-instruments">NGX Exchange · NGN-denominated</div>
+          <div class="mlr-count">1 fund</div>
+        </div>
+      </div>
+
+      <!-- Charts row -->
+      <div class="overview-charts">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3 class="chart-card-title">Capital by Market</h3>
+            <span class="chart-card-note">Nominal account sizes</span>
           </div>
-          <span class="pill-count">1 fund</span>
+          <div class="chart-wrap">
+            <canvas id="marketDonut" width="200" height="200"></canvas>
+            <div class="donut-center">
+              <span class="donut-total">$382k</span>
+              <span class="donut-label">total</span>
+            </div>
+          </div>
+          <div class="chart-legend" id="marketLegend"></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3 class="chart-card-title">Account Types</h3>
+            <span class="chart-card-note">By count</span>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="typeDonut" width="200" height="200"></canvas>
+            <div class="donut-center">
+              <span class="donut-total">15</span>
+              <span class="donut-label">accounts</span>
+            </div>
+          </div>
+          <div class="chart-legend" id="typeLegend"></div>
+        </div>
+
+        <div class="chart-card chart-card--wide">
+          <div class="chart-card-header">
+            <h3 class="chart-card-title">P&L by Account</h3>
+            <span class="chart-card-note">Closed accounts · USD</span>
+          </div>
+          <canvas id="pnlBar" height="140"></canvas>
         </div>
       </div>
 
@@ -351,10 +340,10 @@
   ══════════════════════════════════════════ -->
   <section class="section section--alt" id="accounts">
     <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Account Registry</div>
-        <h2 class="section-title">Every Campaign</h2>
-        <p class="section-desc">15 accounts across 6 years. Each one a chapter — from the first deposit to active evaluations running today.</p>
+      <div class="ov-header">
+        <div class="ov-eyebrow">Account Registry</div>
+        <h2 class="ov-title">Every Campaign</h2>
+        <p class="ov-desc">15 accounts across 6 years. Each one a chapter — from the first deposit to active evaluations running today.</p>
       </div>
 
       <!-- Filter tabs -->
@@ -378,12 +367,12 @@
   ══════════════════════════════════════════ -->
   <section class="section section--alt" id="live">
     <div class="container">
-      <div class="section-header">
-        <div class="section-tag live-tag">
+      <div class="ov-header">
+        <div class="ov-eyebrow live-tag">
           <span class="live-dot"></span> Live Now
         </div>
-        <h2 class="section-title">Active Evaluations</h2>
-        <p class="section-desc">Real-time dashboards for both running prop firm evaluations, built from actual trade data.</p>
+        <h2 class="ov-title">Active Evaluations</h2>
+        <p class="ov-desc">Real-time dashboards for both running prop firm evaluations, built from actual trade data.</p>
       </div>
 
       <div class="live-grid">
@@ -473,10 +462,10 @@
   ══════════════════════════════════════════ -->
   <section class="section section--alt" id="portfolio-links">
     <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Portfolio Pages</div>
-        <h2 class="section-title">Explore in Depth</h2>
-        <p class="section-desc">Each section has a dedicated page with full detail, charts, and breakdowns.</p>
+      <div class="ov-header">
+        <div class="ov-eyebrow">Portfolio Pages</div>
+        <h2 class="ov-title">Explore in Depth</h2>
+        <p class="ov-desc">Each section has a dedicated page with full detail, charts, and breakdowns.</p>
       </div>
       <div class="portfolio-nav-grid">
         <a href="funds.html#calendars" class="pnav-card">
