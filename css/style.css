@@ -578,67 +578,6 @@ canvas { display: block; }
   color: rgba(255,255,255,0.55);
 }
 
-/* ── Overview Grid ─────────────────────────── */
-.overview-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-/* ── Legacy stat-card (kept for other pages) ── */
-.stat-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  padding: 28px 32px;
-  box-shadow: var(--shadow-bento);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.3s;
-}
-.stat-card:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-4px);
-  border-color: var(--teal-mid);
-}
-.stat-card--teal {
-  background: linear-gradient(145deg, var(--teal) 0%, var(--teal-dark) 100%);
-  border-color: transparent;
-  box-shadow: var(--shadow-float);
-}
-.stat-card--teal:hover {
-  border-color: transparent;
-  box-shadow: var(--shadow-float), 0 20px 50px -10px rgba(64,181,173,0.3);
-}
-.stat-card--teal .stat-card-value,
-.stat-card--teal .stat-card-icon {
-  color: white;
-}
-.stat-card--teal .stat-card-label { color: rgba(255,255,255,0.85); }
-.stat-card--teal .stat-card-note  { color: rgba(255,255,255,0.65); }
-.stat-card-icon {
-  font-size: 20px;
-  color: var(--teal);
-  margin-bottom: 12px;
-}
-.stat-card-value {
-  font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text-1);
-  line-height: 1;
-  margin-bottom: 6px;
-  letter-spacing: -0.02em;
-}
-.stat-card-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-2);
-  margin-bottom: 4px;
-}
-.stat-card-note {
-  font-size: 12px;
-  color: var(--text-3);
-}
-
 
 .overview-charts {
   display: grid;
@@ -782,9 +721,6 @@ canvas { display: block; }
   color: var(--text-3);
   margin-top: 2px;
 }
-
-/* Keep old market-pills classes for any other pages referencing them */
-.market-pills { display: none; }
 
 
 /* ── Filter Tabs — segmented underline style ── */
@@ -2742,19 +2678,10 @@ canvas { display: block; }
   .market-ledger-row:nth-child(2) {
     border-bottom: 1px solid var(--border);
   }
-  .overview-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  
   /* Reset bento spans — equal 2-col at tablet */
-  .overview-cards .stat-card:nth-child(1),
-  .overview-cards .stat-card:nth-child(2),
-  .overview-cards .stat-card:nth-child(3),
-  .overview-cards .stat-card:nth-child(4) { grid-column: span 1; }
-  .overview-charts {
-    grid-template-columns: 1fr 1fr;
-  }
   .chart-card--wide { grid-column: span 2; }
-  .market-pills { grid-template-columns: repeat(2, 1fr); }
+  
   .accounts-grid { grid-template-columns: repeat(2, 1fr); }
   .trading-layout { grid-template-columns: 1fr; }
   .trading-stats { position: static; }
@@ -2802,7 +2729,7 @@ canvas { display: block; }
   .hero-stat-divider { display: none; }
   .overview-charts { grid-template-columns: 1fr; }
   .chart-card--wide { grid-column: span 1; }
-  .market-pills { grid-template-columns: 1fr; }
+  
   .market-ledger { grid-template-columns: repeat(2, 1fr); }
   .accounts-grid { grid-template-columns: 1fr; }
   .tat-header,
@@ -2842,20 +2769,13 @@ canvas { display: block; }
   .timeline-bar { border-radius: 4px; }
   .timeline-bar span { font-size: 9px; }
 
-  .section-tag  { font-size: 10px; }
+  
   .section-head { font-size: clamp(22px, 6vw, 32px); }
   .section-sub  { font-size: 14px; }
 
   .overview-charts { grid-template-columns: 1fr; gap: 16px; }
   .chart-card { padding: 20px 16px; }
   .chart-card--wide { grid-column: span 1; }
-
-  .market-pills {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-  .market-pill { padding: 10px 8px; font-size: 11px; }
-  .market-pill-count { font-size: 14px; }
 
   .trading-layout { gap: 20px; }
   .tat-header,
@@ -2891,7 +2811,7 @@ canvas { display: block; }
   .perf-card--wide { grid-column: span 1; }
 
   .btn { min-height: 44px; }
-  .market-pill, .tat-filter-btn, .cal-tab { min-height: 40px; }
+
   .account-card { cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .drawer-close { width: 40px; height: 40px; }
 
@@ -3032,21 +2952,21 @@ canvas { display: block; }
 
 
   /* Overview cards */
-  .overview-cards { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .stat-card { padding: 16px; }
-  .stat-card-value { font-size: 24px; }
+  
+  
+  
   .overview-charts { grid-template-columns: 1fr; }
 
 
   /* Market pills */
-  .market-pill { flex-direction: column; align-items: flex-start; gap: 6px; }
-  .pill-count { margin-left: 0; }
+  
+  
 
 
   /* Section headers */
-  .section-title { font-size: clamp(22px, 6vw, 36px); }
+  
   .ov-title { font-size: clamp(22px, 6vw, 36px); }
-  .section-desc { font-size: 14px; }
+  
   .ov-desc { font-size: 14px; }
 
 
@@ -3149,7 +3069,7 @@ canvas { display: block; }
   .hero-timeline { margin-top: 32px; }
 
   .section { padding: 48px 0; }
-  .section-title { font-size: clamp(22px, 6vw, 36px); }
+  
   .container { padding: 0 16px; }
 
   .accounts-grid { grid-template-columns: 1fr !important; }
@@ -3205,11 +3125,7 @@ canvas { display: block; }
   .account-card { padding: 20px 18px; }
   .account-card-name { font-size: 14px; }
 
-  .overview-cards {
-    display: grid !important;
-    grid-template-columns: 1fr;
-    place-items: center;
-  }
+  
   .account-card { width: 100%; max-width: 420px; }
 
   .hero-content {
@@ -3248,13 +3164,13 @@ canvas { display: block; }
   .hero-stat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.1); }
 
   /* Overview cards: 2-col grid */
-  .overview-cards { grid-template-columns: 1fr 1fr; gap: 12px; }
+  
   .overview-card { padding: 18px 16px; }
   .card-value { font-size: 22px; }
   .overview-charts { grid-template-columns: 1fr; gap: 16px; }
 
   /* Market pills */
-  .market-pills { grid-template-columns: repeat(2, 1fr); }
+  
 
   /* Account table */
   .tat-header,
@@ -3321,10 +3237,10 @@ canvas { display: block; }
 
 
 @media (max-width: 380px) {
-  .overview-cards { grid-template-columns: 1fr; }
+  
 
   .hero-stat { flex: 0 0 100%; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.1); }
-  .overview-cards { grid-template-columns: 1fr; }
+  
 }
 
 /* ════════════════════════════════════════════════
@@ -3470,12 +3386,9 @@ canvas { display: block; }
 [data-theme="dark"] .hero-timeline { border-color: var(--border); }
 
 /* ── Section headers ── */
-[data-theme="dark"] .section-header h2,
-[data-theme="dark"] .section-header .sh-title,
-[data-theme="dark"] .section-title { color: var(--text); }
-[data-theme="dark"] .section-header p,
-[data-theme="dark"] .section-desc { color: #6aaeaa; }
-[data-theme="dark"] .section-tag { background: rgba(64,181,173,0.12); color: #40B5AD; }
+[data-theme="dark"] 
+[data-theme="dark"] 
+[data-theme="dark"] 
 [data-theme="dark"] .section--alt { background: var(--bg-alt); }
 
 /* Dark mode — KPI band */
@@ -3522,17 +3435,14 @@ canvas { display: block; }
 [data-theme="dark"] .an-hero-label { color: #3a6462; }
 
 /* ── Stat cards ── */
-[data-theme="dark"] .stat-card {
-  background: var(--bg-card);
-  border-color: var(--border);
-}
-[data-theme="dark"] .stat-card-value { color: var(--text); }
+[data-theme="dark"] 
+[data-theme="dark"] 
 [data-theme="dark"] .stat-card-label,
 [data-theme="dark"] .stat-label,
 [data-theme="dark"] .an-stat-label,
 [data-theme="dark"] .nav-tagline { color: #6aaeaa; }
-[data-theme="dark"] .stat-card-note { color: #4a7a77; }
-[data-theme="dark"] .stat-card-icon { color: #40B5AD; }
+[data-theme="dark"] 
+[data-theme="dark"] 
 
 /* ── Chart cards ── */
 [data-theme="dark"] .chart-card {
@@ -4421,9 +4331,9 @@ canvas { display: block; }
   .btn-primary, .btn-secondary { width: 100%; text-align: center; justify-content: center; }
 
   /* ── Section headers ── */
-  .section-title { font-size: 26px; }
+  
   .ov-title { font-size: 26px; }
-  .section-desc { font-size: 14px; }
+  
 
   /* ── Overview stat strip ── */
   .an-stat-strip { flex-wrap: wrap; gap: 0; }
@@ -4433,14 +4343,11 @@ canvas { display: block; }
   .an-stat-label { font-size: 9px; }
 
   /* ── Overview portfolio cards - 2x2 grid on iPhone 12 ── */
-  .overview-cards {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 10px;
-  }
-  .stat-card { padding: 16px 14px; }
-  .stat-card-value { font-size: 22px; }
-  .stat-card-label { font-size: 10px; }
-  .stat-card-note { font-size: 9px; }
+  
+  
+  
+  
+  
 
   /* ── Overview charts ── */
   .overview-charts { grid-template-columns: 1fr !important; gap: 14px; }
