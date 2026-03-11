@@ -4,7 +4,7 @@
 ════════════════════════════════════════════════ */
 'use strict';
 
-const CACHE_NAME = 'fibam-v7';
+const CACHE_NAME = 'fibam-v8';
 const BASE = self.registration.scope;
 
 // Local assets — cached with default mode (same-origin)
