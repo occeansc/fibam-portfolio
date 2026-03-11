@@ -286,17 +286,39 @@ function buildLiveCard(id,mId,cId,tPId,tBId,dPId,dBId) {
   const el=document.getElementById(mId);
   if(el) {
     const pc=s.total>=0?'pos':'neg';
-    el.style.gridTemplateColumns='repeat(4,1fr)';
+    el.style.gridTemplateColumns='';
     el.innerHTML=`
-      <div class="live-metric"><div class="live-metric-label">Net P&L</div><div class="live-metric-val ${pc}">${fmtFull(s.total)}</div></div>
-      <div class="live-metric"><div class="live-metric-label">Win Rate</div><div class="live-metric-val neu">${(s.winRate*100).toFixed(0)}%</div></div>
-      <div class="live-metric"><div class="live-metric-label">Profit Factor</div><div class="live-metric-val ${s.profitFactor>=1?'pos':'neg'}">${s.profitFactor}</div></div>
-      <div class="live-metric"><div class="live-metric-label">Trades</div><div class="live-metric-val neu">${s.count}</div></div>
-      <div class="live-metric"><div class="live-metric-label">Avg Win</div><div class="live-metric-val pos small">+${fmtFull(s.avgWin)}</div></div>
-      <div class="live-metric"><div class="live-metric-label">Avg Loss</div><div class="live-metric-val neg small">−${fmtFull(s.avgLoss)}</div></div>
-      <div class="live-metric"><div class="live-metric-label">Best Day</div><div class="live-metric-val pos small">${fmtFull(s.bestDay[1])}</div></div>
-      <div class="live-metric"><div class="live-metric-label">Costs</div><div class="live-metric-val neg small">−${fmtFull(s.totalComm+s.totalSwap)}</div></div>`;
-  }
+      <div class="live-metric live-metric--dominant">
+        <div class="live-metric-label">Net P&amp;L</div>
+        <div class="live-metric-val ${pc}">${s.total>=0?'+':''}${fmtFull(s.total)}</div>
+      </div>
+      <div class="live-metrics-bar">
+        <div class="live-metric-bar-cell">
+          <div class="live-metric-label">Win Rate</div>
+          <div class="live-metric-val neu">${(s.winRate*100).toFixed(0)}%</div>
+        </div>
+        <div class="live-metric-bar-cell">
+          <div class="live-metric-label">Trades</div>
+          <div class="live-metric-val neu">${s.count}</div>
+        </div>
+        <div class="live-metric-bar-cell">
+          <div class="live-metric-label">Profit Factor</div>
+          <div class="live-metric-val ${s.profitFactor>=1?'pos':'neg'}">${s.profitFactor}</div>
+        </div>
+        <div class="live-metric-bar-cell">
+          <div class="live-metric-label">Avg Win</div>
+          <div class="live-metric-val pos small">+${fmtFull(s.avgWin)}</div>
+        </div>
+        <div class="live-metric-bar-cell">
+          <div class="live-metric-label">Avg Loss</div>
+          <div class="live-metric-val neg small">−${fmtFull(s.avgLoss)}</div>
+        </div>
+        <div class="live-metric-bar-cell">
+          <div class="live-metric-label">Costs</div>
+          <div class="live-metric-val neg small">−${fmtFull(s.totalComm+s.totalSwap)}</div>
+        </div>
+      </div>`;
+    }
 
   // Progress bars
   const profitPct=Math.max(0,(s.total/targets.profitTarget)*100);
