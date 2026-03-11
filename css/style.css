@@ -3944,6 +3944,13 @@ canvas { display: block; }
   display: block;
   opacity: 1;
 }
+/* Desktop: overlay is invisible (transparent hit-area for click-outside),
+   mobile: semi-dark dim behind the bottom sheet */
+@media (min-width: 768px) {
+  .cal-day-panel-overlay.open {
+    background: transparent;
+  }
+}
 .cal-day-panel {
   position: fixed;
   bottom: 0;
@@ -4083,7 +4090,14 @@ canvas { display: block; }
     transform: translateY(0);
     opacity: 1;
   }
+  /* On desktop show the handle row so the X button is accessible */
   .cal-panel-handle {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 12px 4px;
+  }
+  /* Hide the drag pill on desktop — only X button needed */
+  .cal-panel-handle::before {
     display: none;
   }
 }
