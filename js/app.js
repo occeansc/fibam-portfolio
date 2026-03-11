@@ -1234,8 +1234,8 @@ async function fetchLivePrices() {
   // ── Stocks (1kHooD open positions) ───────────────────────────────────
   const openPositions = [
     { ticker: 'PANW', openPrice: 150.17 },
-    { ticker: 'RKLB', openPrice: 71.84  },
     { ticker: 'LMND', openPrice: 51.29  },
+    { ticker: 'GRAB', openPrice: 3.90   },
   ];
 
   await Promise.allSettled(openPositions.map(async ({ ticker, openPrice }) => {
