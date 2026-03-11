@@ -3435,14 +3435,9 @@ canvas { display: block; }
 [data-theme="dark"] .an-hero-label { color: #3a6462; }
 
 /* ── Stat cards ── */
-[data-theme="dark"] 
-[data-theme="dark"] 
-[data-theme="dark"] .stat-card-label,
 [data-theme="dark"] .stat-label,
 [data-theme="dark"] .an-stat-label,
 [data-theme="dark"] .nav-tagline { color: #6aaeaa; }
-[data-theme="dark"] 
-[data-theme="dark"] 
 
 /* ── Chart cards ── */
 [data-theme="dark"] .chart-card {
