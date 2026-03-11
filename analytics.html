@@ -82,27 +82,32 @@
   </div>
 
   <!-- Page hero -->
-  <div style="background:var(--bg-alt);border-bottom:1px solid var(--border);padding:40px 0 32px">
+  <div class="page-hero-strip">
     <div class="container">
-      <div class="section-tag" style="margin-bottom:12px;display:inline-block">Performance &amp; Analytics</div>
-      <h1 style="font-size:clamp(28px,5vw,48px);font-weight:700;color:var(--text-1);line-height:1.1;margin-bottom:12px">The Full Picture</h1>
-      <p style="font-size:16px;color:var(--text-2);max-width:580px;line-height:1.65"><span id="anHeroTrades">—</span> trades across <span id="anHeroAccounts">—</span> accounts from 2020–present. Every number computed from raw Rithmic and MT5 trade data.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:28px">
-        <div style="text-align:center;padding:14px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg)">
-          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text-1)" id="anHeroTradesVal">—</div>
-          <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Total Trades</div>
+      <div class="ov-header" style="margin-bottom:24px">
+        <div class="ov-eyebrow">Performance &amp; Analytics</div>
+        <h1 class="ov-title" style="font-size:clamp(28px,5vw,48px)">The Full Picture</h1>
+        <p class="ov-desc"><span id="anHeroTrades">—</span> trades across <span id="anHeroAccounts">—</span> accounts from 2020–present. Every number computed from raw Rithmic and MT5 trade data.</p>
+      </div>
+      <div class="an-hero-stats">
+        <div class="an-hero-stat">
+          <div class="an-hero-val" id="anHeroTradesVal">—</div>
+          <div class="an-hero-label">Total Trades</div>
         </div>
-        <div style="text-align:center;padding:14px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg)">
-          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700;color:var(--text-1)" id="anHeroAccountsVal">—</div>
-          <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Accounts</div>
+        <div class="an-hero-divider"></div>
+        <div class="an-hero-stat">
+          <div class="an-hero-val" id="anHeroAccountsVal">—</div>
+          <div class="an-hero-label">Accounts</div>
         </div>
-        <div style="text-align:center;padding:14px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg)">
-          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700" id="anHeroNetPnl">—</div>
-          <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Net P&L</div>
+        <div class="an-hero-divider"></div>
+        <div class="an-hero-stat">
+          <div class="an-hero-val" id="anHeroNetPnl">—</div>
+          <div class="an-hero-label">Net P&amp;L</div>
         </div>
-        <div style="text-align:center;padding:14px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg)">
-          <div style="font-family:var(--font-mono);font-size:22px;font-weight:700" id="anHeroPeakEq">—</div>
-          <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Peak Equity</div>
+        <div class="an-hero-divider"></div>
+        <div class="an-hero-stat">
+          <div class="an-hero-val" id="anHeroPeakEq">—</div>
+          <div class="an-hero-label">Peak Equity</div>
         </div>
       </div>
     </div>
@@ -111,10 +116,10 @@
   <!-- PERFORMANCE SECTION -->
   <section id="performance" class="section">
     <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Performance Analysis</div>
-        <h2 class="section-title">The Numbers</h2>
-        <p class="section-desc">Aggregated performance across all closed trading accounts. Monthly P&amp;L, cost analysis, and instrument breakdown.</p>
+      <div class="ov-header">
+        <div class="ov-eyebrow">Performance Analysis</div>
+        <h2 class="ov-title">The Numbers</h2>
+        <p class="ov-desc">Aggregated performance across all closed trading accounts. Monthly P&amp;L, cost analysis, and instrument breakdown.</p>
       </div>
       <div class="perf-grid">
         <div class="perf-card perf-card--wide">
@@ -153,10 +158,10 @@
   <!-- DEEP ANALYTICS SECTION -->
   <section class="section section--alt" id="analytics">
     <div class="container">
-      <div class="section-header">
-        <div class="section-tag">Deep Analytics</div>
-        <h2 class="section-title">Trade-Level Breakdown</h2>
-        <p class="section-desc" id="anSectionDesc">All prop firm trades across accounts. Every number from raw Rithmic and MT5 trade data.</p>
+      <div class="ov-header">
+        <div class="ov-eyebrow">Deep Analytics</div>
+        <h2 class="ov-title">Trade-Level Breakdown</h2>
+        <p class="ov-desc" id="anSectionDesc">All prop firm trades across accounts. Every number from raw Rithmic and MT5 trade data.</p>
       </div>
 
       <div class="an-stat-strip">
@@ -274,4 +279,3 @@
   <script src="js/app.js"></script>
 </body>
 </html>
-
